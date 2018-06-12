@@ -1,0 +1,1951 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="100"
+    android:viewportWidth="100">
+
+    <path
+        android:name="line"
+        android:pathData="m50,120 l800,0"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="5" />
+
+    <path
+        android:name="line"
+        android:pathData="m900,120 l770,0"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="5" />
+
+    <path
+        android:name="line"
+        android:pathData="m400,120 l0,150 m-40,-40 l80,0 m0,0 l0,40 m-80,-40 l0,40"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="2" />
+
+
+    <group>
+        <path
+            android:name="line"
+            android:pathData="m666,120 l0,90 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m650,210 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m666,242 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:id="N06_SY"
+            android:name="button20"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m650,250 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m666,282 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m650,290 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="line"
+            android:pathData="m666,322 l0,30"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+
+    <group>
+        <path
+            android:name="line"
+            android:pathData="m1066,120 l0,90 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1050,210 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1066,242 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:id="N06_SY"
+            android:name="button20"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1050,250 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1066,282 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1050,290 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="line"
+            android:pathData="m1066,322 l0,30"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+
+    <path
+        android:name="line"
+        android:pathData="m1300,120 l0,150 m-40,-40 l80,0 m0,0 l0,40 m-80,-40 l0,40"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="2" />
+
+    <path
+        android:name="line"
+        android:pathData="m50,350 l800,0"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="5" />
+
+    <path
+        android:name="line"
+        android:pathData="m900,350 l770,0"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="5" />
+
+    <group android:name="group0">
+        <path
+            android:name="line"
+            android:pathData="m96,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m80,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m96,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:id="N06_SY"
+            android:name="button0"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m80,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m96,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m80,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m96,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m80,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m96,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m110,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,6 l0,20 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m126,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m110,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group1">
+        <path
+            android:name="line"
+            android:pathData="m166,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m150,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m166,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button1"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m150,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m166,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m150,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m166,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m150,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m166,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m180,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m196,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m180,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group2">
+        <path
+            android:name="line"
+            android:pathData="m236,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m220,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m236,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button2"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m220,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m236,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m220,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m236,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m220,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m236,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m250,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m266,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m250,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group3">
+        <path
+            android:name="line"
+            android:pathData="m306,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m290,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m306,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button3"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m290,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m306,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m290,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m306,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m290,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m306,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m320,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m336,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m320,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group4">
+        <path
+            android:name="line"
+            android:pathData="m376,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m360,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m376,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button4"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m360,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m376,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m360,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m376,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m360,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m376,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m390,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m406,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m390,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group5">
+        <path
+            android:name="line"
+            android:pathData="m446,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m430,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m446,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button5"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m430,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m446,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m430,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m446,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m430,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m446,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m460,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m476,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m460,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group6">
+        <path
+            android:name="line"
+            android:pathData="m516,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m500,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m516,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button6"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m500,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m516,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m500,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m516,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m500,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m516,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m530,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m546,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m530,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group7">
+        <path
+            android:name="line"
+            android:pathData="m586,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m570,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m586,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button7"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m570,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m586,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m570,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m586,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m570,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m586,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m600,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m616,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m600,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group8">
+        <path
+            android:name="line"
+            android:pathData="m656,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m640,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m656,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button8"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m640,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m656,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m640,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m656,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m640,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m656,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m670,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m686,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m670,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group9">
+        <path
+            android:name="line"
+            android:pathData="m726,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m710,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m726,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button9"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m710,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m726,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m710,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m726,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m710,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m726,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m740,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m756,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m740,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group10">
+        <path
+            android:name="line"
+            android:pathData="m796,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m780,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m796,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button10"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m780,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m796,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m780,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m796,472 l0,40"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+
+    <path
+        android:name="line"
+        android:pathData="m796,512 l150,0 m0,0 l0,-160"
+        android:strokeAlpha="1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="2" />
+
+    <group android:name="group11">
+        <path
+            android:name="line"
+            android:pathData="m1016,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1000,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1016,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button11"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1000,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1016,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1000,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1016,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1000,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1016,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1030,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1046,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1030,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group12">
+        <path
+            android:name="line"
+            android:pathData="m1086,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1070,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1086,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button12"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1070,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1086,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1070,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1086,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1070,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1086,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1100,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1116,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1100,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group13">
+        <path
+            android:name="line"
+            android:pathData="m1156,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1140,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1156,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button13"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1140,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1156,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1140,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1156,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1140,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1156,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1170,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1186,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1170,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group14">
+        <path
+            android:name="line"
+            android:pathData="m1226,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1210,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1226,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button14"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1210,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1226,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1210,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1226,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1210,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1226,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1240,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1256,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1240,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group15">
+        <path
+            android:name="line"
+            android:pathData="m1296,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1280,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1296,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button15"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1280,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1296,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1280,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1296,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1280,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1296,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1310,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1326,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1310,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group16">
+        <path
+            android:name="line"
+            android:pathData="m1366,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1350,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1366,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button16"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1350,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1366,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1350,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1366,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1350,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1366,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1380,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1396,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1380,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group17">
+        <path
+            android:name="line"
+            android:pathData="m1436,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1420,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1436,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button17"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1420,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1436,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1420,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1436,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1420,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1436,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1450,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1466,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1450,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group18">
+        <path
+            android:name="line"
+            android:pathData="m1506,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1490,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1506,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button18"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1490,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1506,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1490,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1506,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1490,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1506,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1520,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1536,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1520,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+    <group android:name="group19">
+        <path
+            android:name="line"
+            android:pathData="m1576,350 l0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <path
+            android:name="up"
+            android:pathData="m1560,360 m16,0 l-12,16 m12,0 l-12,16 m24,0 l-12,-16 m12,0 l-12,-16 m0,0 m0,16 ,l0,16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1576,392 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="button19"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1560,400 m4,1 h24 v31 h-24 z"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+        <!--android:pathData="m0,50 m4,1 l24,0 m0,0 l0,31 m0,0 l-24,0 m0,0 l0,-31"-->
+
+        <path
+            android:name="line"
+            android:pathData="m1576,432 l0,8"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="down"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1560,440 m4,0 l12,16 m0,0 l12,-16 m0,16 l-12,16 m0,0 l-12,-16 m12,0 l0,-16"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1576,472 l0,80"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1560,552 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1576,492 l30,0 m0,0 v0,10"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="switch"
+            android:fillAlpha="1"
+            android:fillColor="#ffffff"
+            android:pathData="m1590,502 m16,0 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 m0,3 l10,24 m-10,-1 a3,3 0 0,1 0,6 a3,3 0 0,1 0,-6 "
+            android:strokeAlpha="1"
+            android:strokeColor="#00ff00"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="line"
+            android:pathData="m1606,534 l0,10 "
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+
+        <path
+            android:name="land"
+            android:pathData="m1590,544 m8,0 l16,0 m-2,4 l-12,0 m2,4 l8,0"
+            android:strokeAlpha="1"
+            android:strokeColor="#ff0000"
+            android:strokeWidth="2" />
+    </group>
+
+</vector>
