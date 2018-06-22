@@ -6,18 +6,20 @@ import android.graphics.Region;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.bin.david.form.core.SmartTable;
-import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.table.TableData;
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Switch;
 import com.nemsapp.ui.MainUI;
 import com.nemsapp.util.PathParser;
-import com.nemsapp.vo.TestData;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,27 +43,24 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class PicActivity extends AppCompatActivity {
 
     private MainUI mainUI;
-    private SmartTable table;
 
-    final Column<String> nameColumn = new Column<>("姓名", "name");
-    final Column<Integer> ageColumn = new Column<>("年龄", "age");
+    private DrawerLayout drawerLayout;
+
+    private ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainUI = findViewById(R.id.mainUI);
-        ParseSVG();
-//
-//        timer.schedule(task, 0, 1000);
+        listView = findViewById(R.id.v4_listview);
+        drawerLayout = findViewById(R.id.pic_layout);
 
-        List<TestData> list = new ArrayList<>();
-        list.add(new TestData("bcy", 21));
-        list.add(new TestData("bc", 22));
-        TableData tableData = new TableData("测试", list, nameColumn, ageColumn);
-//                new TableData("测试",nameColumn,ageColumn);
-        table = findViewById(R.id.table);
-        table.setTableData(tableData);
+        ParseSVG();
+
+        initDate();
+//        timer.schedule(task, 0, 1000);
     }
 
     final Handler handler = new Handler() {
@@ -147,7 +146,6 @@ public class PicActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("get");
                 HttpURLConnection connection = null;
                 BufferedReader reader = null;
                 try {
@@ -192,6 +190,31 @@ public class PicActivity extends AppCompatActivity {
             timer = null;
         }
         super.onDestroy();
+    }
+
+    private void initDate() {
+        final List<String> list = new ArrayList<>();
+        list.add("网易");
+        list.add("腾讯");
+        list.add("新浪");
+        list.add("搜狐");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showDrawerLayout();
+            }
+        });
+//        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
+    }
+
+    private void showDrawerLayout() {
+        if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.openDrawer(Gravity.LEFT);
+        } else {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        }
     }
 
 }
