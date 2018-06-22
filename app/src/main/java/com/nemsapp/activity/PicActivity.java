@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
@@ -194,27 +195,20 @@ public class PicActivity extends AppCompatActivity {
 
     private void initDate() {
         final List<String> list = new ArrayList<>();
-        list.add("网易");
-        list.add("腾讯");
-        list.add("新浪");
-        list.add("搜狐");
+        list.add("系统图");
+        list.add("单元1");
+        list.add("单元2");
+        list.add("单元3");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showDrawerLayout();
+                Toast.makeText(PicActivity.this, "clicked", Toast.LENGTH_SHORT);
             }
         });
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
     }
 
-    private void showDrawerLayout() {
-        if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.openDrawer(Gravity.LEFT);
-        } else {
-            drawerLayout.closeDrawer(Gravity.LEFT);
-        }
-    }
 
 }

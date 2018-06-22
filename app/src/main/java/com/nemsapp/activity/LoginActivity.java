@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
             if (email.equals("admin") && password.equals("admin")) {
-                Intent intent = new Intent(this, PicActivity.class);
+                Intent intent = new Intent(this, MenuActivity.class);
                 startActivity(intent);
             } else {
                 Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
