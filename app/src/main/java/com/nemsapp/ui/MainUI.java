@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
-import com.nemsapp.components.Line;
+import com.nemsapp.components.OldLine;
 import com.nemsapp.components.Switch;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 public class MainUI extends View {
 
     private List<Button> buttons;
-    private List<Line> lines;
+    private List<OldLine> lines;
     private List<Switch> switches;
 
     private Paint paint;
@@ -83,7 +83,7 @@ public class MainUI extends View {
             }
         }
         if (null != lines && lines.size() > 0) {
-            for (Line line : lines) {
+            for (OldLine line : lines) {
                 line.draw(canvas);
             }
         }
@@ -205,11 +205,11 @@ public class MainUI extends View {
         this.buttons = buttons;
     }
 
-    public List<Line> getLines() {
+    public List<OldLine> getLines() {
         return lines;
     }
 
-    public void setLines(List<Line> lines) {
+    public void setLines(List<OldLine> lines) {
         this.lines = lines;
     }
 

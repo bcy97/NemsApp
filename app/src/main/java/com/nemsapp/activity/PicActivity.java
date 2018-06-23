@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
-import com.nemsapp.components.Line;
+import com.nemsapp.components.OldLine;
 import com.nemsapp.components.Switch;
 import com.nemsapp.ui.MainUI;
 import com.nemsapp.util.PathParser;
@@ -96,7 +95,7 @@ public class PicActivity extends AppCompatActivity {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             List<Button> buttons = new ArrayList<>();
-            List<Line> lines = new ArrayList<>();
+            List<OldLine> lines = new ArrayList<>();
             List<Switch> switches = new ArrayList<>();
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputStream is = getResources().openRawResource(R.raw.swch);
@@ -128,7 +127,7 @@ public class PicActivity extends AppCompatActivity {
                     swch.setName(name);
                     switches.add(swch);
                 } else {
-                    Line line = new Line(this, Float.parseFloat(element.getAttribute("android:strokeWidth")));
+                    OldLine line = new OldLine(this, Float.parseFloat(element.getAttribute("android:strokeWidth")));
 //                            Integer.parseInt(element.getAttribute("android:strokeColor")));
                     line.setPath(path_svg);
                     lines.add(line);

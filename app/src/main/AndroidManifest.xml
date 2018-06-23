@@ -32,19 +32,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PicActivity" />
+        <activity
+            android:name=".activity.PicActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NowDataActivity" />
-        <activity android:name=".activity.MenuActivity" />
-        <activity android:name=".activity.AlertActivity"></activity>
+        <activity
+            android:name=".activity.NowDataActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.MenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AlertActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.HistoryDataActivity" />
+        <activity android:name=".activity.MonitorPicActivity"></activity>
     </application>
 
 </manifest>
