@@ -13,8 +13,11 @@ import android.view.View;
 
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
+import com.nemsapp.components.Component;
+import com.nemsapp.components.Line;
 import com.nemsapp.components.OldLine;
 import com.nemsapp.components.Switch;
+import com.nemsapp.components.Text;
 
 import java.util.List;
 
@@ -24,9 +27,10 @@ import java.util.List;
 
 public class MainUI extends View {
 
-    private List<Button> buttons;
-    private List<OldLine> lines;
-    private List<Switch> switches;
+    private List<Component> components;
+    private List<Line> lines;
+    private List<Text> texts;
+
 
     private Paint paint;
 
@@ -77,35 +81,21 @@ public class MainUI extends View {
             scaleTime = 1f;
         }
         canvas.scale(scaleTime, scaleTime);
-        if (null != buttons && buttons.size() > 0) {
-            for (Button button : buttons) {
-                button.draw(canvas);
+        if (null != components && components.size() > 0) {
+            for (Component c : components) {
+                c.draw(canvas);
             }
         }
         if (null != lines && lines.size() > 0) {
-            for (OldLine line : lines) {
+            for (Line line : lines) {
                 line.draw(canvas);
             }
         }
-        if (null != switches && switches.size() > 0) {
-            for (Switch swtch : switches) {
-                swtch.draw(canvas);
+        if (null != texts && texts.size() > 0) {
+            for (Text text : texts) {
+                text.draw(canvas);
             }
         }
-        paint = new Paint();
-        //设置抗锯齿
-        paint.setAntiAlias(true);
-        //设置画笔颜色
-        paint.setColor(getResources().getColor(R.color.colorPrimary));
-        //设置画笔大小
-        paint.setStrokeWidth(3);
-        //设置字体大小
-        paint.setTextSize(30);
-        //设置文字样式
-        paint.setTypeface(Typeface.DEFAULT_BOLD);
-        String str = "电压";
-        //全部显示，起点在(50,100)点
-        canvas.drawText(str, 50, 100, paint);
     }
 
     @Override
@@ -116,24 +106,6 @@ public class MainUI extends View {
                 float x = event.getX();
                 float y = event.getY();
                 String kind = "";
-                for (Button button : buttons) {
-                    Region region = button.getRegion();
-                    boolean isContain = region.contains((int) ((x - nowX) / scaleTime), (int) ((y - nowY) / scaleTime));
-                    if (isContain) {
-                        button.setOn(button.isOn() ? false : true);
-                        kind = "button";
-                        break;
-                    }
-                }
-                for (Switch swtch : switches) {
-                    Region region = swtch.getRegion();
-                    boolean isContain = region.contains((int) ((x - nowX) / scaleTime), (int) ((y - nowY) / scaleTime));
-                    if (isContain) {
-                        swtch.setOn(swtch.isOn() ? false : true);
-                        kind = "switch";
-                        break;
-                    }
-                }
                 if (kind.equals("")) {
                     mode = MODE_DRAG;
                     startPoint.set(x, y);
@@ -197,28 +169,28 @@ public class MainUI extends View {
         return new PointF(midX, midY);
     }
 
-    public List<Button> getButtons() {
-        return buttons;
+    public List<Component> getComponents() {
+        return components;
     }
 
-    public void setButtons(List<Button> buttons) {
-        this.buttons = buttons;
+    public void setComponents(List<Component> components) {
+        this.components = components;
     }
 
-    public List<OldLine> getLines() {
+    public List<Line> getLines() {
         return lines;
     }
 
-    public void setLines(List<OldLine> lines) {
+    public void setLines(List<Line> lines) {
         this.lines = lines;
     }
 
-    public List<Switch> getSwitches() {
-        return switches;
+    public List<Text> getTexts() {
+        return texts;
     }
 
-    public void setSwitches(List<Switch> switches) {
-        this.switches = switches;
+    public void setTexts(List<Text> texts) {
+        this.texts = texts;
     }
 }
 

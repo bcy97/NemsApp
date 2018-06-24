@@ -1,5 +1,9 @@
 package com.nemsapp;
 
+import android.test.mock.MockContext;
+
+import com.nemsapp.activity.MonitorPicActivity;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,4 +18,7 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+    MonitorPicActivity monitorPicActivity = new MonitorPicActivity();
+
 }

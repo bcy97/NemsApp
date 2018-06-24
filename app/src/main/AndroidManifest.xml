@@ -39,11 +39,7 @@
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.NowDataActivity"
@@ -55,7 +51,13 @@
             android:name=".activity.AlertActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.HistoryDataActivity" />
-        <activity android:name=".activity.MonitorPicActivity"></activity>
+        <activity android:name=".activity.MonitorPicActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -8,75 +8,61 @@ import android.graphics.Path;
 
 import com.nemsapp.util.PathParser;
 
-public class Line {
+public class Component {
 
     private Context context;
     private Paint paint;
     private Path path;
 
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
-
-    private int strokeWidth;
+    private String name;
+    private double x;
+    private double y;
+    private float strokeWidth;
     private String color;
 
     private String str_path;
 
-    public Line(Context context) {
+    public Component(Context context) {
         this.context = context;
         paint = new Paint();
     }
 
     public void draw(Canvas canvas) {
         paint.setStyle(Paint.Style.STROKE);
-        int c = Color.parseColor(color);
-        paint.setColor(c);
-
-        str_path = "m" + x1 + "," + y1 + " l" + (x2 - x1) + "," + (y2 - y1);
-
+        paint.setColor(Color.parseColor(color));
         path = PathParser.createPathFromPathData(str_path);
         canvas.drawPath(path, paint);
     }
 
-    public int getX1() {
-        return x1;
+    public String getName() {
+        return name;
     }
 
-    public void setX1(int x1) {
-        this.x1 = x1;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getY1() {
-        return y1;
+    public double getX() {
+        return x;
     }
 
-    public void setY1(int y1) {
-        this.y1 = y1;
+    public void setX(double x) {
+        this.x = x;
     }
 
-    public int getX2() {
-        return x2;
+    public double getY() {
+        return y;
     }
 
-    public void setX2(int x2) {
-        this.x2 = x2;
+    public void setY(double y) {
+        this.y = y;
     }
 
-    public int getY2() {
-        return y2;
-    }
-
-    public void setY2(int y2) {
-        this.y2 = y2;
-    }
-
-    public int getStrokeWidth() {
+    public float getStrokeWidth() {
         return strokeWidth;
     }
 
-    public void setStrokeWidth(int strokeWidth) {
+    public void setStrokeWidth(float strokeWidth) {
         this.strokeWidth = strokeWidth;
     }
 
@@ -86,5 +72,13 @@ public class Line {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getStr_path() {
+        return str_path;
+    }
+
+    public void setStr_path(String str_path) {
+        this.str_path = str_path;
     }
 }

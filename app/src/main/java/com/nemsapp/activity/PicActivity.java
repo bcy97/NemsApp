@@ -134,7 +134,7 @@ public class PicActivity extends AppCompatActivity {
                 }
             }
             mainUI.setButtons(buttons);
-            mainUI.setLines(lines);
+            mainUI.setOldLines(lines);
             mainUI.setSwitches(switches);
         } catch (Exception e) {
             e.printStackTrace();
