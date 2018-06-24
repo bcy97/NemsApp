@@ -27,17 +27,19 @@ public class Line {
     public Line(Context context) {
         this.context = context;
         paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
     }
 
     public void draw(Canvas canvas) {
-        paint.setStyle(Paint.Style.STROKE);
+
+        canvas.drawPath(path, paint);
+    }
+
+    public void init() {
         int c = Color.parseColor(color);
         paint.setColor(c);
-
         str_path = "m" + x1 + "," + y1 + " l" + (x2 - x1) + "," + (y2 - y1);
-
         path = PathParser.createPathFromPathData(str_path);
-        canvas.drawPath(path, paint);
     }
 
     public int getX1() {

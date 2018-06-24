@@ -19,8 +19,11 @@ public class Component {
     private double y;
     private float strokeWidth;
     private String color;
+    private String com_path;
 
     private String str_path;
+
+    private Paint.Style style = Paint.Style.STROKE;
 
     public Component(Context context) {
         this.context = context;
@@ -28,10 +31,17 @@ public class Component {
     }
 
     public void draw(Canvas canvas) {
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor(color));
-        path = PathParser.createPathFromPathData(str_path);
+
         canvas.drawPath(path, paint);
+    }
+
+    public void init() {
+        paint.setStyle(style);
+        paint.setColor(Color.parseColor(color));
+
+        str_path = "m" + x + "," + y + com_path;
+
+        path = PathParser.createPathFromPathData(str_path);
     }
 
     public String getName() {
@@ -74,11 +84,15 @@ public class Component {
         this.color = color;
     }
 
-    public String getStr_path() {
-        return str_path;
+    public String getCom_path() {
+        return com_path;
     }
 
-    public void setStr_path(String str_path) {
-        this.str_path = str_path;
+    public void setCom_path(String com_path) {
+        this.com_path = com_path;
+    }
+
+    public void setStyle(Paint.Style style) {
+        this.style = style;
     }
 }

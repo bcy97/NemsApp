@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 
 import com.nemsapp.R;
@@ -25,16 +26,14 @@ import java.util.List;
  * Created by duoduogao on 2018/3/11.
  */
 
-public class MainUI extends View {
+public class MainUI extends SurfaceView {
 
     private List<Component> components;
     private List<Line> lines;
     private List<Text> texts;
 
 
-    private Paint paint;
-
-    private float scaleTime = 1f;
+    private float scaleTime = 5f;
 
     /**
      * 记录是拖拉界面模式还是放大缩小界面模式

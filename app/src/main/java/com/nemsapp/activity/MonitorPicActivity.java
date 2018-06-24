@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nemsapp.R;
+import com.nemsapp.components.Component;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
@@ -39,12 +40,35 @@ public class MonitorPicActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        initXml();
+//        initXml();
+        String path = "";
+        Component component = new Component(this);
+        component.setColor("#ff0000");
+        component.setName("16-0");
+        component.setCom_path(path);
+        component.setStrokeWidth(1);
+        component.setX(100);
+        component.setY(100);
+        component.init();
+
+        String path2 = "";
+        Component component2 = new Component(this);
+        component2.setColor("#ff0000");
+        component2.setName("16-0");
+        component2.setCom_path(path2);
+        component2.setStrokeWidth(1);
+        component2.setX(100);
+        component2.setY(150);
+        component2.init();
+        List<Component> components = new ArrayList<>();
+        components.add(component);
+        components.add(component2);
+        mainUI.setComponents(components);
     }
 
     private void initXml() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
+        DocumentBuilder builder;
         try {
             builder = factory.newDocumentBuilder();
             InputStream is = getResources().openRawResource(R.raw.system2);
@@ -72,7 +96,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             String[] to = element.getAttribute("to").split(",");
             line.setX2(Integer.parseInt(to[0]));
             line.setY2(Integer.parseInt(to[1]));
-
+            line.init();
             lines.add(line);
         }
         return lines;
@@ -89,7 +113,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             text.setY(Integer.parseInt(from[1]));
             text.setText(element.getAttribute("text"));
             text.setSize(Integer.parseInt(element.getAttribute("size")));
-
+            text.init();
             texts.add(text);
         }
 

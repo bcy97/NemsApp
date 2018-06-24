@@ -2,6 +2,7 @@ package com.nemsapp.components;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Typeface;
@@ -17,6 +18,7 @@ public class Text {
     private int x;
     private int y;
     private int size;
+    private int loc_y;
 
     public Text(Context context) {
         this.context = context;
@@ -24,6 +26,11 @@ public class Text {
     }
 
     public void draw(Canvas canvas) {
+        //全部显示，起点在(50,100)点
+        canvas.drawText(text, x, loc_y, paint);
+    }
+
+    public void init() {
         //设置抗锯齿
         paint.setAntiAlias(true);
         //设置画笔大小
@@ -32,8 +39,10 @@ public class Text {
         paint.setTextSize(size);
         //设置文字样式
         paint.setTypeface(Typeface.DEFAULT);
-        //全部显示，起点在(50,100)点
-        canvas.drawText(text, x, y + size, paint);
+        //设置文字颜色
+        paint.setColor(Color.RED);
+        //设置文字baseline向下偏移size
+        loc_y = y + size;
     }
 
     public String getText() {
