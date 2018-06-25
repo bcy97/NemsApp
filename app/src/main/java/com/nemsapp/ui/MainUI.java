@@ -2,23 +2,15 @@ package com.nemsapp.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Region;
-import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
 
-import com.nemsapp.R;
-import com.nemsapp.components.Button;
-import com.nemsapp.components.Component;
 import com.nemsapp.components.Image;
+import com.nemsapp.components.ImageStatue;
 import com.nemsapp.components.Line;
-import com.nemsapp.components.OldLine;
-import com.nemsapp.components.Switch;
 import com.nemsapp.components.Text;
 
 import java.util.List;
@@ -29,10 +21,10 @@ import java.util.List;
 
 public class MainUI extends SurfaceView {
 
-    private List<Component> components;
     private List<Line> lines;
     private List<Text> texts;
     private List<Image> images;
+    private List<ImageStatue> imageStatues;
 
 
     private float scaleTime = 1f;
@@ -82,11 +74,6 @@ public class MainUI extends SurfaceView {
             scaleTime = 1f;
         }
         canvas.scale(scaleTime, scaleTime);
-        if (null != components && components.size() > 0) {
-            for (Component c : components) {
-                c.draw(canvas);
-            }
-        }
         if (null != lines && lines.size() > 0) {
             for (Line line : lines) {
                 line.draw(canvas);
@@ -100,6 +87,11 @@ public class MainUI extends SurfaceView {
         if (null != images && images.size() > 0) {
             for (Image image : images) {
                 image.draw(canvas);
+            }
+        }
+        if (null != imageStatues && imageStatues.size() > 0) {
+            for (ImageStatue imageStatue : imageStatues) {
+                imageStatue.draw(canvas);
             }
         }
     }
@@ -175,14 +167,6 @@ public class MainUI extends SurfaceView {
         return new PointF(midX, midY);
     }
 
-    public List<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<Component> components) {
-        this.components = components;
-    }
-
     public List<Line> getLines() {
         return lines;
     }
@@ -205,6 +189,14 @@ public class MainUI extends SurfaceView {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public List<ImageStatue> getImageStatues() {
+        return imageStatues;
+    }
+
+    public void setImageStatues(List<ImageStatue> imageStatues) {
+        this.imageStatues = imageStatues;
     }
 }
 

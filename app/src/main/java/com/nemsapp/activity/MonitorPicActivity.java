@@ -1,13 +1,12 @@
 package com.nemsapp.activity;
 
-import android.content.res.AssetManager;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.nemsapp.R;
-import com.nemsapp.components.Component;
 import com.nemsapp.components.Image;
+import com.nemsapp.components.ImageStatue;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
@@ -15,9 +14,7 @@ import com.nemsapp.ui.MainUI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +23,6 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class MonitorPicActivity extends AppCompatActivity {
 
@@ -64,6 +60,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             mainUI.setLines(parseLine(document));
             mainUI.setTexts(parseString(document));
             mainUI.setImages(parseImage(document));
+            mainUI.setImageStatues(parseImageStatue(document));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,4 +150,29 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         return images;
     }
+
+    private List<ImageStatue> parseImageStatue(Document document) {
+        NodeList lineList = document.getElementsByTagName("imageStatue");
+        List<ImageStatue> imageStatues = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            if (element.getAttribute("iconType").equals("0")) {
+                ImageStatue imageStatue = new ImageStatue(this);
+                String[] from = element.getAttribute("from").split(",");
+                imageStatue.setX(Integer.parseInt(from[0]));
+                imageStatue.setY(Integer.parseInt(from[1]));
+                imageStatue.setName(element.getAttribute("stname"));
+                imageStatue.setColor(element.getAttribute("borderColor"));
+                imageStatue.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                imageStatue.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
+                imageStatue.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
+                imageStatue.init();
+                imageStatues.add(imageStatue);
+            }
+        }
+
+        return imageStatues;
+    }
+
+
 }
