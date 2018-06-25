@@ -15,6 +15,7 @@ import android.view.View;
 import com.nemsapp.R;
 import com.nemsapp.components.Button;
 import com.nemsapp.components.Component;
+import com.nemsapp.components.Image;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.OldLine;
 import com.nemsapp.components.Switch;
@@ -31,9 +32,10 @@ public class MainUI extends SurfaceView {
     private List<Component> components;
     private List<Line> lines;
     private List<Text> texts;
+    private List<Image> images;
 
 
-    private float scaleTime = 5f;
+    private float scaleTime = 1f;
 
     /**
      * 记录是拖拉界面模式还是放大缩小界面模式
@@ -93,6 +95,11 @@ public class MainUI extends SurfaceView {
         if (null != texts && texts.size() > 0) {
             for (Text text : texts) {
                 text.draw(canvas);
+            }
+        }
+        if (null != images && images.size() > 0) {
+            for (Image image : images) {
+                image.draw(canvas);
             }
         }
     }
@@ -190,6 +197,14 @@ public class MainUI extends SurfaceView {
 
     public void setTexts(List<Text> texts) {
         this.texts = texts;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.nemsapp.R;
 import com.nemsapp.components.Component;
+import com.nemsapp.components.Image;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
@@ -19,7 +20,9 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,41 +32,21 @@ public class MonitorPicActivity extends AppCompatActivity {
 
     private MainUI mainUI;
 
+    private Map<String, Map<String, String>> piclib;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_pic);
         mainUI = findViewById(R.id.mainUI);
 
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
-//        initXml();
-        String path = "";
-        Component component = new Component(this);
-        component.setColor("#ff0000");
-        component.setName("16-0");
-        component.setCom_path(path);
-        component.setStrokeWidth(1);
-        component.setX(100);
-        component.setY(100);
-        component.init();
-
-        String path2 = "";
-        Component component2 = new Component(this);
-        component2.setColor("#ff0000");
-        component2.setName("16-0");
-        component2.setCom_path(path2);
-        component2.setStrokeWidth(1);
-        component2.setX(100);
-        component2.setY(150);
-        component2.init();
-        List<Component> components = new ArrayList<>();
-        components.add(component);
-        components.add(component2);
-        mainUI.setComponents(components);
+        initXml();
     }
 
     private void initXml() {
@@ -73,13 +56,43 @@ public class MonitorPicActivity extends AppCompatActivity {
             builder = factory.newDocumentBuilder();
             InputStream is = getResources().openRawResource(R.raw.system2);
             Document document = builder.parse(is);
+            InputStream is2 = getResources().openRawResource(R.raw.piclib);
+            Document pic = builder.parse(is2);
 
+            piclib = initPiclib16(pic);
 
             mainUI.setLines(parseLine(document));
             mainUI.setTexts(parseString(document));
+            mainUI.setImages(parseImage(document));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private Map<String, Map<String, String>> initPiclib16(Document document) {
+        Map<String, Map<String, String>> piclib = new HashMap<>();
+        NodeList lineList = document.getElementsByTagName("p16");
+        Map<String, String> lib16 = new HashMap<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            lib16.put(element.getAttribute("id"), element.getAttribute("path"));
+        }
+        lineList = document.getElementsByTagName("p32");
+        Map<String, String> lib32 = new HashMap<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            lib32.put(element.getAttribute("id"), element.getAttribute("path"));
+        }
+        lineList = document.getElementsByTagName("p48");
+        Map<String, String> lib48 = new HashMap<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            lib48.put(element.getAttribute("id"), element.getAttribute("path"));
+        }
+        piclib.put("16", lib16);
+        piclib.put("32", lib32);
+        piclib.put("48", lib48);
+        return piclib;
     }
 
     private List<Line> parseLine(Document document) {
@@ -118,5 +131,26 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
 
         return texts;
+    }
+
+    private List<Image> parseImage(Document document) {
+        NodeList lineList = document.getElementsByTagName("image");
+        List<Image> images = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            if (element.getAttribute("iconType").equals("0")) {
+                Image image = new Image(this);
+                String[] from = element.getAttribute("from").split(",");
+                image.setX(Integer.parseInt(from[0]));
+                image.setY(Integer.parseInt(from[1]));
+                image.setColor(element.getAttribute("borderColor"));
+                image.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                image.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
+                image.init();
+                images.add(image);
+            }
+        }
+
+        return images;
     }
 }
