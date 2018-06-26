@@ -5,17 +5,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-public class Text {
+public class DyanData {
 
     private Paint paint;
 
     private String text;
+    private String name;
     private int x;
     private int y;
     private int size;
     private int loc_y;
 
-    public Text() {
+    public DyanData() {
         paint = new Paint();
     }
 
@@ -45,6 +46,14 @@ public class Text {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getX() {

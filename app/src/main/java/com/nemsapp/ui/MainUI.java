@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.nemsapp.components.DyanData;
 import com.nemsapp.components.Image;
 import com.nemsapp.components.ImageStatue;
 import com.nemsapp.components.Line;
@@ -25,6 +26,7 @@ public class MainUI extends SurfaceView {
     private List<Text> texts;
     private List<Image> images;
     private List<ImageStatue> imageStatues;
+    private List<DyanData> dyanDatas;
 
 
     private float scaleTime = 1f;
@@ -92,6 +94,11 @@ public class MainUI extends SurfaceView {
         if (null != imageStatues && imageStatues.size() > 0) {
             for (ImageStatue imageStatue : imageStatues) {
                 imageStatue.draw(canvas);
+            }
+        }
+        if (null != dyanDatas && dyanDatas.size() > 0) {
+            for (DyanData dyanData : dyanDatas) {
+                dyanData.draw(canvas);
             }
         }
     }
@@ -197,6 +204,14 @@ public class MainUI extends SurfaceView {
 
     public void setImageStatues(List<ImageStatue> imageStatues) {
         this.imageStatues = imageStatues;
+    }
+
+    public List<DyanData> getDyanDatas() {
+        return dyanDatas;
+    }
+
+    public void setDyanDatas(List<DyanData> dyanData) {
+        this.dyanDatas = dyanData;
     }
 }
 

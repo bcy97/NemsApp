@@ -1,43 +1,12 @@
 package com.nemsapp.activity;
 
-import android.graphics.Path;
-import android.graphics.RectF;
-import android.graphics.Region;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nemsapp.R;
-import com.nemsapp.components.Button;
-import com.nemsapp.components.OldLine;
-import com.nemsapp.components.Switch;
 import com.nemsapp.ui.MainUI;
-import com.nemsapp.util.PathParser;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class PicActivity extends AppCompatActivity {

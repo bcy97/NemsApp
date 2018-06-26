@@ -1,6 +1,5 @@
 package com.nemsapp.components;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +8,6 @@ import android.graphics.Path;
 import com.nemsapp.util.PathParser;
 
 public class ImageStatue {
-    private Context context;
     private Paint paint;
     private Path path_on;
     private Path path_off;
@@ -27,8 +25,7 @@ public class ImageStatue {
 
     private Paint.Style style = Paint.Style.STROKE;
 
-    public ImageStatue(Context context) {
-        this.context = context;
+    public ImageStatue() {
         paint = new Paint();
         on = true;
     }

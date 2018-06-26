@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nemsapp.R;
+import com.nemsapp.components.DyanData;
 import com.nemsapp.components.Image;
 import com.nemsapp.components.ImageStatue;
 import com.nemsapp.components.Line;
@@ -97,7 +98,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         List<Line> lines = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
-            Line line = new Line(this);
+            Line line = new Line();
             line.setColor(element.getAttribute("lineColor"));
             line.setStrokeWidth(Integer.parseInt(element.getAttribute("lineWidth")));
             String[] from = element.getAttribute("from").split(",");
@@ -117,7 +118,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         List<Text> texts = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
-            Text text = new Text(this);
+            Text text = new Text();
             String[] from = element.getAttribute("from").split(",");
             text.setX(Integer.parseInt(from[0]));
             text.setY(Integer.parseInt(from[1]));
@@ -136,7 +137,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             if (element.getAttribute("iconType").equals("0")) {
-                Image image = new Image(this);
+                Image image = new Image();
                 String[] from = element.getAttribute("from").split(",");
                 image.setX(Integer.parseInt(from[0]));
                 image.setY(Integer.parseInt(from[1]));
@@ -145,6 +146,8 @@ public class MonitorPicActivity extends AppCompatActivity {
                 image.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
                 image.init();
                 images.add(image);
+            } else {
+                System.out.println(element.getAttribute("filename"));
             }
         }
 
@@ -157,7 +160,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             if (element.getAttribute("iconType").equals("0")) {
-                ImageStatue imageStatue = new ImageStatue(this);
+                ImageStatue imageStatue = new ImageStatue();
                 String[] from = element.getAttribute("from").split(",");
                 imageStatue.setX(Integer.parseInt(from[0]));
                 imageStatue.setY(Integer.parseInt(from[1]));
@@ -168,11 +171,30 @@ public class MonitorPicActivity extends AppCompatActivity {
                 imageStatue.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
                 imageStatue.init();
                 imageStatues.add(imageStatue);
+            } else {
+                System.out.println(element.getAttribute("filename_close") + " " + element.getAttribute("filename_open"));
             }
         }
 
         return imageStatues;
     }
 
+    private List<DyanData> parseDyanData(Document document) {
+        NodeList lineList = document.getElementsByTagName("dyanData");
+        List<DyanData> texts = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            DyanData dyanData = new DyanData();
+            String[] from = element.getAttribute("from").split(",");
+            dyanData.setX(Integer.parseInt(from[0]));
+            dyanData.setY(Integer.parseInt(from[1]));
+            dyanData.setText(element.getAttribute("text"));
+            dyanData.setName(element.getAttribute("name"));
+            dyanData.setSize(Integer.parseInt(element.getAttribute("size")));
+            dyanData.init();
+            texts.add(dyanData);
+        }
 
+        return texts;
+    }
 }

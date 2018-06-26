@@ -9,7 +9,6 @@ import android.graphics.Path;
 import com.nemsapp.util.PathParser;
 
 public class Image {
-    private Context context;
     private Paint paint;
     private Path path;
 
@@ -24,8 +23,7 @@ public class Image {
 
     private Paint.Style style = Paint.Style.STROKE;
 
-    public Image(Context context) {
-        this.context = context;
+    public Image() {
         paint = new Paint();
     }
 
