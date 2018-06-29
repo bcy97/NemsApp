@@ -35,7 +35,7 @@ public class MainUI extends SurfaceView {
     private List<CommandButton> commandButtons;
 
 
-    private float scaleTime = 1f;
+    private float scaleTime = 0.7f;
 
     /**
      * 记录是拖拉界面模式还是放大缩小界面模式

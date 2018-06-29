@@ -25,8 +25,8 @@ public class PathParser {
      * @param start    the start index, inclusive
      * @param end      the end index, exclusive
      * @return the new array
-     * @throws IllegalArgumentException       if {@code start > end}
-     * @throws NullPointerException           if {@code original == null}
+     * @throws IllegalArgumentException if {@code start > end}
+     * @throws NullPointerException     if {@code original == null}
      */
     private static float[] copyOfRange(float[] original, int start, int end) {
         if (start > end) {

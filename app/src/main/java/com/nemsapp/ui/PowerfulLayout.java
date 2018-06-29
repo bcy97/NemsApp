@@ -80,7 +80,8 @@ public class PowerfulLayout extends FrameLayout {
         return b;
     }
 
-    private boolean needToHandle=true;
+    private boolean needToHandle = true;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -88,13 +89,13 @@ public class PowerfulLayout extends FrameLayout {
         if (pointerCount > 1) {// 多点触控，
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    needToHandle=false;
+                    needToHandle = false;
                     break;
                 case MotionEvent.ACTION_MOVE:
 
                     break;
                 case MotionEvent.ACTION_POINTER_2_UP://第二个手指抬起的时候
-                    needToHandle=true;
+                    needToHandle = true;
                     break;
 
                 default:
@@ -103,7 +104,7 @@ public class PowerfulLayout extends FrameLayout {
             return mScaleGestureDetector.onTouchEvent(event);//让mScaleGestureDetector处理触摸事件
         } else {
             long currentTimeMillis = System.currentTimeMillis();
-            if (currentTimeMillis - lastMultiTouchTime > 200&&needToHandle) {
+            if (currentTimeMillis - lastMultiTouchTime > 200 && needToHandle) {
 //                  多点触控全部手指抬起后要等待200毫秒才能执行单指触控的操作，避免多点触控后出现颤抖的情况
                 try {
                     mDragHelper.processTouchEvent(event);

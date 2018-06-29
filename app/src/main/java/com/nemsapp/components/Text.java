@@ -34,7 +34,7 @@ public class Text {
         //设置文字样式
         paint.setTypeface(Typeface.DEFAULT);
         //设置文字颜色
-        paint.setColor(Color.RED);
+        paint.setColor(Color.WHITE);
         //设置文字baseline向下偏移size
         loc_y = y + size;
     }

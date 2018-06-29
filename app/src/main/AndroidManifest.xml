@@ -51,7 +51,9 @@
             android:name=".activity.AlertActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.HistoryDataActivity" />
-        <activity android:name=".activity.MonitorPicActivity">
+        <activity
+            android:name=".activity.MonitorPicActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

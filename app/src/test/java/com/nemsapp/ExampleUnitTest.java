@@ -1,12 +1,10 @@
 package com.nemsapp;
 
-import android.test.mock.MockContext;
-
 import com.nemsapp.activity.MonitorPicActivity;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

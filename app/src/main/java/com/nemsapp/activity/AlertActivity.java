@@ -1,14 +1,13 @@
 package com.nemsapp.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.table.TableData;
 import com.nemsapp.R;
 import com.nemsapp.vo.AlertData;
-import com.nemsapp.vo.NowData;
 
 import java.util.ArrayList;
 import java.util.List;
