@@ -8,9 +8,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.nemsapp.components.CommandButton;
 import com.nemsapp.components.DyanData;
-import com.nemsapp.components.Image;
-import com.nemsapp.components.ImageStatue;
+import com.nemsapp.components.ImageStatue_0;
+import com.nemsapp.components.ImageStatue_1;
+import com.nemsapp.components.Image_0;
+import com.nemsapp.components.Image_1;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 
@@ -24,9 +27,12 @@ public class MainUI extends SurfaceView {
 
     private List<Line> lines;
     private List<Text> texts;
-    private List<Image> images;
-    private List<ImageStatue> imageStatues;
+    private List<Image_0> image0s;
+    private List<Image_1> image1s;
+    private List<ImageStatue_0> imageStatue0s;
+    private List<ImageStatue_1> imageStatue1s;
     private List<DyanData> dyanDatas;
+    private List<CommandButton> commandButtons;
 
 
     private float scaleTime = 1f;
@@ -86,19 +92,34 @@ public class MainUI extends SurfaceView {
                 text.draw(canvas);
             }
         }
-        if (null != images && images.size() > 0) {
-            for (Image image : images) {
-                image.draw(canvas);
+        if (null != image0s && image0s.size() > 0) {
+            for (Image_0 image0 : image0s) {
+                image0.draw(canvas);
             }
         }
-        if (null != imageStatues && imageStatues.size() > 0) {
-            for (ImageStatue imageStatue : imageStatues) {
-                imageStatue.draw(canvas);
+        if (null != image1s && image1s.size() > 0) {
+            for (Image_1 image1 : image1s) {
+                image1.draw(canvas);
+            }
+        }
+        if (null != imageStatue0s && imageStatue0s.size() > 0) {
+            for (ImageStatue_0 imageStatue0 : imageStatue0s) {
+                imageStatue0.draw(canvas);
+            }
+        }
+        if (null != imageStatue1s && imageStatue1s.size() > 0) {
+            for (ImageStatue_1 imageStatue1 : imageStatue1s) {
+                imageStatue1.draw(canvas);
             }
         }
         if (null != dyanDatas && dyanDatas.size() > 0) {
             for (DyanData dyanData : dyanDatas) {
                 dyanData.draw(canvas);
+            }
+        }
+        if (null != commandButtons && commandButtons.size() > 0) {
+            for (CommandButton commandButton : commandButtons) {
+                commandButton.draw(canvas);
             }
         }
     }
@@ -190,28 +211,40 @@ public class MainUI extends SurfaceView {
         this.texts = texts;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public List<Image_0> getImage0s() {
+        return image0s;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setImage0s(List<Image_0> image0s) {
+        this.image0s = image0s;
     }
 
-    public List<ImageStatue> getImageStatues() {
-        return imageStatues;
+    public List<Image_1> getImage1s() {
+        return image1s;
     }
 
-    public void setImageStatues(List<ImageStatue> imageStatues) {
-        this.imageStatues = imageStatues;
+    public void setImage1s(List<Image_1> image1s) {
+        this.image1s = image1s;
     }
 
-    public List<DyanData> getDyanDatas() {
-        return dyanDatas;
+    public List<ImageStatue_0> getImageStatue0s() {
+        return imageStatue0s;
+    }
+
+    public void setImageStatue0s(List<ImageStatue_0> imageStatue0s) {
+        this.imageStatue0s = imageStatue0s;
+    }
+
+    public void setImageStatue1s(List<ImageStatue_1> imageStatue1s) {
+        this.imageStatue1s = imageStatue1s;
     }
 
     public void setDyanDatas(List<DyanData> dyanData) {
         this.dyanDatas = dyanData;
+    }
+
+    public void setCommandButtons(List<CommandButton> commandButtons) {
+        this.commandButtons = commandButtons;
     }
 }
 

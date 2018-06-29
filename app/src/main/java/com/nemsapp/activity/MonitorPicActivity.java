@@ -1,13 +1,19 @@
 package com.nemsapp.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nemsapp.R;
+import com.nemsapp.components.CommandButton;
 import com.nemsapp.components.DyanData;
-import com.nemsapp.components.Image;
-import com.nemsapp.components.ImageStatue;
+import com.nemsapp.components.ImageStatue_0;
+import com.nemsapp.components.ImageStatue_1;
+import com.nemsapp.components.Image_0;
+import com.nemsapp.components.Image_1;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
@@ -16,6 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +58,8 @@ public class MonitorPicActivity extends AppCompatActivity {
         DocumentBuilder builder;
         try {
             builder = factory.newDocumentBuilder();
-            InputStream is = getResources().openRawResource(R.raw.system2);
+//            InputStream is = getResources().openRawResource(R.raw.system2);
+            InputStream is = getAssets().open("xml/2#开闭所系统图.xml");
             Document document = builder.parse(is);
             InputStream is2 = getResources().openRawResource(R.raw.piclib);
             Document pic = builder.parse(is2);
@@ -60,8 +68,11 @@ public class MonitorPicActivity extends AppCompatActivity {
 
             mainUI.setLines(parseLine(document));
             mainUI.setTexts(parseString(document));
-            mainUI.setImages(parseImage(document));
-            mainUI.setImageStatues(parseImageStatue(document));
+            mainUI.setImage0s(parseImage0(document));
+            mainUI.setImage1s(parseImage1(document));
+            mainUI.setImageStatue0s(parseImageStatue0(document));
+            mainUI.setImageStatue1s(parseImageStatue1(document));
+            mainUI.setCommandButtons(parseCommandButton(document));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,70 +142,159 @@ public class MonitorPicActivity extends AppCompatActivity {
         return texts;
     }
 
-    private List<Image> parseImage(Document document) {
+    private List<Image_0> parseImage0(Document document) {
         NodeList lineList = document.getElementsByTagName("image");
-        List<Image> images = new ArrayList<>();
+        List<Image_0> image0s = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             if (element.getAttribute("iconType").equals("0")) {
-                Image image = new Image();
+                Image_0 image0 = new Image_0();
                 String[] from = element.getAttribute("from").split(",");
-                image.setX(Integer.parseInt(from[0]));
-                image.setY(Integer.parseInt(from[1]));
-                image.setColor(element.getAttribute("borderColor"));
-                image.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                image.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
-                image.init();
-                images.add(image);
-            } else {
-                System.out.println(element.getAttribute("filename"));
+                image0.setX(Integer.parseInt(from[0]));
+                image0.setY(Integer.parseInt(from[1]));
+                image0.setColor(element.getAttribute("borderColor"));
+                image0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                image0.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
+                image0.init();
+                image0s.add(image0);
             }
         }
 
-        return images;
+        return image0s;
     }
 
-    private List<ImageStatue> parseImageStatue(Document document) {
-        NodeList lineList = document.getElementsByTagName("imageStatue");
-        List<ImageStatue> imageStatues = new ArrayList<>();
+    private List<Image_1> parseImage1(Document document) {
+        NodeList lineList = document.getElementsByTagName("image");
+        List<Image_1> image1s = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
-            if (element.getAttribute("iconType").equals("0")) {
-                ImageStatue imageStatue = new ImageStatue();
+            if (element.getAttribute("iconType").equals("1")) {
+                Image_1 image1 = new Image_1();
                 String[] from = element.getAttribute("from").split(",");
-                imageStatue.setX(Integer.parseInt(from[0]));
-                imageStatue.setY(Integer.parseInt(from[1]));
-                imageStatue.setName(element.getAttribute("stname"));
-                imageStatue.setColor(element.getAttribute("borderColor"));
-                imageStatue.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                imageStatue.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
-                imageStatue.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
-                imageStatue.init();
-                imageStatues.add(imageStatue);
-            } else {
-                System.out.println(element.getAttribute("filename_close") + " " + element.getAttribute("filename_open"));
+                String[] to = element.getAttribute("to").split(",");
+                image1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+                Bitmap bitmap = null;
+                try {
+                    InputStream is = getAssets().open(element.getAttribute("filename"));
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                image1.setBitmap(bitmap);
+                image1s.add(image1);
             }
         }
 
-        return imageStatues;
+        return image1s;
+    }
+
+    private List<ImageStatue_0> parseImageStatue0(Document document) {
+        NodeList lineList = document.getElementsByTagName("imageStatue");
+        List<ImageStatue_0> imageStatue0s = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            if (element.getAttribute("iconType").equals("0")) {
+                ImageStatue_0 imageStatue0 = new ImageStatue_0();
+                String[] from = element.getAttribute("from").split(",");
+                imageStatue0.setX(Integer.parseInt(from[0]));
+                imageStatue0.setY(Integer.parseInt(from[1]));
+                imageStatue0.setName(element.getAttribute("stname"));
+                imageStatue0.setColor(element.getAttribute("borderColor"));
+                imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                imageStatue0.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
+                imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
+                imageStatue0.init();
+                imageStatue0s.add(imageStatue0);
+            }
+        }
+
+        return imageStatue0s;
+    }
+
+    private List<ImageStatue_1> parseImageStatue1(Document document) {
+        NodeList lineList = document.getElementsByTagName("imageStatue");
+        List<ImageStatue_1> imageStatue1s = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            if (element.getAttribute("iconType").equals("1")) {
+                ImageStatue_1 imageStatue1 = new ImageStatue_1();
+                String[] from = element.getAttribute("from").split(",");
+                String[] to = element.getAttribute("to").split(",");
+                imageStatue1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+                imageStatue1.setName(element.getAttribute("stname"));
+                imageStatue1s.add(imageStatue1);
+                Bitmap bitmap = null;
+                try {
+                    InputStream is = getAssets().open(element.getAttribute("filename_open"));
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageStatue1.setOpen(bitmap);
+                try {
+                    InputStream is = getAssets().open(element.getAttribute("filename_close"));
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageStatue1.setClose(bitmap);
+                imageStatue1s.add(imageStatue1);
+            }
+        }
+
+        return imageStatue1s;
     }
 
     private List<DyanData> parseDyanData(Document document) {
         NodeList lineList = document.getElementsByTagName("dyanData");
-        List<DyanData> texts = new ArrayList<>();
+        List<DyanData> dyanDatas = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             DyanData dyanData = new DyanData();
             String[] from = element.getAttribute("from").split(",");
             dyanData.setX(Integer.parseInt(from[0]));
             dyanData.setY(Integer.parseInt(from[1]));
-            dyanData.setText(element.getAttribute("text"));
             dyanData.setName(element.getAttribute("name"));
             dyanData.setSize(Integer.parseInt(element.getAttribute("size")));
             dyanData.init();
-            texts.add(dyanData);
+            System.out.println(dyanData.getName());
         }
 
-        return texts;
+        return dyanDatas;
+    }
+
+    private List<CommandButton> parseCommandButton(Document document) {
+        NodeList lineList = document.getElementsByTagName("commandButton");
+        List<CommandButton> commandButtons = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            CommandButton commandButton = new CommandButton();
+            String[] from = element.getAttribute("from").split(",");
+            String[] to = element.getAttribute("to").split(",");
+            commandButton.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+            Bitmap bitmap = null;
+            try {
+                InputStream is = getAssets().open(element.getAttribute("filename_down"));
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            commandButton.setDown(bitmap);
+            try {
+                InputStream is = getAssets().open(element.getAttribute("filename_up"));
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            commandButton.setUp(bitmap);
+            commandButtons.add(commandButton);
+        }
+
+        return commandButtons;
     }
 }

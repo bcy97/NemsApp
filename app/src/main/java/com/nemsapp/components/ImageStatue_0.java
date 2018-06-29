@@ -7,7 +7,7 @@ import android.graphics.Path;
 
 import com.nemsapp.util.PathParser;
 
-public class ImageStatue {
+public class ImageStatue_0 {
     private Paint paint;
     private Path path_on;
     private Path path_off;
@@ -25,7 +25,7 @@ public class ImageStatue {
 
     private Paint.Style style = Paint.Style.STROKE;
 
-    public ImageStatue() {
+    public ImageStatue_0() {
         paint = new Paint();
         on = true;
     }

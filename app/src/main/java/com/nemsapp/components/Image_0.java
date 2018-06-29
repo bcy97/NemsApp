@@ -1,6 +1,5 @@
 package com.nemsapp.components;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,7 +7,7 @@ import android.graphics.Path;
 
 import com.nemsapp.util.PathParser;
 
-public class Image {
+public class Image_0 {
     private Paint paint;
     private Path path;
 
@@ -23,7 +22,7 @@ public class Image {
 
     private Paint.Style style = Paint.Style.STROKE;
 
-    public Image() {
+    public Image_0() {
         paint = new Paint();
     }
 
