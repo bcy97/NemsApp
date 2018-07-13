@@ -59,7 +59,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         try {
             builder = factory.newDocumentBuilder();
 //            InputStream is = getResources().openRawResource(R.raw.system2);
-            InputStream is = getAssets().open("xml/2#开闭所系统图.xml");
+            InputStream is = getAssets().open("xml/a.xml");
             Document document = builder.parse(is);
             InputStream is2 = getResources().openRawResource(R.raw.piclib);
             Document pic = builder.parse(is2);
