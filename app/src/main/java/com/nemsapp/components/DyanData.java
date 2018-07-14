@@ -21,7 +21,6 @@ public class DyanData {
     }
 
     public void draw(Canvas canvas) {
-        //全部显示，起点在(50,100)点
         canvas.drawText(text, x, loc_y, paint);
     }
 

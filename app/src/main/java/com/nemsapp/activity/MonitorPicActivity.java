@@ -73,6 +73,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             mainUI.setImageStatue0s(parseImageStatue0(document));
             mainUI.setImageStatue1s(parseImageStatue1(document));
             mainUI.setCommandButtons(parseCommandButton(document));
+            mainUI.setDyanDatas(parseDyanData(document));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -258,8 +259,10 @@ public class MonitorPicActivity extends AppCompatActivity {
             dyanData.setX(Integer.parseInt(from[0]));
             dyanData.setY(Integer.parseInt(from[1]));
             dyanData.setName(element.getAttribute("name"));
+            dyanData.setText(element.getAttribute("name"));
             dyanData.setSize(Integer.parseInt(element.getAttribute("size")));
             dyanData.init();
+            dyanDatas.add(dyanData);
             System.out.println(dyanData.getName());
         }
 
