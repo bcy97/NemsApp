@@ -235,12 +235,24 @@ public class MainUI extends SurfaceView {
         this.imageStatue0s = imageStatue0s;
     }
 
+    public List<ImageStatue_1> getImageStatue1s() {
+        return imageStatue1s;
+    }
+
     public void setImageStatue1s(List<ImageStatue_1> imageStatue1s) {
         this.imageStatue1s = imageStatue1s;
     }
 
-    public void setDyanDatas(List<DyanData> dyanData) {
-        this.dyanDatas = dyanData;
+    public List<DyanData> getDyanDatas() {
+        return dyanDatas;
+    }
+
+    public void setDyanDatas(List<DyanData> dyanDatas) {
+        this.dyanDatas = dyanDatas;
+    }
+
+    public List<CommandButton> getCommandButtons() {
+        return commandButtons;
     }
 
     public void setCommandButtons(List<CommandButton> commandButtons) {

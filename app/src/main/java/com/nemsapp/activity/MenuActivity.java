@@ -25,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, PicActivity.class);
+                Intent intent = new Intent(MenuActivity.this, MonitorPicActivity.class);
                 startActivity(intent);
             }
         });

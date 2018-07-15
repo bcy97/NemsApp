@@ -18,12 +18,20 @@ import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
 
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +59,9 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
 
         initXml();
+
+        getAnData();
+
     }
 
     private void initXml() {
@@ -300,4 +311,111 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         return commandButtons;
     }
+
+//    final Handler handler = new Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case 1:
+//                    update();
+//                    break;
+//            }
+//            super.handleMessage(msg);
+//        }
+//
+//        void update() {
+//            //刷新msg的内容
+//            mainUI.invalidate();
+//        }
+//    };
+//    Timer timer = new Timer();
+//    TimerTask task = new TimerTask() {
+//        public void run() {
+//            Message message = new Message();
+//            message.what = 1;
+//            handler.sendMessage(message);
+//        }
+//    };
+
+    private void getAnData() {
+        //开启线程来发起网络请求
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
+                BufferedReader reader = null;
+                try {
+                    URL url = new URL("http://127.0.0.1:8080/realData/getAnData");
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setConnectTimeout(8000); //设置连接超时时间，单位ms
+                    connection.setReadTimeout(8000); //设置读取超时时间，单位ms
+
+                    //设置是否向httpURLConnection输出，因为post请求参数要放在http正文内，所以要设置为true
+                    connection.setDoOutput(true);
+
+                    //设置是否从httpURLConnection读入，默认是false
+                    connection.setDoInput(true);
+
+                    //POST请求不能用缓存，设置为false
+                    connection.setUseCaches(false);
+
+                    //传送的内容是可序列化的
+                    //如果不设置此项，传送序列化对象时，当WEB服务默认的不是这种类型时，会抛出java.io.EOFException错误
+                    connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
+
+                    //请求方法为post
+                    connection.setRequestMethod("POST");
+
+
+                    List<DyanData> andatas = new ArrayList<>();
+
+                    String[] anIds = new String[andatas.size()];
+                    for (int i = 0; i < andatas.size(); i++) {
+                        anIds[i] = andatas.get(i).getName();
+                    }
+
+                    JSONObject json = new JSONObject();
+                    json.put("ids", anIds);
+                    OutputStream out = connection.getOutputStream();//输出流，用来发送请求，http请求实际上直到这个函数里面才正式发送出去
+                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));//创建字符流对象并用高效缓冲流包装它，便获得最高的效率,发送的是字符串推荐用字符流，其它数据就用字节流
+                    bw.write(json.toString());//把json字符串写入缓冲区中
+                    bw.flush();//刷新缓冲区，把数据发送出去，这步很重要
+                    out.close();
+                    bw.close();//使用完关闭
+
+
+                    if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                        InputStream in = connection.getInputStream();
+                        reader = new BufferedReader(new InputStreamReader(in));
+                        //下面对获取到的输入流进行读取
+                        StringBuilder response = new StringBuilder();
+                        System.out.println(response.toString());
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }).start();
+    }
+
+//    @Override
+//    protected void onDestroy() {
+//        if (timer != null) {// 停止timer
+//            timer.cancel();
+//            timer = null;
+//        }
+//        super.onDestroy();
+//    }
 }
