@@ -18,6 +18,7 @@ import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by duoduogao on 2018/3/11.
@@ -31,7 +32,7 @@ public class MainUI extends SurfaceView {
     private List<Image_1> image1s;
     private List<ImageStatue_0> imageStatue0s;
     private List<ImageStatue_1> imageStatue1s;
-    private List<DyanData> dyanDatas;
+    private Map<String, DyanData> dyanDatas;
     private List<CommandButton> commandButtons;
 
 
@@ -113,8 +114,8 @@ public class MainUI extends SurfaceView {
             }
         }
         if (null != dyanDatas && dyanDatas.size() > 0) {
-            for (DyanData dyanData : dyanDatas) {
-                dyanData.draw(canvas);
+            for (String name : dyanDatas.keySet()) {
+                dyanDatas.get(name).draw(canvas);
             }
         }
         if (null != commandButtons && commandButtons.size() > 0) {
@@ -243,11 +244,11 @@ public class MainUI extends SurfaceView {
         this.imageStatue1s = imageStatue1s;
     }
 
-    public List<DyanData> getDyanDatas() {
+    public Map<String, DyanData> getDyanDatas() {
         return dyanDatas;
     }
 
-    public void setDyanDatas(List<DyanData> dyanDatas) {
+    public void setDyanDatas(Map<String, DyanData> dyanDatas) {
         this.dyanDatas = dyanDatas;
     }
 

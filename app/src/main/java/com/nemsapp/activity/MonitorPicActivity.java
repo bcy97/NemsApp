@@ -4,9 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.components.CommandButton;
 import com.nemsapp.components.DyanData;
@@ -17,28 +22,28 @@ import com.nemsapp.components.Image_1;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
+import com.nemsapp.vo.AnValue;
+import com.okhttplib.HttpInfo;
+import com.okhttplib.OkHttpUtil;
+import com.okhttplib.callback.Callback;
 
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 
 public class MonitorPicActivity extends AppCompatActivity {
 
@@ -60,7 +65,8 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         initXml();
 
-        getAnData();
+
+        timer.schedule(task, 0, 5000);
 
     }
 
@@ -260,9 +266,9 @@ public class MonitorPicActivity extends AppCompatActivity {
         return imageStatue1s;
     }
 
-    private List<DyanData> parseDyanData(Document document) {
+    private Map<String, DyanData> parseDyanData(Document document) {
         NodeList lineList = document.getElementsByTagName("dyanData");
-        List<DyanData> dyanDatas = new ArrayList<>();
+        Map<String, DyanData> dyanDatas = new HashMap<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             DyanData dyanData = new DyanData();
@@ -270,11 +276,9 @@ public class MonitorPicActivity extends AppCompatActivity {
             dyanData.setX(Integer.parseInt(from[0]));
             dyanData.setY(Integer.parseInt(from[1]));
             dyanData.setName(element.getAttribute("name"));
-            dyanData.setText(element.getAttribute("name"));
             dyanData.setSize(Integer.parseInt(element.getAttribute("size")));
             dyanData.init();
-            dyanDatas.add(dyanData);
-            System.out.println(dyanData.getName());
+            dyanDatas.put(element.getAttribute("name"), dyanData);
         }
 
         return dyanDatas;
@@ -299,11 +303,11 @@ public class MonitorPicActivity extends AppCompatActivity {
             }
             commandButton.setDown(bitmap);
             try {
+                System.out.println(element.getAttribute("filename_up"));
                 InputStream is = getAssets().open(element.getAttribute("filename_up"));
                 bitmap = BitmapFactory.decodeStream(is);
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
             }
             commandButton.setUp(bitmap);
             commandButtons.add(commandButton);
@@ -312,102 +316,72 @@ public class MonitorPicActivity extends AppCompatActivity {
         return commandButtons;
     }
 
-//    final Handler handler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case 1:
-//                    update();
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
-//
-//        void update() {
-//            //刷新msg的内容
-//            mainUI.invalidate();
-//        }
-//    };
-//    Timer timer = new Timer();
-//    TimerTask task = new TimerTask() {
-//        public void run() {
-//            Message message = new Message();
-//            message.what = 1;
-//            handler.sendMessage(message);
-//        }
-//    };
+    final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    update();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
 
-    private void getAnData() {
-        //开启线程来发起网络请求
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                BufferedReader reader = null;
-                try {
-                    URL url = new URL("http://127.0.0.1:8080/realData/getAnData");
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setConnectTimeout(8000); //设置连接超时时间，单位ms
-                    connection.setReadTimeout(8000); //设置读取超时时间，单位ms
+        void update() {
+            getAnData(mainUI.getDyanDatas());
+            //刷新msg的内容
+            mainUI.invalidate();
+        }
+    };
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        public void run() {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
+    };
 
-                    //设置是否向httpURLConnection输出，因为post请求参数要放在http正文内，所以要设置为true
-                    connection.setDoOutput(true);
+    /**
+     * 异步请求：回调方法可以直接操作UI
+     */
+    private void getAnData(final Map<String, DyanData> andatas) {
 
-                    //设置是否从httpURLConnection读入，默认是false
-                    connection.setDoInput(true);
+        String data = "[";
+        for (String name : andatas.keySet()) {
+            data += "\"" + name + "\",";
+        }
 
-                    //POST请求不能用缓存，设置为false
-                    connection.setUseCaches(false);
-
-                    //传送的内容是可序列化的
-                    //如果不设置此项，传送序列化对象时，当WEB服务默认的不是这种类型时，会抛出java.io.EOFException错误
-                    connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
-
-                    //请求方法为post
-                    connection.setRequestMethod("POST");
+        data = data.substring(0, data.length() - 1) + "]";
 
 
-                    List<DyanData> andatas = new ArrayList<>();
-
-                    String[] anIds = new String[andatas.size()];
-                    for (int i = 0; i < andatas.size(); i++) {
-                        anIds[i] = andatas.get(i).getName();
-                    }
-
-                    JSONObject json = new JSONObject();
-                    json.put("ids", anIds);
-                    OutputStream out = connection.getOutputStream();//输出流，用来发送请求，http请求实际上直到这个函数里面才正式发送出去
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));//创建字符流对象并用高效缓冲流包装它，便获得最高的效率,发送的是字符串推荐用字符流，其它数据就用字节流
-                    bw.write(json.toString());//把json字符串写入缓冲区中
-                    bw.flush();//刷新缓冲区，把数据发送出去，这步很重要
-                    out.close();
-                    bw.close();//使用完关闭
-
-
-                    if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
-                        InputStream in = connection.getInputStream();
-                        reader = new BufferedReader(new InputStreamReader(in));
-                        //下面对获取到的输入流进行读取
-                        StringBuilder response = new StringBuilder();
-                        System.out.println(response.toString());
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+        OkHttpUtil.getDefault(this).doPostAsync(
+                HttpInfo.Builder()
+                        .setUrl("http://192.168.2.176:8080/realData/getAnData")
+                        .setContentType("application/json")
+                        .setResponseEncoding("utf8")
+                        .addParamJson(data)
+                        .build(),
+                new Callback() {
+                    @Override
+                    public void onSuccess(HttpInfo info) throws IOException {
+                        String response = info.getRetDetail();
+                        Gson gson = new Gson();
+                        Map<String, AnValue> data = gson.fromJson(response, new TypeToken<HashMap<String, AnValue>>() {
+                        }.getType());
+                        for (String name : data.keySet()) {
+                            if (data.get(name).getValid() == 1) {
+                                andatas.get(name).setText(new DecimalFormat("0.00").format(data.get(name).getValue()));
+                            }
                         }
                     }
-                    if (connection != null) {
-                        connection.disconnect();
+
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                        Toast.makeText(getApplicationContext(), "网络连接不可用", Toast.LENGTH_SHORT).show();
+                        System.out.println("网络连接不可用");
                     }
                 }
-            }
-        }).start();
+        );
     }
 
 //    @Override

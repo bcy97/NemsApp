@@ -37,6 +37,8 @@ public class DyanData {
         paint.setColor(Color.RED);
         //设置文字baseline向下偏移size
         loc_y = y + size;
+        //初始化text为空
+        text = "";
     }
 
     public String getText() {
