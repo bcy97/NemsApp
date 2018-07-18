@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.components.CommandButton;
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.ImageStatue;
 import com.nemsapp.components.ImageStatue_0;
 import com.nemsapp.components.ImageStatue_1;
 import com.nemsapp.components.Image_0;
@@ -23,6 +24,7 @@ import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
 import com.nemsapp.vo.AnValue;
+import com.nemsapp.vo.StValue;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.callback.Callback;
@@ -51,11 +53,15 @@ public class MonitorPicActivity extends AppCompatActivity {
 
     private Map<String, Map<String, String>> piclib;
 
+    private Map<String, ImageStatue> imageStatues;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_pic);
         mainUI = findViewById(R.id.mainUI);
+
+        imageStatues = new HashMap<>();
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -64,7 +70,6 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
 
         initXml();
-
 
         timer.schedule(task, 0, 5000);
 
@@ -91,6 +96,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             mainUI.setImageStatue1s(parseImageStatue1(document));
             mainUI.setCommandButtons(parseCommandButton(document));
             mainUI.setDyanDatas(parseDyanData(document));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,6 +230,10 @@ public class MonitorPicActivity extends AppCompatActivity {
                 imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
                 imageStatue0.init();
                 imageStatue0s.add(imageStatue0);
+
+                if (!imageStatue0.getName().equals("")) {
+                    imageStatues.put(imageStatue0.name, imageStatue0);
+                }
             }
         }
 
@@ -260,6 +270,10 @@ public class MonitorPicActivity extends AppCompatActivity {
                 }
                 imageStatue1.setClose(bitmap);
                 imageStatue1s.add(imageStatue1);
+
+                if (!imageStatue1.name.equals("")) {
+                    imageStatues.put(imageStatue1.name, imageStatue1);
+                }
             }
         }
 
@@ -303,7 +317,9 @@ public class MonitorPicActivity extends AppCompatActivity {
             }
             commandButton.setDown(bitmap);
             try {
-                System.out.println(element.getAttribute("filename_up"));
+                if (element.getAttribute("filename_up").equals("")) {
+                    continue;
+                }
                 InputStream is = getAssets().open(element.getAttribute("filename_up"));
                 bitmap = BitmapFactory.decodeStream(is);
                 is.close();
@@ -328,6 +344,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         void update() {
             getAnData(mainUI.getDyanDatas());
+            getStData(imageStatues);
             //刷新msg的内容
             mainUI.invalidate();
         }
@@ -342,7 +359,7 @@ public class MonitorPicActivity extends AppCompatActivity {
     };
 
     /**
-     * 异步请求：回调方法可以直接操作UI
+     * 异步请求：请求监控图中的AnData,回调方法可以直接操作UI
      */
     private void getAnData(final Map<String, DyanData> andatas) {
 
@@ -356,7 +373,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
-                        .setUrl("http://192.168.2.176:8080/realData/getAnData")
+                        .setUrl("http://172.19.176.240:8080/realData/getAnData")
                         .setContentType("application/json")
                         .setResponseEncoding("utf8")
                         .addParamJson(data)
@@ -384,12 +401,56 @@ public class MonitorPicActivity extends AppCompatActivity {
         );
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        if (timer != null) {// 停止timer
-//            timer.cancel();
-//            timer = null;
-//        }
-//        super.onDestroy();
-//    }
+    /**
+     * 异步请求：请求监控图中的AnData,回调方法可以直接操作UI
+     */
+    private void getStData(final Map<String, ImageStatue> imageStatues) {
+
+        String data = "[";
+        for (String name : imageStatues.keySet()) {
+            data += "\"" + name + "\",";
+        }
+
+        data = data.substring(0, data.length() - 1) + "]";
+
+
+        OkHttpUtil.getDefault(this).doPostAsync(
+                HttpInfo.Builder()
+                        .setUrl("http://172.19.176.240:8080/realData/getStData")
+                        .setContentType("application/json")
+                        .setResponseEncoding("utf8")
+                        .addParamJson(data)
+                        .build(),
+                new Callback() {
+                    @Override
+                    public void onSuccess(HttpInfo info) throws IOException {
+                        String response = info.getRetDetail();
+                        Gson gson = new Gson();
+                        Map<String, StValue> data = gson.fromJson(response, new TypeToken<HashMap<String, StValue>>() {
+                        }.getType());
+                        for (String name : data.keySet()) {
+                            if (data.get(name).getValid() == 1) {
+                                imageStatues.get(name).on = data.get(name).getValue() == 1 ? true : false;
+//                                andatas.get(name).setText(new DecimalFormat("0.00").format(data.get(name).getValue()));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                        Toast.makeText(getApplicationContext(), "网络连接不可用", Toast.LENGTH_SHORT).show();
+                        System.out.println("网络连接不可用");
+                    }
+                }
+        );
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (timer != null) {// 停止timer
+            timer.cancel();
+            timer = null;
+        }
+        super.onDestroy();
+    }
 }

@@ -7,23 +7,25 @@ import android.graphics.Path;
 
 import com.nemsapp.util.PathParser;
 
-public class ImageStatue_0 {
-    private Paint paint;
-    private Path path_on;
-    private Path path_off;
+/**
+ * 对应xml文件内的ImageStatue，iconType为0，即为图原的图标
+ */
+public class ImageStatue_0 extends ImageStatue{
 
-    private String name;
-    private double x;
-    private double y;
-    private int strokeWidth;
-    private String color;
-    private String on_path;
-    private String off_path;
-    private boolean on;
+    private Path path_on;  //开状态路径
+    private Path path_off; //关状态路径
 
-    private String str_path;
+    private double x;  //坐标x
+    private double y;  //坐标y
+    private int strokeWidth;  //线宽
+    private String color;  //颜色
+    private String on_path;  //开状态路径字符串
+    private String off_path; //关状态路径字符串
 
-    private Paint.Style style = Paint.Style.STROKE;
+
+    private String str_path;  //加上坐标后的路径字符串
+
+    private Paint.Style style = Paint.Style.STROKE;  //画笔样式
 
     public ImageStatue_0() {
         paint = new Paint();

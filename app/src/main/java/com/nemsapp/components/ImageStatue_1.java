@@ -5,14 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class ImageStatue_1 {
-    private Paint paint;
+/**
+ * 对应xml文件内的ImageStatue，iconType为1，即为bmp的图标
+ */
+public class ImageStatue_1 extends ImageStatue {
 
-    private String name;
-    private Rect rect;
-    private boolean on;
-    private Bitmap open;
-    private Bitmap close;
+    private Rect rect;  //图标范围
+    private boolean on;  //开关状态
+    private Bitmap open;  //开状态bmp
+    private Bitmap close; //关状态bmp
 
     public ImageStatue_1() {
         paint = new Paint();
@@ -29,6 +30,10 @@ public class ImageStatue_1 {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setRect(Rect rect) {
