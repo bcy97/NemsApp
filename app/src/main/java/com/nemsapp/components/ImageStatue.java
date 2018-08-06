@@ -10,4 +10,12 @@ public class ImageStatue {
 
     public boolean on;  //开关状态
 
+    public void setOn() {
+        this.on = true;
+    }
+
+    public void setOff() {
+        this.on = false;
+    }
+
 }

@@ -5,4 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".activity.HistoryDataActivity">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
 </android.support.constraint.ConstraintLayout>

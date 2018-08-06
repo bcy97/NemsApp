@@ -23,6 +23,7 @@ import com.nemsapp.components.Image_1;
 import com.nemsapp.components.Line;
 import com.nemsapp.components.Text;
 import com.nemsapp.ui.MainUI;
+import com.nemsapp.util.Constants;
 import com.nemsapp.vo.AnValue;
 import com.nemsapp.vo.StValue;
 import com.okhttplib.HttpInfo;
@@ -373,7 +374,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
-                        .setUrl("http://172.19.176.240:8080/realData/getAnData")
+                        .setUrl("http://" + Constants.ip + ":8080/realData/getAnData")
                         .setContentType("application/json")
                         .setResponseEncoding("utf8")
                         .addParamJson(data)
@@ -402,7 +403,7 @@ public class MonitorPicActivity extends AppCompatActivity {
     }
 
     /**
-     * 异步请求：请求监控图中的AnData,回调方法可以直接操作UI
+     * 异步请求：请求监控图中的StData,回调方法可以直接操作UI
      */
     private void getStData(final Map<String, ImageStatue> imageStatues) {
 
@@ -416,7 +417,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
-                        .setUrl("http://172.19.176.240:8080/realData/getStData")
+                        .setUrl("http://" + Constants.ip + ":8080/realData/getStData")
                         .setContentType("application/json")
                         .setResponseEncoding("utf8")
                         .addParamJson(data)
@@ -430,7 +431,11 @@ public class MonitorPicActivity extends AppCompatActivity {
                         }.getType());
                         for (String name : data.keySet()) {
                             if (data.get(name).getValid() == 1) {
-                                imageStatues.get(name).on = data.get(name).getValue() == 1 ? true : false;
+                                if (data.get(name).getValue() == 1) {
+                                    imageStatues.get(name).setOn();
+                                } else {
+                                    imageStatues.get(name).setOff();
+                                }
 //                                andatas.get(name).setText(new DecimalFormat("0.00").format(data.get(name).getValue()));
                             }
                         }

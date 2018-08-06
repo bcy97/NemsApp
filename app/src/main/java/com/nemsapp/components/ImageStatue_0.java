@@ -10,7 +10,7 @@ import com.nemsapp.util.PathParser;
 /**
  * 对应xml文件内的ImageStatue，iconType为0，即为图原的图标
  */
-public class ImageStatue_0 extends ImageStatue{
+public class ImageStatue_0 extends ImageStatue {
 
     private Path path_on;  //开状态路径
     private Path path_off; //关状态路径
@@ -88,14 +88,6 @@ public class ImageStatue_0 extends ImageStatue{
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public void setOn() {
-        this.on = true;
-    }
-
-    public void setOff() {
-        this.on = false;
     }
 
     public String getOn_path() {

@@ -40,14 +40,6 @@ public class ImageStatue_1 extends ImageStatue {
         this.rect = rect;
     }
 
-    public void setOn() {
-        this.on = on;
-    }
-
-    private void setOff() {
-        this.on = false;
-    }
-
     public void setOpen(Bitmap open) {
         this.open = open;
     }

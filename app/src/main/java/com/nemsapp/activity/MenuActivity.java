@@ -30,6 +30,14 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, HistoryDataActivity.class);
+                startActivity(intent);
+            }
+        });
+
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
