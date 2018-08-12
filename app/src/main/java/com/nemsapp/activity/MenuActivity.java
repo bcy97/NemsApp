@@ -33,7 +33,7 @@ public class MenuActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, HistoryDataActivity.class);
+                Intent intent = new Intent(MenuActivity.this, GraphActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,6 +45,15 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, HistoryDataActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,4 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="stime">开始时间</string>
+    <string name="etime">结束时间</string>
 </resources>

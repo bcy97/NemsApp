@@ -33,14 +33,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.PicActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NowDataActivity"
             android:screenOrientation="landscape" />
@@ -59,10 +54,10 @@
         <activity
             android:name=".activity.HistoryDataActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.MonitorPicActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.GraphActivity"></activity>
     </application>
 
 </manifest>
