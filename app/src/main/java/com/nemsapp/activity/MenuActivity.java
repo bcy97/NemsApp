@@ -62,6 +62,14 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, StatisActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
