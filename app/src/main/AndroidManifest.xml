@@ -57,7 +57,9 @@
         <activity
             android:name=".activity.MonitorPicActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.GraphActivity" />
+        <activity
+            android:name=".activity.GraphActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".activity.StatisActivity"></activity>
     </application>
 

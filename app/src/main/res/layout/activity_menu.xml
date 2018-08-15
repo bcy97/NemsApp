@@ -40,7 +40,7 @@
         android:id="@+id/button4"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="历史数据"
+        android:text="累加量统计"
         app:layout_constraintBottom_toBottomOf="@id/button6"
         app:layout_constraintLeft_toRightOf="@id/button3"
         app:layout_constraintRight_toRightOf="parent"
