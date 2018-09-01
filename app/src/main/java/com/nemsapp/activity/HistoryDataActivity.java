@@ -1,15 +1,16 @@
 package com.nemsapp.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,17 +21,32 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.MapTableData;
 import com.bin.david.form.data.table.TableData;
 import com.nemsapp.R;
-import com.nemsapp.vo.NowData;
+import com.nemsapp.util.Constants;
+import com.nemsapp.util.FileHelper;
+import com.nemsapp.util.JsonHelper;
+import com.nemsapp.vo.Cumulant;
+import com.nemsapp.vo.FileMD5;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class HistoryDataActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private OkHttpClient okHttpClient = new OkHttpClient();
 
     private TimePickerView pvTime;
     private Button sTime;
@@ -40,9 +56,14 @@ public class HistoryDataActivity extends AppCompatActivity implements View.OnCli
 
     private SmartTable table;
 
-    final Column<String> dataColumn_1 = new Column<>("名称", "data1");
-    final Column<Integer> dataColumn_2 = new Column<>("数值", "data2");
-    final Column<Integer> dataColumn_3 = new Column<>("单位", "data3");
+    private List<String> unitlist;
+
+    final Column<String> dataColumn_1 = new Column<>("名称", "name");
+    final Column<Double> dataColumn_2 = new Column<>("当月", "thisMonth");
+    final Column<Double> dataColumn_3 = new Column<>("当日", "today");
+    final Column<Double> dataColumn_4 = new Column<>("上月", "lastMonth");
+    final Column<Double> dataColumn_5 = new Column<>("上日", "lastday");
+    final Column<Double> dataColumn_6 = new Column<>("统计值", "statis");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,36 +85,82 @@ public class HistoryDataActivity extends AppCompatActivity implements View.OnCli
         eTime.setOnClickListener(this);
         listView = findViewById(R.id.history_data);
 
-        List<NowData> list = new ArrayList<>();
-        list.add(new NowData(0.1, 3.3, 2.3));
-        list.add(new NowData(0.1, 3.3, 2.3));
-        list.add(new NowData(0.1, 3.3, 2.3));
-        list.add(new NowData(0.1, 3.3, 2.3));
-        list.add(new NowData(0.1, 3.3, 2.3));
-        TableData tableData = new TableData("", list, dataColumn_1, dataColumn_2, dataColumn_3);
+        initSideBar();
+
+        //获取屏幕高宽
+        Resources resources = this.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
         table = findViewById(R.id.table);
+        table.getConfig().setMinTableWidth(width);
+
+//        getDataByUnitName(unitlist.get(0));
+
+
+        List<Cumulant> list = new ArrayList<>();
+        list.add(new Cumulant("123"));
+        list.add(new Cumulant("13"));
+        list.add(new Cumulant("12"));
+        list.add(new Cumulant("1"));
+        TableData tableData = new TableData(unitlist.get(0), list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
         table.setTableData(tableData);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getWindow().getAttributes().height - 50);
-        table.setLayoutParams(layoutParams);
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
 
-
-        initDate();
     }
 
-    private void initDate() {
-        final List<String> list = new ArrayList<>();
-        list.add("所有单元");
-        list.add("单元1");
-        list.add("单元2");
-        list.add("单元3");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+    private void getDataByUnitName(String unitname) {
+        String url = "http://" + Constants.ip + "/cumulant/getDataByUnitName";
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(mediaType, unitname))
+                .build();
+        final Call call = okHttpClient.newCall(request);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = call.execute();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MapTableData tableData = null;
+                            try {
+                                tableData = MapTableData.create("表格名", JsonHelper.jsonToMapList(response.body().string()));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            table.setTableData(tableData);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void initSideBar() {
+
+        //获取点列表
+        List<FileMD5> fileMD5List = FileHelper.getConfigFileMD5().get("unitConfigs");
+
+        unitlist = new ArrayList<>();
+        for (int i = 0; i < fileMD5List.size(); i++) {
+            String name = fileMD5List.get(i).getFileName();
+            unitlist.add(name.substring(0, name.length() - 4));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, unitlist);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HistoryDataActivity.this, "clicked", Toast.LENGTH_SHORT);
+                System.out.println(unitlist.get(position));
+                getDataByUnitName(unitlist.get(position));
             }
         });
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
