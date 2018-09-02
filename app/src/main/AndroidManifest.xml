@@ -21,7 +21,7 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NowDataActivity"
+            android:name=".activity.RealDataActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.MenuActivity"
@@ -36,7 +36,7 @@
             android:name=".activity.AlertActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.HistoryDataActivity"
+            android:name=".activity.CumulantDataActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.MonitorPicActivity"

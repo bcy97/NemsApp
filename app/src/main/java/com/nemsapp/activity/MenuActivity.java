@@ -87,7 +87,7 @@ public class MenuActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, NowDataActivity.class);
+                Intent intent = new Intent(MenuActivity.this, RealDataActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,7 +95,7 @@ public class MenuActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, HistoryDataActivity.class);
+                Intent intent = new Intent(MenuActivity.this, CumulantDataActivity.class);
                 startActivity(intent);
             }
         });

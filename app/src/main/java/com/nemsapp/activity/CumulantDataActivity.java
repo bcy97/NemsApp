@@ -44,7 +44,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class HistoryDataActivity extends AppCompatActivity implements View.OnClickListener {
+public class CumulantDataActivity extends AppCompatActivity implements View.OnClickListener {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -110,7 +110,7 @@ public class HistoryDataActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void getDataByUnitName(String unitname) {
+    private void getDataByUnitName(final String unitname) {
         String url = "http://" + Constants.ip + "/cumulant/getDataByUnitName";
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
@@ -130,7 +130,7 @@ public class HistoryDataActivity extends AppCompatActivity implements View.OnCli
                         public void run() {
                             MapTableData tableData = null;
                             try {
-                                tableData = MapTableData.create("表格名", JsonHelper.jsonToMapList(response.body().string()));
+                                tableData = MapTableData.create(unitname, JsonHelper.jsonToMapList(response.body().string()));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -203,7 +203,7 @@ public class HistoryDataActivity extends AppCompatActivity implements View.OnCli
                 } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
                     eTime.setText("结束时间：" + getTime(date));
                 }
-                Toast.makeText(HistoryDataActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CumulantDataActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
         })
                 .setDate(selectedDate)
