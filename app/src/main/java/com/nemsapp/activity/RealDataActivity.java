@@ -13,11 +13,11 @@ import com.bin.david.form.data.table.TableData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
+import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Constants;
-import com.nemsapp.util.FileHelper;
 import com.nemsapp.vo.AnValue;
-import com.nemsapp.vo.FileMD5;
 import com.nemsapp.vo.RealData;
+import com.nemsapp.vo.UnitInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,15 +62,13 @@ public class RealDataActivity extends AppCompatActivity {
 
         initSideBar();
 
-        List<RealData> list = new ArrayList<>();
-        list.add(new RealData("123"));
-        list.add(new RealData("12"));
-        list.add(new RealData("13"));
-        list.add(new RealData("23"));
-        TableData tableData = new TableData("", list, dataColumn_1, dataColumn_2, dataColumn_3);
         table = findViewById(R.id.table);
-        table.setTableData(tableData);
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+
+        if (unitlist.size() > 0) {
+
+            getDataByUnitName(unitlist.get(0));
+        }
 
 
     }
@@ -78,12 +76,12 @@ public class RealDataActivity extends AppCompatActivity {
     private void initSideBar() {
 
         //获取点列表
-        List<FileMD5> fileMD5List = FileHelper.getConfigFileMD5().get("unitConfigs");
+        List<UnitInfo> pointList = CfgData.getInstance().getUnitList();
 
         unitlist = new ArrayList<>();
-        for (int i = 0; i < fileMD5List.size(); i++) {
-            String name = fileMD5List.get(i).getFileName();
-            unitlist.add(name.substring(0, name.length() - 4));
+        for (int i = 0; i < pointList.size(); i++) {
+            String name = pointList.get(i).getName();
+            unitlist.add(name);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, unitlist);
         listView.setAdapter(adapter);
@@ -104,7 +102,7 @@ public class RealDataActivity extends AppCompatActivity {
 
         final Request request = new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(mediaType, "1#开闭所201柜1#进线"))
+                .post(RequestBody.create(mediaType, unitname))
                 .build();
         final Call call = okHttpClient.newCall(request);
         new Thread(new Runnable() {
@@ -112,23 +110,20 @@ public class RealDataActivity extends AppCompatActivity {
             public void run() {
                 try {
                     final Response response = call.execute();
+                    final String strdata = response.body().string();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             TableData tableData = null;
-                            try {
-                                Gson gson = new Gson();
-                                String strdata = response.body().string();
-                                Map<String, AnValue> data = gson.fromJson(strdata, new TypeToken<HashMap<String, AnValue>>() {
-                                }.getType());
-                                realData = new ArrayList<>();
-                                for (String name : data.keySet()) {
-                                    realData.add(new RealData(name, data.get(name).getValid() == 1 ? data.get(name).getValue() : 0, ""));
-                                }
-                                tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            Gson gson = new Gson();
+                            System.out.println(strdata);
+                            Map<String, AnValue> data = gson.fromJson(strdata, new TypeToken<HashMap<String, AnValue>>() {
+                            }.getType());
+                            realData = new ArrayList<>();
+                            for (String name : data.keySet()) {
+                                realData.add(new RealData(name, data.get(name).getValid() == 1 ? data.get(name).getValue() : 0, ""));
                             }
+                            tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);
                             table.setTableData(tableData);
                         }
                     });

@@ -13,15 +13,29 @@ import java.util.List;
 
 public class CfgData {
 
+    private static CfgData instance;
 
-    public static List<UnitInfo> getAllUnitInfo() {
-        List<UnitInfo> unitList = new ArrayList<>();
+    private List<UnitInfo> unitList;
+
+    private CfgData() {
+        setUnitInfo();
+    }
+
+    public static CfgData getInstance() {
+        if (instance == null) {
+            instance = new CfgData();
+        }
+        return instance;
+    }
+
+    public void setUnitInfo() {
+        unitList = new ArrayList<>();
         File file = new File(Constants.folderPath + "/unitConfigs");
-        if (file == null || file.exists()) {
-            return unitList;
+        if (file == null || !file.exists()) {
+            return;
         }
         if (!file.isDirectory()) {
-            return unitList;
+            return;
         }
         SAXReader reader = new SAXReader();
         File[] fileArr = file.listFiles();
@@ -29,52 +43,26 @@ public class CfgData {
             Document doc = null;
             try {
                 doc = reader.read(item);
+                Element root = doc.getRootElement();
+
+                String temp = root.attributeValue("unitNo");
+                Short unitNo = new Short(temp);
+
+                temp = root.attributeValue("type");
+                float type = new Float(temp);
+
+                String name = root.attributeValue("name");
+
+                UnitInfo ui = new UnitInfo(name, unitNo, (byte) type);
+
+                unitList.add(ui);
             } catch (DocumentException e) {
-                e.printStackTrace();
+                System.out.println(item.getName());
             }
-            Element root = doc.getRootElement();
-
-            String temp = root.attributeValue("unitNo");
-            Short unitNo = new Short(temp);
-
-            temp = root.attributeValue("type");
-            float type = new Float(temp);
-
-            String name = root.attributeValue("name");
-
-            UnitInfo ui = new UnitInfo(name, unitNo, (byte) type);
-
-            unitList.add(ui);
         }
-        return unitList;
     }
 
-    public static List<UnitInfo> getUnitInfoByUnitName(String unitname) {
-        List<UnitInfo> unitList = new ArrayList<>();
-        File file = new File(Constants.folderPath + "/unitConfigs/"+unitname);
-        if (file == null || file.exists()) {
-            return unitList;
-        }
-        SAXReader reader = new SAXReader();
-        Document doc = null;
-        try {
-            doc = reader.read(file);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-        Element root = doc.getRootElement();
-
-        String temp = root.attributeValue("unitNo");
-        Short unitNo = new Short(temp);
-
-        temp = root.attributeValue("type");
-        float type = new Float(temp);
-
-        String name = root.attributeValue("name");
-
-        UnitInfo ui = new UnitInfo(name, unitNo, (byte) type);
-
-        unitList.add(ui);
+    public List<UnitInfo> getUnitList() {
         return unitList;
     }
 

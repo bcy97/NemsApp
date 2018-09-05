@@ -24,11 +24,11 @@ import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.table.MapTableData;
 import com.bin.david.form.data.table.TableData;
 import com.nemsapp.R;
+import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Constants;
-import com.nemsapp.util.FileHelper;
 import com.nemsapp.util.JsonHelper;
 import com.nemsapp.vo.Cumulant;
-import com.nemsapp.vo.FileMD5;
+import com.nemsapp.vo.UnitInfo;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -147,11 +147,11 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     private void initSideBar() {
 
         //获取点列表
-        List<FileMD5> fileMD5List = FileHelper.getConfigFileMD5().get("unitConfigs");
+        List<UnitInfo> pointList = CfgData.getInstance().getUnitList();
 
         unitlist = new ArrayList<>();
-        for (int i = 0; i < fileMD5List.size(); i++) {
-            String name = fileMD5List.get(i).getFileName();
+        for (int i = 0; i < pointList.size(); i++) {
+            String name = pointList.get(i).getName();
             unitlist.add(name.substring(0, name.length() - 4));
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, unitlist);
