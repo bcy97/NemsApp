@@ -95,7 +95,7 @@ public class RealDataActivity extends AppCompatActivity {
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
     }
 
-    public void getDataByUnitName(final String unitname) {
+    private void getDataByUnitName(final String unitname) {
         String url = "http://" + Constants.ip + ":8080/realdata/getRealData";
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
@@ -133,5 +133,7 @@ public class RealDataActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
 
 }

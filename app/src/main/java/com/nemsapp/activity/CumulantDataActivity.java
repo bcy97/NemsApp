@@ -21,12 +21,12 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.table.MapTableData;
 import com.bin.david.form.data.table.TableData;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Constants;
-import com.nemsapp.util.JsonHelper;
 import com.nemsapp.vo.Cumulant;
 import com.nemsapp.vo.UnitInfo;
 
@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,6 +53,11 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     private Button sTime;
     private Button eTime;
 
+    private Date startTime;
+    private Date endTime;
+
+    private String unitName;
+
     private ListView listView;
 
     private SmartTable table;
@@ -64,6 +70,8 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     final Column<Double> dataColumn_4 = new Column<>("上月", "lastMonth");
     final Column<Double> dataColumn_5 = new Column<>("上日", "lastday");
     final Column<Double> dataColumn_6 = new Column<>("统计值", "statis");
+
+    List<Cumulant> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,19 +107,12 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 //        getDataByUnitName(unitlist.get(0));
 
 
-        List<Cumulant> list = new ArrayList<>();
-        list.add(new Cumulant("123"));
-        list.add(new Cumulant("13"));
-        list.add(new Cumulant("12"));
-        list.add(new Cumulant("1"));
-        TableData tableData = new TableData(unitlist.get(0), list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
-        table.setTableData(tableData);
-
+//        getDataByUnitName(unitlist.get(0));
 
     }
 
     private void getDataByUnitName(final String unitname) {
-        String url = "http://" + Constants.ip + "/cumulant/getDataByUnitName";
+        String url = "http://" + Constants.ip + ":8080/cumulant/getDataByUnitName";
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 
@@ -125,15 +126,66 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
             public void run() {
                 try {
                     final Response response = call.execute();
+                    final String strdata = response.body().string();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            MapTableData tableData = null;
-                            try {
-                                tableData = MapTableData.create(unitname, JsonHelper.jsonToMapList(response.body().string()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            TableData tableData = null;
+                            Gson gson = new Gson();
+                            List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
+                            }.getType());
+                            list = new ArrayList<>();
+                            for (Cumulant c : data) {
+                                list.add(c);
                             }
+                            tableData = new TableData(unitname, list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            table.setTableData(tableData);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void getDataByUnitNameAndTime(final Date stime, final Date etime, final String unitname) {
+        String url = "http://" + Constants.ip + ":8080/cumulant/getDataByUnitNameAndTime";
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        FormBody.Builder builder = new FormBody.Builder();
+
+        builder.add("stime", String.valueOf(stime));
+        builder.add("etime", String.valueOf(etime));
+        builder.add("unitname", unitname);
+
+        // Create RequestBody
+        RequestBody formBody = builder.build();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+        final Call call = okHttpClient.newCall(request);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = call.execute();
+                    final String strdata = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TableData tableData = null;
+                            Gson gson = new Gson();
+                            List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
+                            }.getType());
+                            list = new ArrayList<>();
+                            for (Cumulant c : data) {
+                                list.add(c);
+                            }
+                            tableData = new TableData(unitname, list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
                         }
                     });
@@ -152,15 +204,16 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
         unitlist = new ArrayList<>();
         for (int i = 0; i < pointList.size(); i++) {
             String name = pointList.get(i).getName();
-            unitlist.add(name.substring(0, name.length() - 4));
+            unitlist.add(name);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, unitlist);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println(unitlist.get(position));
-                getDataByUnitName(unitlist.get(position));
+                unitName = unitlist.get(position);
+                System.out.println(unitName);
+                getDataByUnitName(unitName);
             }
         });
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
@@ -175,6 +228,19 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
             pvTime.show(v);
+        } else if (v.getId() == R.id.btn_Search) {
+            if (startTime == null) {
+                Toast.makeText(this, "请选择开始时间", Toast.LENGTH_SHORT);
+                return;
+            }
+            if (endTime == null) {
+                Toast.makeText(this, "请选择结束时间", Toast.LENGTH_SHORT);
+                return;
+            }
+            if (unitName == null || unitName.equals("")) {
+                unitName = unitlist.get(0);
+            }
+            getDataByUnitNameAndTime(startTime, endTime, unitName);
         }
     }
 
@@ -190,7 +256,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
          * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          */
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
-        Calendar startDate = Calendar.getInstance();
+        final Calendar startDate = Calendar.getInstance();
         startDate.set(2014, 1, 23);
         Calendar endDate = Calendar.getInstance();
         endDate.set(2027, 2, 28);
@@ -200,8 +266,10 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 if (v.getId() == R.id.btn_Stime && pvTime != null) {
                     sTime.setText("开始时间：" + getTime(date));
+                    startTime = date;
                 } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
                     eTime.setText("结束时间：" + getTime(date));
+                    endTime = date;
                 }
                 Toast.makeText(CumulantDataActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
