@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +34,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -52,6 +53,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     private TimePickerView pvTime;
     private Button sTime;
     private Button eTime;
+    private Button search;
 
     private Date startTime;
     private Date endTime;
@@ -71,8 +73,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     final Column<Double> dataColumn_5 = new Column<>("上日", "lastday");
     final Column<Double> dataColumn_6 = new Column<>("统计值", "statis");
 
-    List<Cumulant> list;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +91,10 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 
         eTime = findViewById(R.id.btn_Etime);
         eTime.setOnClickListener(this);
+
+        search = findViewById(R.id.btn_Search);
+        search.setOnClickListener(this);
+
         listView = findViewById(R.id.history_data);
 
         initSideBar();
@@ -134,11 +138,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                             Gson gson = new Gson();
                             List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
                             }.getType());
-                            list = new ArrayList<>();
-                            for (Cumulant c : data) {
-                                list.add(c);
-                            }
-                            tableData = new TableData(unitname, list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
                         }
                     });
@@ -154,18 +154,24 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 
-        FormBody.Builder builder = new FormBody.Builder();
+        Map<String, String> data = new HashMap<>();
+        data.put("stime", getTime(stime));
+        data.put("etime", getTime(etime));
+        data.put("unitname", unitname);
+        Gson gson = new Gson();
 
-        builder.add("stime", String.valueOf(stime));
-        builder.add("etime", String.valueOf(etime));
-        builder.add("unitname", unitname);
+        RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(data));
 
         // Create RequestBody
-        RequestBody formBody = builder.build();
+        RequestBody formBody = new FormBody.Builder()
+                .add("stime", getTime(stime))
+                .add("etime", getTime(etime))
+                .add("unitname", unitname)
+                .build();
 
         final Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .post(requestBody)
                 .build();
         final Call call = okHttpClient.newCall(request);
         new Thread(new Runnable() {
@@ -174,6 +180,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                 try {
                     final Response response = call.execute();
                     final String strdata = response.body().string();
+                    System.out.println(strdata);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -181,11 +188,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                             Gson gson = new Gson();
                             List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
                             }.getType());
-                            list = new ArrayList<>();
-                            for (Cumulant c : data) {
-                                list.add(c);
-                            }
-                            tableData = new TableData(unitname, list, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
                         }
                     });
@@ -309,7 +312,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        Log.d("getTime()", "choice date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
     }
