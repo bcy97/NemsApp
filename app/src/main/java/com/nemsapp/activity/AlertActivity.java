@@ -10,19 +10,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.util.Constants;
-import com.nemsapp.vo.AlertData;
 import com.nemsapp.vo.EventInfo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
@@ -44,30 +39,18 @@ public class AlertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
 
-        List<AlertData> list = new ArrayList<>();
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        TableData tableData = new TableData("", list, dataColumn_1, dataColumn_2, dataColumn_3,
-                dataColumn_4, dataColumn_5, dataColumn_6);
-        table = findViewById(R.id.alert_table);
-        table.setTableData(tableData);
+        getAlert();
+
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
 
     }
 
-    private void getDataByUnitName(final String unitname) {
-        String url = "http://" + Constants.ip + ":8080/cumulant/getDataByUnitName";
-
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+    private void getAlert() {
+        String url = "http://" + Constants.ip + ":8080/alert/getAlert";
 
         final Request request = new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(mediaType, unitname))
+                .get()
                 .build();
         final Call call = okHttpClient.newCall(request);
         new Thread(new Runnable() {
@@ -83,7 +66,7 @@ public class AlertActivity extends AppCompatActivity {
                             Gson gson = new Gson();
                             EventInfo[] data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
                             }.getType());
-                            tableData = new TableData(unitname, Arrays.asList(data), dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            tableData = new TableData("即时警报", Arrays.asList(data), dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
                         }
                     });
