@@ -39,6 +39,8 @@ public class AlertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
 
+        table = findViewById(R.id.alert_table);
+
         getAlert();
 
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());

@@ -374,7 +374,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
-                        .setUrl("http://" + Constants.ip + ":8080/realData/getAnData")
+                        .setUrl("http://" + Constants.ip + ":8080/monitor/getAnData")
                         .setContentType("application/json")
                         .setResponseEncoding("utf8")
                         .addParamJson(data)
@@ -417,7 +417,7 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
-                        .setUrl("http://" + Constants.ip + ":8080/realData/getStData")
+                        .setUrl("http://" + Constants.ip + ":8080/monitor/getStData")
                         .setContentType("application/json")
                         .setResponseEncoding("utf8")
                         .addParamJson(data)

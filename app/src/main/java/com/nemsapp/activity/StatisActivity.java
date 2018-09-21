@@ -19,9 +19,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.table.TableData;
 import com.nemsapp.R;
-import com.nemsapp.vo.AlertData;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_data);
+        setContentView(R.layout.activity_statis);
 
         //隐藏actionBar
         ActionBar actionBar = getSupportActionBar();
@@ -64,20 +62,9 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         eTime = findViewById(R.id.btn_Etime);
         eTime.setOnClickListener(this);
-        listView = findViewById(R.id.history_data);
+        listView = findViewById(R.id.static_data);
 
-        List<AlertData> list = new ArrayList<>();
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        list.add(new AlertData(0.1, 3.3, 2.3, 3.3, 2.33, 2.3));
-        TableData tableData = new TableData("", list, dataColumn_1, dataColumn_2, dataColumn_3,
-                dataColumn_4, dataColumn_5, dataColumn_6);
-        table = findViewById(R.id.alert_table);
-        table.setTableData(tableData);
+        table = findViewById(R.id.static_table);
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
 
         initDate();
