@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -172,22 +174,6 @@ public class MenuActivity extends AppCompatActivity {
                         if (!result) {
                             //请求新的configList
                             downloadFile("configList.xml", Constants.folderPath);
-                            //获取新的md5列表
-                            configFileMD5 = FileHelper.getConfigFileMD5();
-                            //获取config文件的种类
-                            Set<String> configFileType = configFileMD5.keySet();
-                            //按种类遍历
-                            for (String type : configFileType) {
-                                String path = Constants.folderPath + "/" + type;
-                                List<FileMD5> md5List = configFileMD5.get(type);
-                                //遍历当前种类的文件的md5
-                                for (FileMD5 f : md5List) {
-                                    File file = new File(path + "/" + f.getFileName());
-                                    if (!f.getMd5().equals(MD5.getMD5(file))) {
-                                        downloadFile(f.getFileName(), path);
-                                    }
-                                }
-                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -198,26 +184,38 @@ public class MenuActivity extends AppCompatActivity {
             //不存在configList
         } else {
             downloadFile("configList.xml", Constants.folderPath);
-            //获取md5列表
-            configFileMD5 = FileHelper.getConfigFileMD5();
-            //获取config文件的种类
-            Set<String> configFileType = configFileMD5.keySet();
-            //按种类遍历
-            for (String type : configFileType) {
-                String path = Constants.folderPath + "/" + type;
-                File configFolder = new File(path);
-                if (!configFolder.exists()) {
-                    configFolder.mkdirs();
-                }
-                List<FileMD5> md5List = configFileMD5.get(type);
-                //全部下载
-                for (FileMD5 f : md5List) {
-                    downloadFile(f.getFileName(), path);
-                }
-            }
+
         }
 
     }
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    //获取md5列表
+                    configFileMD5 = FileHelper.getConfigFileMD5();
+                    //获取config文件的种类
+                    Set<String> configFileType = configFileMD5.keySet();
+                    //按种类遍历
+                    for (String type : configFileType) {
+                        String path = Constants.folderPath + "/" + type;
+                        File configFolder = new File(path);
+                        if (!configFolder.exists()) {
+                            configFolder.mkdirs();
+                        }
+                        List<FileMD5> md5List = configFileMD5.get(type);
+                        //全部下载
+                        for (FileMD5 f : md5List) {
+                            downloadFile(f.getFileName(), path);
+                        }
+                    }
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     private void downloadFile(final String filename, final String path) {
         //下载路径，如果路径无效了，可换成你的下载路径
@@ -251,6 +249,11 @@ public class MenuActivity extends AppCompatActivity {
 
                     bufferedSink.close();
                     Log.i("DOWNLOAD", "download success");
+                    if (filename.equals("configList.xml")){
+                        Message message=new Message();
+                        message.what=1;
+                        handler.sendMessage(message);
+                    }
                     Log.i("DOWNLOAD", "totalTime=" + (System.currentTimeMillis() - startTime));
                 } catch (Exception e) {
                     e.printStackTrace();

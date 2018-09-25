@@ -44,7 +44,8 @@
         <activity
             android:name=".activity.GraphActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.StatisActivity" />
+        <activity android:name=".activity.StatisActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".activity.FileActivity">
 
         </activity>
