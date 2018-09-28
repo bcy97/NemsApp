@@ -33,5 +33,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     implementation group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    implementation group: 'jaxen', name: 'jaxen', version: '1.1.4'
+
 
 }

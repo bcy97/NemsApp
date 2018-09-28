@@ -20,7 +20,9 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.ArrayTableData;
 import com.bin.david.form.data.table.TableData;
+import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
@@ -111,7 +113,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 //        getDataByUnitName(unitlist.get(0));
 
 
-//        getDataByUnitName(unitlist.get(0));
+        getDataByUnitName(unitlist.get(0));
 
     }
 
@@ -184,12 +186,12 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            TableData tableData = null;
                             Gson gson = new Gson();
                             List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
                             }.getType());
-                            tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            final TableData tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
+
                         }
                     });
                 } catch (IOException e) {

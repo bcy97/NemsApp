@@ -125,11 +125,6 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //回退到桌面
-   /* <action android:name="android.intent.action.MAIN" />
-    <category android:name="android.intent.category.HOME" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.MONKEY"/>*/
-
         Intent intent = new Intent();
         intent.setAction("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.HOME");
@@ -189,10 +184,10 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     //获取md5列表
                     configFileMD5 = FileHelper.getConfigFileMD5();
@@ -249,9 +244,9 @@ public class MenuActivity extends AppCompatActivity {
 
                     bufferedSink.close();
                     Log.i("DOWNLOAD", "download success");
-                    if (filename.equals("configList.xml")){
-                        Message message=new Message();
-                        message.what=1;
+                    if (filename.equals("configList.xml")) {
+                        Message message = new Message();
+                        message.what = 1;
                         handler.sendMessage(message);
                     }
                     Log.i("DOWNLOAD", "totalTime=" + (System.currentTimeMillis() - startTime));

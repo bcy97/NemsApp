@@ -70,19 +70,23 @@ public class GraphActivity extends AppCompatActivity {
         mDatas.add(new Node("1", "-1", "曲线图"));
 
         mDatas.add(new Node(2 + "", 1 + "", "单元名1"));
-        mDatas.add(new Node(3 + "", 1 + "", "单元名2"));
-        mDatas.add(new Node(4 + "", 1 + "", "单元名3"));
+        mDatas.add(new Node(3 + "", 2 + "", "点名1"));
+        mDatas.add(new Node(4 + "", 2 + "", "点名2"));
 
-        mDatas.add(new Node(7 + "", 2 + "", "点名1"));
-        mDatas.add(new Node(8 + "", 2 + "", "点名2"));
 
-        mDatas.add(new Node(9 + "", 3 + "", "点名1"));
-        mDatas.add(new Node(10 + "", 3 + "", "点名2"));
-        mDatas.add(new Node(11 + "", 3 + "", "点名3"));
-        mDatas.add(new Node(12 + "", 4 + "", "点名1"));
-        mDatas.add(new Node(13 + "", 4 + "", "点名2"));
-        mDatas.add(new Node(14 + "", 4 + "", "点名3"));
-        mDatas.add(new Node(15 + "", 4 + "", "点名4"));
-        mDatas.add(new Node(16 + "", 4 + "", "点名5"));
+        mDatas.add(new Node(5 + "", 1 + "", "单元名2"));
+        mDatas.add(new Node(6 + "", 5 + "", "点名1"));
+        mDatas.add(new Node(7 + "", 5 + "", "点名2"));
+        mDatas.add(new Node(8 + "", 5 + "", "点名3"));
+
+
+        mDatas.add(new Node(9 + "", 1 + "", "单元名3"));
+
+
+        mDatas.add(new Node(10 + "", 9 + "", "点名1"));
+        mDatas.add(new Node(11 + "", 9 + "", "点名2"));
+        mDatas.add(new Node(12 + "", 9 + "", "点名3"));
+        mDatas.add(new Node(13 + "", 9 + "", "点名4"));
+        mDatas.add(new Node(14 + "", 9 + "", "点名5"));
     }
 }

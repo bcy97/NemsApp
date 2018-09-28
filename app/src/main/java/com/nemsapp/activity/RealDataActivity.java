@@ -15,11 +15,14 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Constants;
+import com.nemsapp.vo.AnO;
 import com.nemsapp.vo.AnValue;
 import com.nemsapp.vo.RealData;
 import com.nemsapp.vo.UnitInfo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,7 +124,11 @@ public class RealDataActivity extends AppCompatActivity {
                             }.getType());
                             realData = new ArrayList<>();
                             for (String name : data.keySet()) {
-                                realData.add(new RealData(name, data.get(name).getValid() == 1 ? data.get(name).getValue() : 0, ""));
+                                AnO anO = CfgData.getInstance().getAnO(name);
+                                double value = data.get(name).getValid() == 1 ? data.get(name).getValue() : 0;
+                                BigDecimal bigDecimal = new BigDecimal(value);
+                                double v = bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue();
+                                realData.add(new RealData(anO.getCname(), bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue(), anO.getLgName()));
                             }
                             tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);
                             table.setTableData(tableData);
@@ -133,7 +140,6 @@ public class RealDataActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 
 
 }

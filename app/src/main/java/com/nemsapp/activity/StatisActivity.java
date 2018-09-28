@@ -37,6 +37,13 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
     private SmartTable table;
 
+    //设置起始时间
+    private Date startTime;
+    private Date endTime;
+
+    //设置要查询的点名
+    private String pointName;
+
     final Column<String> dataColumn_1 = new Column<>("序号", "id");
     final Column<Integer> dataColumn_2 = new Column<>("时间", "time");
     final Column<Integer> dataColumn_3 = new Column<>("监控单元", "unit");
@@ -96,6 +103,17 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
             pvTime.show(v);
+        } else if (v.getId() == R.id.btn_Search) {
+            if (startTime == null) {
+                Toast.makeText(this, "请选择开始时间", Toast.LENGTH_SHORT);
+                return;
+            }
+            if (endTime == null) {
+                Toast.makeText(this, "请选择结束时间", Toast.LENGTH_SHORT);
+                return;
+            }
+            if (pointName == null || pointName.equals("")) {
+            }
         }
     }
 
