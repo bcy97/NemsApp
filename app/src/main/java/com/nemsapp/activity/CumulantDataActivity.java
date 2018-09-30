@@ -133,6 +133,7 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                 try {
                     final Response response = call.execute();
                     final String strdata = response.body().string();
+                    System.out.println(strdata);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

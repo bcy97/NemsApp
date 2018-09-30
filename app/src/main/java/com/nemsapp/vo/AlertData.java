@@ -3,76 +3,57 @@ package com.nemsapp.vo;
 import com.bin.david.form.annotation.SmartColumn;
 
 public class AlertData {
-    @SmartColumn(name = "id")
-    private double id;
     @SmartColumn(name = "time")
-    private double time;
+    private String time;
     @SmartColumn(name = "unit")
-    private double unit;
+    private String unit;
     @SmartColumn(name = "event")
-    private double event;
-    @SmartColumn(name = "content")
-    private double content;
-    @SmartColumn(name = "data")
-    private double data;
+    private String event;
+    @SmartColumn(name = "info")
+    private String info;
+    @SmartColumn(name = "more")
+    private String more;
 
     public AlertData() {
     }
 
-    public AlertData(double id, double time, double unit, double event, double content, double data) {
-        this.id = id;
-        this.time = time;
-        this.unit = unit;
-        this.event = event;
-        this.content = content;
-        this.data = data;
-    }
-
-    public double getId() {
-        return id;
-    }
-
-    public void setId(double id) {
-        this.id = id;
-    }
-
-    public double getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public double getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    public void setUnit(double unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 
-    public double getEvent() {
+    public String getEvent() {
         return event;
     }
 
-    public void setEvent(double event) {
+    public void setEvent(String event) {
         this.event = event;
     }
 
-    public double getContent() {
-        return content;
+    public String getInfo() {
+        return info;
     }
 
-    public void setContent(double content) {
-        this.content = content;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    public double getData() {
-        return data;
+    public String getMore() {
+        return more;
     }
 
-    public void setData(double data) {
-        this.data = data;
+    public void setMore(String more) {
+        this.more = more;
     }
 }

@@ -1,7 +1,10 @@
 package com.nemsapp.vo;
 
+import com.bin.david.form.annotation.SmartTable;
 
 public class EventLog {
+
+
     private String name;
     private String type;
     private String data;

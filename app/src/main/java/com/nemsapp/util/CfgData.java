@@ -20,6 +20,7 @@ public class CfgData {
 
     //单元名
     private List<UnitInfo> unitList;
+    private Map<Short, UnitInfo> unitnameMap;
 
     //点信息的table
     private Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
@@ -136,6 +137,13 @@ public class CfgData {
         return stIdNameMap.keySet().toArray(new Integer[stIdNameMap.size()]);
     }
 
+    public UnitInfo getUnitInfoByNo(short unitNo) {
+        if (unitnameMap.containsKey(unitNo)) {
+            return unitnameMap.get(unitNo);
+        }
+        return null;
+    }
+
 
     public void initConfig() {
         anMap = new HashMap<>();
@@ -148,6 +156,7 @@ public class CfgData {
         unitAnMap = new HashMap<>();
         unitAcMap = new HashMap<>();
         unitStMap = new HashMap<>();
+        unitnameMap = new HashMap<>();
 
         File folder = new File(Constants.folderPath + "/unitConfigs");
         if (folder != null && !folder.exists()) {
@@ -183,9 +192,11 @@ public class CfgData {
             unitStMap.put(unitNo, initStO(doc, unitNo));
 
             unitList.add(ui);
+            unitnameMap.put(ui.getUnitNo(), ui);
         }
 
     }
+
 
     @SuppressWarnings("unchecked")
     /**
