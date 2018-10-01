@@ -1,12 +1,11 @@
 package com.nemsapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,13 +18,23 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.table.TableData;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
+import com.nemsapp.adapter.SimpleTreeAdapter;
+import com.nemsapp.treelist.Node;
+import com.nemsapp.treelist.TreeListViewAdapter;
+import com.nemsapp.util.CfgData;
+import com.nemsapp.util.Utils;
+import com.nemsapp.vo.*;
+import okhttp3.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static com.nemsapp.util.Constants.*;
 
 public class StatisActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,7 +42,6 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     private Button sTime;
     private Button eTime;
 
-    private ListView listView;
 
     private SmartTable table;
 
@@ -42,14 +50,23 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     private Date endTime;
 
     //设置要查询的点名
-    private String pointName;
+    private List<String> unitnames;
 
-    final Column<String> dataColumn_1 = new Column<>("序号", "id");
-    final Column<Integer> dataColumn_2 = new Column<>("时间", "time");
-    final Column<Integer> dataColumn_3 = new Column<>("监控单元", "unit");
-    final Column<Integer> dataColumn_4 = new Column<>("事件名称", "event");
-    final Column<Integer> dataColumn_5 = new Column<>("事件内容", "content");
-    final Column<Integer> dataColumn_6 = new Column<>("相关数据", "data");
+    final Column<Integer> dataColumn_1 = new Column<>("时间", "time");
+    final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
+    final Column<Integer> dataColumn_3 = new Column<>("事件名称", "event");
+    final Column<Integer> dataColumn_4 = new Column<>("事件内容", "content");
+    final Column<Integer> dataColumn_5 = new Column<>("相关数据", "data");
+
+    //侧边栏数据
+    private ListView sideBar;
+    private TreeListViewAdapter siderBarAdapter;
+    private List<Node> sideBarDatas = new ArrayList<>();
+
+    private OkHttpClient okHttpClient = new OkHttpClient();
+
+    //返回的数据
+    private EventInfo[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +79,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
             actionBar.hide();
         }
 
+        //初始化时间选择器
         initCustomTimePicker();
 
         sTime = findViewById(R.id.btn_Stime);
@@ -69,28 +87,35 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         eTime = findViewById(R.id.btn_Etime);
         eTime.setOnClickListener(this);
-        listView = findViewById(R.id.static_data);
 
+        //初始化表格
         table = findViewById(R.id.static_table);
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
 
-        initDate();
+        //初始化侧边栏
+        sideBar = findViewById(R.id.static_data);
+        initSideBar();
+
+        //初始化默认参数，获取默认数据
+        unitnames = new ArrayList<>();
+        unitnames.add(sideBarDatas.get(1).getName());
+        getEventInfoByUnitName(unitnames);
+
     }
 
-    private void initDate() {
-        final List<String> list = new ArrayList<>();
-        list.add("所有单元");
-        list.add("单元1");
-        list.add("单元2");
-        list.add("单元3");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(StatisActivity.this, "clicked", Toast.LENGTH_SHORT);
-            }
-        });
+    private void initSideBar() {
+
+        //获取所有单元列表
+        List<UnitInfo> unitList = CfgData.getInstance().getUnitList();
+
+        sideBarDatas.add(new Node(0, -1, "所有单元"));
+
+        for (UnitInfo unit : unitList) {
+            sideBarDatas.add(new Node(unit.getUnitNo(), 0, unit.getName()));
+        }
+
+        siderBarAdapter = new SimpleTreeAdapter(sideBar, StatisActivity.this, sideBarDatas, 0, R.mipmap.tree_ex, R.mipmap.tree_ec);
+        sideBar.setAdapter(siderBarAdapter);
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
     }
 
@@ -112,7 +137,10 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "请选择结束时间", Toast.LENGTH_SHORT);
                 return;
             }
-            if (pointName == null || pointName.equals("")) {
+            if (unitnames == null || unitnames.size() <= 0) {
+                unitnames = new ArrayList<>();
+                unitnames.add(sideBarDatas.get(1).getName());
+                getEventInfoByUnitNameAndTime(startTime, endTime, unitnames);
             }
         }
     }
@@ -139,8 +167,10 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 if (v.getId() == R.id.btn_Stime && pvTime != null) {
                     sTime.setText("开始时间：" + getTime(date));
+                    startTime = date;
                 } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
                     eTime.setText("结束时间：" + getTime(date));
+                    endTime = date;
                 }
                 Toast.makeText(StatisActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
@@ -183,6 +213,179 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         Log.d("getTime()", "choice date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
+    }
+
+
+    private void getEventInfoByUnitName(final List<String> unitnames) {
+
+        String url = "http://" + ip + ":8080/eventInfo/getInfo";
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        final Gson gson = new Gson();
+        Map<String, String> param = new HashMap<>();
+        param.put("unitname", gson.toJson(unitnames));
+
+        RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
+
+        // 创建request
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        //同步请求
+        final Call call = okHttpClient.newCall(request);
+
+        //发起请求
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = call.execute();
+                    final String strdata = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TableData tableData = null;
+                            final ArrayList<AlertData> alertDatas = new ArrayList<>();
+                            data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
+                            }.getType());
+
+                            for (int i = 0; i < data.length; i++) {
+                                AlertData alertData = new AlertData();
+                                int id = data[i].getId();
+                                switch (Utils.getTypeInId(id)) {
+                                    case IDAN:
+                                        AnO anO = CfgData.getInstance().getAnO(id);
+                                        alertData.setEvent(anO.getCname());
+                                        break;
+                                    case IDACC:
+                                        AcO acO = CfgData.getInstance().getAcO(id);
+                                        alertData.setEvent(acO.getCname());
+                                        break;
+                                    case IDST:
+                                        StO stO = CfgData.getInstance().getStO(id);
+                                        alertData.setEvent(stO.getCname());
+                                }
+                                alertData.setUnit(CfgData.getInstance().getUnitInfoByNo(Utils.getUnitNoInId(id)).getName());
+                                alertData.setTime(data[i].getStrTime().substring(0, data[i].getStrTime().length() - 4));
+                                alertData.setInfo(data[i].getInfo());
+                                if (data[i].getEventLogs() != null && data[i].getEventLogs().size() > 0) {
+                                    alertData.setMore("查看详情");
+                                } else {
+                                    alertData.setMore("无更多信息");
+                                }
+                                alertDatas.add(alertData);
+                            }
+
+                            tableData = new TableData("查询统计", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
+                            tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
+                                @Override
+                                public void onClick(Column column, String value, Object o, int col, int row) {
+                                    if (value != null && value.equals("查看详情")) {
+                                        List<EventLog> eventLogs = data[row].getEventLogs();
+                                        Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
+                                        intent.putExtra("data", gson.toJson(eventLogs));
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                            table.setTableData(tableData);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void getEventInfoByUnitNameAndTime(final Date stime, Date etime, final List<String> unitnames) {
+
+        String url = "http://" + ip + ":8080/eventInfo/getInfo";
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        final Gson gson = new Gson();
+        Map<String, String> param = new HashMap<>();
+        param.put("stime", getTime(stime));
+        param.put("etime", getTime(etime));
+        param.put("unitname", gson.toJson(unitnames));
+
+        RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
+
+        // 创建request
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        //同步请求
+        final Call call = okHttpClient.newCall(request);
+
+        //发起请求
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = call.execute();
+                    final String strdata = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TableData tableData = null;
+                            final ArrayList<AlertData> alertDatas = new ArrayList<>();
+                            data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
+                            }.getType());
+
+                            for (int i = 0; i < data.length; i++) {
+                                AlertData alertData = new AlertData();
+                                int id = data[i].getId();
+                                switch (Utils.getTypeInId(id)) {
+                                    case IDAN:
+                                        AnO anO = CfgData.getInstance().getAnO(id);
+                                        alertData.setEvent(anO.getCname());
+                                        break;
+                                    case IDACC:
+                                        AcO acO = CfgData.getInstance().getAcO(id);
+                                        alertData.setEvent(acO.getCname());
+                                        break;
+                                    case IDST:
+                                        StO stO = CfgData.getInstance().getStO(id);
+                                        alertData.setEvent(stO.getCname());
+                                }
+                                alertData.setUnit(CfgData.getInstance().getUnitInfoByNo(Utils.getUnitNoInId(id)).getName());
+                                alertData.setTime(data[i].getStrTime().substring(0, data[i].getStrTime().length() - 4));
+                                alertData.setInfo(data[i].getInfo());
+                                if (data[i].getEventLogs() != null && data[i].getEventLogs().size() > 0) {
+                                    alertData.setMore("查看详情");
+                                } else {
+                                    alertData.setMore("无更多信息");
+                                }
+                                alertDatas.add(alertData);
+                            }
+
+                            tableData = new TableData("查询统计", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
+                            tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
+                                @Override
+                                public void onClick(Column column, String value, Object o, int col, int row) {
+                                    if (value != null && value.equals("查看详情")) {
+                                        List<EventLog> eventLogs = data[row].getEventLogs();
+                                        Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
+                                        intent.putExtra("data", gson.toJson(eventLogs));
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                            table.setTableData(tableData);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 

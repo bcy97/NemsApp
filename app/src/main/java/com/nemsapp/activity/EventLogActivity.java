@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.vo.EventLog;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class EventLogActivity extends AppCompatActivity {

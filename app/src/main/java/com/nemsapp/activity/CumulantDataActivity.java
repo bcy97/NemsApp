@@ -101,14 +101,9 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 
         initSideBar();
 
-        //获取屏幕高宽
-        Resources resources = this.getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
 
         table = findViewById(R.id.table);
-        table.getConfig().setMinTableWidth(width);
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
 
 //        getDataByUnitName(unitlist.get(0));
 
@@ -165,13 +160,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(data));
 
-        // Create RequestBody
-        RequestBody formBody = new FormBody.Builder()
-                .add("stime", getTime(stime))
-                .add("etime", getTime(etime))
-                .add("unitname", unitname)
-                .build();
-
         final Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
@@ -218,7 +206,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 unitName = unitlist.get(position);
-                System.out.println(unitName);
                 getDataByUnitName(unitName);
             }
         });

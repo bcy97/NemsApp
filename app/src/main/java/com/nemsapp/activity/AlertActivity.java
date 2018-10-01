@@ -37,11 +37,11 @@ public class AlertActivity extends AppCompatActivity {
 
     private EventInfo[] data;
 
-    final Column<Integer> dataColumn_2 = new Column<>("时间", "time");
-    final Column<Integer> dataColumn_3 = new Column<>("监控单元", "unit");
-    final Column<Integer> dataColumn_4 = new Column<>("事件名称", "event");
-    final Column<Integer> dataColumn_5 = new Column<>("事件内容", "info");
-    final Column<Integer> dataColumn_6 = new Column<>("相关数据", "more");
+    final Column<Integer> dataColumn_1 = new Column<>("时间", "time");
+    final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
+    final Column<Integer> dataColumn_3 = new Column<>("事件名称", "event");
+    final Column<Integer> dataColumn_4 = new Column<>("事件内容", "info");
+    final Column<Integer> dataColumn_5 = new Column<>("相关数据", "more");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class AlertActivity extends AppCompatActivity {
                                 alertDatas.add(alertData);
                             }
 
-                            tableData = new TableData("即时警报", alertDatas, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+                            tableData = new TableData("即时警报", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
                             tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
                                 @Override
                                 public void onClick(Column column, String value, Object o, int col, int row) {

@@ -13,6 +13,11 @@ import com.nemsapp.R;
 import com.nemsapp.adapter.SimpleTreeAdapter;
 import com.nemsapp.treelist.Node;
 import com.nemsapp.treelist.TreeListViewAdapter;
+import com.nemsapp.util.CfgData;
+import com.nemsapp.vo.AcO;
+import com.nemsapp.vo.AnO;
+import com.nemsapp.vo.StO;
+import com.nemsapp.vo.UnitInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +25,9 @@ import java.util.List;
 public class GraphActivity extends AppCompatActivity {
 
     private LineChart lineChart;
-    private TreeListViewAdapter mAdapter;
-    private List<Node> mDatas = new ArrayList<Node>();
+    private TreeListViewAdapter siderBarAdapter;
+    private List<Node> sideBarDatas = new ArrayList<>();
+    private ListView sideBar;
 
 
     @Override
@@ -42,13 +48,13 @@ public class GraphActivity extends AppCompatActivity {
         //一个LineDataSet就是一条线
 
 
-        ListView mTree = findViewById(R.id.list);
+        ListView sideBar = findViewById(R.id.list);
 
         initDatas();
 
-        mAdapter = new SimpleTreeAdapter(mTree, GraphActivity.this,
-                mDatas, 0, R.mipmap.tree_ex, R.mipmap.tree_ec);
-        mTree.setAdapter(mAdapter);
+        siderBarAdapter = new SimpleTreeAdapter(sideBar, GraphActivity.this,
+                sideBarDatas, 0, R.mipmap.tree_ex, R.mipmap.tree_ec);
+        sideBar.setAdapter(siderBarAdapter);
 
     }
 
@@ -67,26 +73,31 @@ public class GraphActivity extends AppCompatActivity {
 
     private void initDatas() {
         // id , pid , label , 其他属性
-        mDatas.add(new Node("1", "-1", "曲线图"));
+        List<UnitInfo> unitList = CfgData.getInstance().getUnitList();
 
-        mDatas.add(new Node(2 + "", 1 + "", "单元名1"));
-        mDatas.add(new Node(3 + "", 2 + "", "点名1"));
-        mDatas.add(new Node(4 + "", 2 + "", "点名2"));
+        int i = 1;
 
+        sideBarDatas.add(new Node(0 + "", "-1", "所有单元"));
 
-        mDatas.add(new Node(5 + "", 1 + "", "单元名2"));
-        mDatas.add(new Node(6 + "", 5 + "", "点名1"));
-        mDatas.add(new Node(7 + "", 5 + "", "点名2"));
-        mDatas.add(new Node(8 + "", 5 + "", "点名3"));
+        for (UnitInfo unit : unitList) {
+            int index = i;
+            sideBarDatas.add(new Node(index + "", 0 + "", unit.getName()));
+            for (AnO anO : CfgData.getInstance().getAnOByUnitNo(unit.getUnitNo())) {
+                i++;
+                sideBarDatas.add(new Node(i + "", index + "", anO.getCname()));
+            }
+            for (StO stO : CfgData.getInstance().getStOByUnitNo(unit.getUnitNo())) {
+                i++;
+                sideBarDatas.add(new Node(i + "", index + "", stO.getCname()));
+            }
+            for (AcO acO : CfgData.getInstance().getAcOByUnitNo(unit.getUnitNo())) {
+                i++;
+                sideBarDatas.add(new Node(i + "", index + "", acO.getCname()));
+            }
+            i++;
+        }
 
-
-        mDatas.add(new Node(9 + "", 1 + "", "单元名3"));
-
-
-        mDatas.add(new Node(10 + "", 9 + "", "点名1"));
-        mDatas.add(new Node(11 + "", 9 + "", "点名2"));
-        mDatas.add(new Node(12 + "", 9 + "", "点名3"));
-        mDatas.add(new Node(13 + "", 9 + "", "点名4"));
-        mDatas.add(new Node(14 + "", 9 + "", "点名5"));
+        siderBarAdapter = new SimpleTreeAdapter(sideBar, GraphActivity.this, sideBarDatas, 0, R.mipmap.tree_ex, R.mipmap.tree_ec);
+        sideBar.setAdapter(siderBarAdapter);
     }
 }
