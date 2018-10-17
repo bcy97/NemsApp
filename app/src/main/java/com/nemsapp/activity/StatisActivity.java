@@ -24,10 +24,12 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.adapter.SimpleTreeAdapter;
 import com.nemsapp.treelist.Node;
+import com.nemsapp.treelist.OnTreeNodeClickListener;
 import com.nemsapp.treelist.TreeListViewAdapter;
 import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Utils;
 import com.nemsapp.vo.*;
+
 import okhttp3.*;
 
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     private TimePickerView pvTime;
     private Button sTime;
     private Button eTime;
+    private Button search;
 
 
     private SmartTable table;
@@ -55,8 +58,8 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     final Column<Integer> dataColumn_1 = new Column<>("时间", "time");
     final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
     final Column<Integer> dataColumn_3 = new Column<>("事件名称", "event");
-    final Column<Integer> dataColumn_4 = new Column<>("事件内容", "content");
-    final Column<Integer> dataColumn_5 = new Column<>("相关数据", "data");
+    final Column<Integer> dataColumn_4 = new Column<>("事件内容", "info");
+    final Column<Integer> dataColumn_5 = new Column<>("相关数据", "more");
 
     //侧边栏数据
     private ListView sideBar;
@@ -88,6 +91,9 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         eTime = findViewById(R.id.btn_Etime);
         eTime.setOnClickListener(this);
 
+        search = findViewById(R.id.btn_Search);
+        search.setOnClickListener(this);
+
         //初始化表格
         table = findViewById(R.id.static_table);
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
@@ -116,6 +122,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         siderBarAdapter = new SimpleTreeAdapter(sideBar, StatisActivity.this, sideBarDatas, 0, R.mipmap.tree_ex, R.mipmap.tree_ec);
         sideBar.setAdapter(siderBarAdapter);
+
 //        drawerLayout.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
     }
 
@@ -137,11 +144,18 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "请选择结束时间", Toast.LENGTH_SHORT);
                 return;
             }
-            if (unitnames == null || unitnames.size() <= 0) {
-                unitnames = new ArrayList<>();
-                unitnames.add(sideBarDatas.get(1).getName());
-                getEventInfoByUnitNameAndTime(startTime, endTime, unitnames);
+            unitnames = new ArrayList<>();
+
+            for (Node node : sideBarDatas) {
+                if (node.isLeaf() && node.isChecked()) {
+                    unitnames.add(node.getName());
+                }
             }
+            if (unitnames.size() <= 0) {
+                unitnames.add(sideBarDatas.get(1).getName());
+            }
+
+            getEventInfoByUnitNameAndTime(startTime, endTime, unitnames);
         }
     }
 
@@ -224,6 +238,9 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         final Gson gson = new Gson();
         Map<String, String> param = new HashMap<>();
+        Date now = new Date();
+        param.put("stime", getTime(new Date(now.getTime() - 86400000L)));
+        param.put("etime", getTime(now));
         param.put("unitname", gson.toJson(unitnames));
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
@@ -244,6 +261,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                 try {
                     final Response response = call.execute();
                     final String strdata = response.body().string();
+                    System.out.println(strdata);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -331,6 +349,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                 try {
                     final Response response = call.execute();
                     final String strdata = response.body().string();
+                    System.out.println(strdata);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

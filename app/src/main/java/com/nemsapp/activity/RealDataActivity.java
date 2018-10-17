@@ -66,7 +66,8 @@ public class RealDataActivity extends AppCompatActivity {
         initSideBar();
 
         table = findViewById(R.id.table);
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
+                .setShowXSequence(false);
 
         if (unitlist.size() > 0) {
 

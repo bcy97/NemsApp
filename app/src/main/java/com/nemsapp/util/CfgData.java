@@ -168,7 +168,7 @@ public class CfgData {
         SAXReader reader = new SAXReader();
         File[] fileArr = folder.listFiles();
         for (File file : fileArr) {
-            Document doc = null;
+            Document doc;
             try {
                 doc = reader.read(file);
             } catch (DocumentException e) {

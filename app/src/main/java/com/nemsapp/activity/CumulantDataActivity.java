@@ -103,7 +103,8 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
 
 
         table = findViewById(R.id.table);
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
+                .setShowXSequence(false);
 
 //        getDataByUnitName(unitlist.get(0));
 

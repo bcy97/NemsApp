@@ -2,6 +2,7 @@ package com.nemsapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.table.TableData;
@@ -26,7 +27,8 @@ public class EventLogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_log);
 
         table = findViewById(R.id.log_table);
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
+                .setShowXSequence(false);
 
         Gson gson = new Gson();
 

@@ -52,7 +52,7 @@ public class AlertActivity extends AppCompatActivity {
 
         getAlert();
 
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth()).setShowXSequence(false);
 
     }
 

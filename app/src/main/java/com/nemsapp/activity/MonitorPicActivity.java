@@ -8,6 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,14 +34,18 @@ import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.callback.Callback;
 
+import org.dom4j.io.SAXReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +58,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MonitorPicActivity extends AppCompatActivity {
 
+    //主pic图
     private MainUI mainUI;
+
+    //pic列表
+    private ListView sidebar;
+    List<String> picList;
 
     private Map<String, Map<String, String>> piclib;
 
@@ -62,27 +75,58 @@ public class MonitorPicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monitor_pic);
         mainUI = findViewById(R.id.mainUI);
 
-        imageStatues = new HashMap<>();
+        sidebar = findViewById(R.id.pic_sidebar);
 
+        imageStatues = new HashMap<>();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
-        initXml();
+        initSideBar();
+
+        if (picList != null && picList.size() > 0) {
+            initXml(picList.get(0));
+        }
 
         timer.schedule(task, 0, 5000);
 
     }
 
-    private void initXml() {
+    private void initSideBar() {
+        picList = new ArrayList<>();
+
+        //获取文件夹
+        File folder = new File(Constants.folderPath + "/pictures");
+        if (folder != null && !folder.exists()) return;
+        if (!folder.isDirectory()) return;
+
+        //获取文件夹下的pic列表
+        picList = Arrays.asList(folder.list());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, picList);
+        sidebar.setAdapter(adapter);
+        sidebar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                initXml(picList.get(i));
+            }
+        });
+
+    }
+
+    private void initXml(String filename) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
+
         try {
             builder = factory.newDocumentBuilder();
 //            InputStream is = getResources().openRawResource(R.raw.system2);
-            InputStream is = getAssets().open("xml/a.xml");
+//            InputStream is = getAssets().open("xml/a.xml");
+
+            File file = new File(Constants.folderPath + "/pictures/" + filename);
+            InputStream is = new FileInputStream(file);
             Document document = builder.parse(is);
             InputStream is2 = getResources().openRawResource(R.raw.piclib);
             Document pic = builder.parse(is2);
@@ -337,7 +381,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    update();
+//                    update();
                     break;
             }
             super.handleMessage(msg);
