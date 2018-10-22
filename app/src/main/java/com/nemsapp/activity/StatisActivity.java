@@ -242,6 +242,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         param.put("stime", getTime(new Date(now.getTime() - 86400000L)));
         param.put("etime", getTime(now));
         param.put("unitname", gson.toJson(unitnames));
+        param.put("type", 0 + "");
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
 
@@ -330,6 +331,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         param.put("stime", getTime(stime));
         param.put("etime", getTime(etime));
         param.put("unitname", gson.toJson(unitnames));
+        param.put("type", 0 + "");
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
 

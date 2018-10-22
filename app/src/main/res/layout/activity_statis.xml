@@ -19,7 +19,7 @@
                 android:id="@+id/btn_Stime"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:layout_weight="2"
                 android:text="@string/stime" />
 
@@ -27,9 +27,17 @@
                 android:id="@+id/btn_Etime"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:layout_weight="2"
                 android:text="@string/etime" />
+
+            <Button
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:text="遥测" />
 
             <Button
                 android:id="@+id/btn_Search"
