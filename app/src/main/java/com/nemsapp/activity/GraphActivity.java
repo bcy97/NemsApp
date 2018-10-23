@@ -1,5 +1,6 @@
 package com.nemsapp.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,9 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.adapter.SimpleTreeAdapter;
 import com.nemsapp.treelist.Node;
@@ -60,6 +63,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     private ListView sideBar;
 
     private Map<String, List<GraphLine>> pointMap;
+    private Map<String, GraphLine> allPoints;
 
     private TimePickerView pvTime;
     private Button time;
@@ -116,6 +120,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         int i = 1;
 
         pointMap = new HashMap<>();
+        allPoints = new HashMap<>();
 
         sideBarDatas.add(new Node(0, "-1", "所有单元"));
 
@@ -141,7 +146,9 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     List<GraphLine> lineInfos = new ArrayList<>();
                     List<Element> lines = group.elements();
                     for (Element line : lines) {
-                        lineInfos.add(new GraphLine(line.attributeValue("name"), line.attributeValue("color")));
+                        GraphLine graphLine = new GraphLine(line.attributeValue("name"), line.attributeValue("color"));
+                        lineInfos.add(graphLine);
+                        allPoints.put(line.attributeValue("name"), graphLine);
                         pointMap.put(group.attributeValue("name"), lineInfos);
                     }
                 }
@@ -169,7 +176,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 //        data.put("unitname", unitname);
         Gson gson = new Gson();
 
-        List<String> pointNames = new ArrayList<>();
+        final List<String> pointNames = new ArrayList<>();
 
         for (Node node : sideBarDatas) {
             if (node.isLeaf() && node.isChecked()) {
@@ -194,10 +201,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 .post(requestBody)
                 .build();
 
-        //同步请求
-        final Call call = okHttpClient.newCall(request);
-
         //发起请求
+        final Call call = okHttpClient.newCall(request);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -208,9 +213,30 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            final Gson gson = new Gson();
-                        }
+                            Gson gson = new Gson();
+                            Map<String, Float[]> data = gson.fromJson(strdata, new TypeToken<HashMap<String, Float[]>>() {
+                            }.getType());
+                            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                            for (String pointName : pointNames) {
+                                ArrayList<Entry> yVals = new ArrayList<>();
+                                for (int i = 0; i < data.get(pointName).length; i++) {
+                                    yVals.add(new Entry(data.get(pointName)[i], i));
+                                }
+                                LineDataSet lineData = new LineDataSet(yVals, pointName);
+                                lineData.setCubicIntensity(0.2f);
+                                lineData.setDrawFilled(true);  //设置包括的范围区域填充颜色
+                                lineData.setDrawCircles(true);  //设置有圆点
+                                lineData.setLineWidth(2f);    //设置线的宽度
+                                lineData.setCircleSize(5f);   //设置小圆的大小
+                                int color = Color.parseColor(allPoints.get(pointName).getColor());
+                                lineData.setHighLightColor(color);
+                                lineData.setColor(color);    //设置曲线的颜色
+                                lineData.setFillColor(color);
+                                dataSets.add(lineData);
 
+                            }
+                            lineChart.setData(new LineData(dataSets));
+                        }
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
