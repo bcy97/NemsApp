@@ -16,9 +16,15 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -43,6 +49,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -55,20 +62,33 @@ import static com.nemsapp.util.Constants.ip;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private OkHttpClient okHttpClient = new OkHttpClient();
+    private OkHttpClient okHttpClient;
 
-    private LineChart lineChart;
+
+    //侧边栏相关对象
     private TreeListViewAdapter sideBarAdapter;
     private List<Node> sideBarDatas = new ArrayList<>();
     private ListView sideBar;
 
+    //侧边栏数据和曲线信息
     private Map<String, List<GraphLine>> pointMap;
     private Map<String, GraphLine> allPoints;
 
+    //时间选择器和搜索按钮
     private TimePickerView pvTime;
     private Button time;
     private Date chooseTime;
     private Button search;
+
+    //曲线图相关元素
+    private LineChart lineChart;
+    private XAxis xAxis;                //X轴
+    private YAxis leftYAxis;            //左侧Y轴
+    private YAxis rightYaxis;           //右侧Y轴
+    private Legend legend;              //图例
+    //曲线图X轴数据
+    private String[] xVals = {"0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"
+            , "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"};
 
 
     @Override
@@ -76,43 +96,79 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        //隐藏顶部标题栏
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
-        sideBar = findViewById(R.id.list);
+        //初始化OkhttpClient，设置超时时长
+        okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
 
+        //初始化sidebar
+        sideBar = findViewById(R.id.list);
         initSiderBar();
 
+
+        //初始化时间选择器和搜索按钮，添加监听
         time = findViewById(R.id.chooseTime);
         time.setOnClickListener(this);
         search = findViewById(R.id.Search);
         search.setOnClickListener(this);
-
         initCustomTimePicker();
 
-        //设置数据
-        List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            entries.add(new Entry(i, (float) (Math.random()) * 80));
-        }
-        //一个LineDataSet就是一条线
-
+        //初始化曲线图
+        lineChart = findViewById(R.id.lineChart);
+        initChart();
 
     }
 
-    private void init() {
+    private void initChart() {
 
-        lineChart = findViewById(R.id.lineChart);
-        //显示边界
+        //是否展示网格线
+        lineChart.setDrawGridBackground(false);
+        //是否显示边界
         lineChart.setDrawBorders(true);
+        //是否可以拖动
+        lineChart.setDragEnabled(true);
+        //是否有触摸事件
+        lineChart.setTouchEnabled(true);
+        //设置XY轴动画效果
+        lineChart.animateY(2500);
+        lineChart.animateX(1500);
 
-        List<Entry> entries = new ArrayList<>();
+        /***XY轴的设置***/
+        xAxis = lineChart.getXAxis();
+        leftYAxis = lineChart.getAxisLeft();
+        rightYaxis = lineChart.getAxisRight();
+        //X轴设置显示位置在底部
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAxisMinimum(0f);
+        //保证Y轴从0开始，不然会上移一点
+//        leftYAxis.setAxisMinimum(0f);
+//        rightYaxis.setAxisMinimum(0f);
+        //设置x轴的坐标
+        xAxis.setGranularity(12f);
+//        xAxis.setValueFormatter(formatter);
+        IAxisValueFormatter formatter = new IndexAxisValueFormatter(xVals);
+        xAxis.setValueFormatter(formatter);
 
-        LineDataSet lineDataSet = new LineDataSet(entries, "");
-        LineData data = new LineData(lineDataSet);
-        lineChart.setData(data);
+        /***折线图例 标签 设置***/
+        legend = lineChart.getLegend();
+        //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(12f);
+        //显示位置 左下方
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        //是否绘制在图表里面
+        legend.setDrawInside(true);
+
+
     }
 
     private void initSiderBar() {
@@ -194,6 +250,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         data.put("pointName", gson.toJson(pointNames));
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(data));
+        System.out.println(gson.toJson(data));
 
         // 创建request
         final Request request = new Request.Builder()
@@ -208,19 +265,18 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             public void run() {
                 try {
                     final Response response = call.execute();
-                    final String strdata = response.body().string();
-                    System.out.println(strdata);
+                    final String strData = response.body().string();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Gson gson = new Gson();
-                            Map<String, Float[]> data = gson.fromJson(strdata, new TypeToken<HashMap<String, Float[]>>() {
+                            Map<String, Float[]> data = gson.fromJson(strData, new TypeToken<HashMap<String, Float[]>>() {
                             }.getType());
-                            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                             for (String pointName : pointNames) {
                                 ArrayList<Entry> yVals = new ArrayList<>();
                                 for (int i = 0; i < data.get(pointName).length; i++) {
-                                    yVals.add(new Entry(data.get(pointName)[i], i));
+                                    yVals.add(new Entry(i, data.get(pointName)[i]));
                                 }
                                 LineDataSet lineData = new LineDataSet(yVals, pointName);
                                 lineData.setCubicIntensity(0.2f);
@@ -228,14 +284,17 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 lineData.setDrawCircles(true);  //设置有圆点
                                 lineData.setLineWidth(2f);    //设置线的宽度
                                 lineData.setCircleSize(5f);   //设置小圆的大小
-                                int color = Color.parseColor(allPoints.get(pointName).getColor());
-                                lineData.setHighLightColor(color);
-                                lineData.setColor(color);    //设置曲线的颜色
-                                lineData.setFillColor(color);
+                                if (allPoints.get(pointName).getColor() != null) {
+                                    int color = Color.parseColor("#" + allPoints.get(pointName).getColor());
+                                    lineData.setHighLightColor(color);
+                                    lineData.setColor(color);    //设置曲线的颜色
+                                }
+                                lineData.setDrawFilled(false);
                                 dataSets.add(lineData);
 
                             }
                             lineChart.setData(new LineData(dataSets));
+                            lineChart.invalidate();
                         }
                     });
                 } catch (IOException e) {

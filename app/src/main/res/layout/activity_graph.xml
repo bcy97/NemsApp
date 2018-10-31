@@ -7,31 +7,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/chooseTime"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:layout_weight="2"
-            android:text="@string/stime" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-        <Button
-            android:id="@+id/Search"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="查询" />
+            <Button
+                android:id="@+id/chooseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_weight="2"
+                android:text="@string/stime" />
+
+            <Button
+                android:id="@+id/Search"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="查询" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
 
     <ListView
         android:id="@+id/list"
