@@ -23,7 +23,7 @@ import okhttp3.OkHttpClient;
 
 public class MenuActivity extends AppCompatActivity {
 
-    final OkHttpClient client = new OkHttpClient();
+    private FileHelper fileHelper = new FileHelper();
 
     Map<String, List<FileMD5>> configFileMD5;
 
@@ -101,7 +101,10 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        configFileMD5 = new FileHelper().initConfig();
+        configFileMD5 = fileHelper.initConfig();
+
+        fileHelper.initPictureLib();
+
     }
 
     @Override

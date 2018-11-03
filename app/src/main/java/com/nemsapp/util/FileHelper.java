@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nemsapp.vo.FileMD5;
 
 import org.w3c.dom.Document;
@@ -14,6 +16,7 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +95,64 @@ public class FileHelper {
 
     public void initPictureLib() {
 
+        final File publiclib = new File(Constants.folderPath + "/iconlibrary/public");
+        File userlib = new File(Constants.folderPath + "/iconlibrary/user");
+
+        if (!publiclib.exists()) {
+            publiclib.mkdirs();
+        }
+        if (!userlib.exists()) {
+            userlib.mkdirs();
+        }
+
+        final List<String> publicList = Arrays.asList(publiclib.list());
+        final List<String> userList = Arrays.asList(userlib.list());
+
+        //获取服务器的图片库列表
+        String url = "http://" + Constants.ip + ":8080/file/getIconLibrary";
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        //同步请求
+        final Call call = okHttpClient.newCall(request);
+
+        //发起请求
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = call.execute();
+                    final String strdata = response.body().string();
+                    Gson gson = new Gson();
+                    Map<String, List<String>> iconLib = gson.fromJson(strdata, new TypeToken<Map<String, List<String>>>() {
+                    }.getType());
+                    Map<String, Integer> pubDiff = getDiffrent(publicList, iconLib.get("public"));
+                    Map<String, Integer> userDiff = getDiffrent(userList, iconLib.get("user"));
+
+                    for (String name : pubDiff.keySet()) {
+                        if (pubDiff.get(name) == 0) {
+                            File file = new File(Constants.folderPath + "/iconlibrary/public/" + name);
+                            file.delete();
+                        } else {
+                            downloadFile(name, Constants.folderPath + "/iconlibrary/public", "iconlibrary/public");
+                        }
+                    }
+                    for (String name : userDiff.keySet()) {
+                        if (userDiff.get(name) == 0) {
+                            File file = new File(Constants.folderPath + "/iconlibrary/user/" + name);
+                            file.delete();
+                        } else {
+                            downloadFile(name, Constants.folderPath + "/iconlibrary/user", "iconlibrary/user");
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
     }
 
     public boolean downloadFile(final String filename, final String path, final String kind) {
@@ -110,8 +171,6 @@ public class FileHelper {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
-        final boolean result;
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -213,5 +272,34 @@ public class FileHelper {
 
         return md5Map;
 
+    }
+
+    /**
+     * 获取两个List的不同元素
+     *
+     * @param list1
+     * @param list2
+     * @return
+     */
+    private static Map<String, Integer> getDiffrent(List<String> list1, List<String> list2) {
+        Map<String, Integer> map = new HashMap<>(list1.size() + list2.size());
+        Map<String, Integer> diff = new HashMap<>();
+        for (String string : list1) {
+            map.put(string, 0);
+        }
+        for (String string : list2) {
+            Integer cc = map.get(string);
+            if (cc != null) {
+                map.put(string, ++cc);
+                continue;
+            }
+            map.put(string, 2);
+        }
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 0 || entry.getValue() == 2) {
+                diff.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return diff;
     }
 }
