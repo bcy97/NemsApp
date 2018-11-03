@@ -124,8 +124,6 @@ public class MonitorPicActivity extends AppCompatActivity {
 
         try {
             builder = factory.newDocumentBuilder();
-//            InputStream is = getResources().openRawResource(R.raw.system2);
-//            InputStream is = getAssets().open("xml/a.xml");
 
             File file = new File(Constants.folderPath + "/pictures/" + filename);
             InputStream is = new FileInputStream(file);
@@ -246,7 +244,8 @@ public class MonitorPicActivity extends AppCompatActivity {
                 image1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
                 Bitmap bitmap = null;
                 try {
-                    InputStream is = getAssets().open(element.getAttribute("filename"));
+                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename"));
+                    InputStream is = new FileInputStream(file);
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                 } catch (IOException e) {
@@ -301,7 +300,8 @@ public class MonitorPicActivity extends AppCompatActivity {
                 imageStatue1s.add(imageStatue1);
                 Bitmap bitmap = null;
                 try {
-                    InputStream is = getAssets().open(element.getAttribute("filename_open"));
+                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
+                    InputStream is = new FileInputStream(file);
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                 } catch (IOException e) {
@@ -309,7 +309,8 @@ public class MonitorPicActivity extends AppCompatActivity {
                 }
                 imageStatue1.setOpen(bitmap);
                 try {
-                    InputStream is = getAssets().open(element.getAttribute("filename_close"));
+                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_close"));
+                    InputStream is = new FileInputStream(file);
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                 } catch (IOException e) {
@@ -356,7 +357,8 @@ public class MonitorPicActivity extends AppCompatActivity {
             commandButton.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
             Bitmap bitmap = null;
             try {
-                InputStream is = getAssets().open(element.getAttribute("filename_down"));
+                File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_down"));
+                InputStream is = new FileInputStream(file);
                 bitmap = BitmapFactory.decodeStream(is);
                 is.close();
             } catch (IOException e) {
@@ -367,7 +369,8 @@ public class MonitorPicActivity extends AppCompatActivity {
                 if (element.getAttribute("filename_up").equals("")) {
                     continue;
                 }
-                InputStream is = getAssets().open(element.getAttribute("filename_up"));
+                File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_up"));
+                InputStream is = new FileInputStream(file);
                 bitmap = BitmapFactory.decodeStream(is);
                 is.close();
             } catch (IOException e) {
