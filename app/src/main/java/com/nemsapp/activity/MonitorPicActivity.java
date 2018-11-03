@@ -32,6 +32,8 @@ import com.nemsapp.vo.AnValue;
 import com.nemsapp.vo.StValue;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
+import com.okhttplib.annotation.ContentType;
+import com.okhttplib.annotation.Encoding;
 import com.okhttplib.callback.Callback;
 
 import org.dom4j.io.SAXReader;
@@ -419,8 +421,8 @@ public class MonitorPicActivity extends AppCompatActivity {
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
                         .setUrl("http://" + Constants.ip + ":8080/monitor/getAnData")
-                        .setContentType("application/json")
-                        .setResponseEncoding("utf8")
+                        .setContentType(ContentType.JSON)
+                        .setResponseEncoding(Encoding.UTF_8)
                         .addParamJson(data)
                         .build(),
                 new Callback() {
@@ -462,8 +464,8 @@ public class MonitorPicActivity extends AppCompatActivity {
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder()
                         .setUrl("http://" + Constants.ip + ":8080/monitor/getStData")
-                        .setContentType("application/json")
-                        .setResponseEncoding("utf8")
+                        .setContentType(ContentType.JSON)
+                        .setResponseEncoding(Encoding.UTF_8)
                         .addParamJson(data)
                         .build(),
                 new Callback() {
