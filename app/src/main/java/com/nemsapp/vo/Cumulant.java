@@ -77,4 +77,17 @@ public class Cumulant {
     public void setStatis(double statis) {
         this.statis = statis;
     }
+
+    @Override
+    public String toString() {
+        return "Cumulant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", today=" + today +
+                ", lastday=" + lastday +
+                ", thisMonth=" + thisMonth +
+                ", lastMonth=" + lastMonth +
+                ", statis=" + statis +
+                '}';
+    }
 }

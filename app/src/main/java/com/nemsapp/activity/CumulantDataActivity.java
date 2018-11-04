@@ -1,10 +1,8 @@
 package com.nemsapp.activity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,9 +18,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.table.ArrayTableData;
 import com.bin.david.form.data.table.TableData;
-import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
@@ -32,6 +28,8 @@ import com.nemsapp.vo.Cumulant;
 import com.nemsapp.vo.UnitInfo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -105,9 +102,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
         table = findViewById(R.id.table);
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
                 .setShowXSequence(false);
-
-//        getDataByUnitName(unitlist.get(0));
-
 
         getDataByUnitName(unitlist.get(0));
 
@@ -179,7 +173,27 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                             Gson gson = new Gson();
                             List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
                             }.getType());
-                            final TableData tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
+
+                            for (Cumulant cumulant : data) {
+                                //修改当月的小数位数
+                                BigDecimal bigDecimal = new BigDecimal(cumulant.getThisMonth());
+                                cumulant.setThisMonth(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改当日小数位数
+                                bigDecimal = new BigDecimal(cumulant.getToday());
+                                cumulant.setToday(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改上月小数位数
+                                bigDecimal = new BigDecimal(cumulant.getLastMonth());
+                                cumulant.setLastMonth(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改上日小数位数
+                                bigDecimal = new BigDecimal(cumulant.getLastday());
+                                cumulant.setLastday(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改统计值小数位数
+                                bigDecimal = new BigDecimal(cumulant.getStatis());
+                                cumulant.setStatis(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                System.out.println(cumulant);
+                            }
+
+                            TableData tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
 
                         }

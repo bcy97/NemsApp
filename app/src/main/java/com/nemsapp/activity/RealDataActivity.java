@@ -118,7 +118,7 @@ public class RealDataActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            TableData tableData = null;
+                            TableData tableData;
                             Gson gson = new Gson();
                             System.out.println(strdata);
                             Map<String, AnValue> data = gson.fromJson(strdata, new TypeToken<HashMap<String, AnValue>>() {
@@ -128,7 +128,6 @@ public class RealDataActivity extends AppCompatActivity {
                                 AnO anO = CfgData.getInstance().getAnO(name);
                                 double value = data.get(name).getValid() == 1 ? data.get(name).getValue() : 0;
                                 BigDecimal bigDecimal = new BigDecimal(value);
-                                double v = bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue();
                                 realData.add(new RealData(anO.getCname(), bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue(), anO.getLgName()));
                             }
                             tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);

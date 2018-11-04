@@ -113,6 +113,8 @@ public class MonitorPicActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 initXml(picList.get(i));
+                mainUI.invalidate();
+
             }
         });
 
@@ -141,6 +143,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             mainUI.setImageStatue1s(parseImageStatue1(document));
             mainUI.setCommandButtons(parseCommandButton(document));
             mainUI.setDyanDatas(parseDyanData(document));
+
 
         } catch (Exception e) {
             e.printStackTrace();
