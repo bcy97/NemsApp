@@ -19,8 +19,6 @@ import com.nemsapp.vo.FileMD5;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.OkHttpClient;
-
 public class MenuActivity extends AppCompatActivity {
 
     private FileHelper fileHelper = new FileHelper();

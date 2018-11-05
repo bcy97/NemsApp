@@ -127,10 +127,30 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            TableData tableData = null;
+                            TableData tableData;
                             Gson gson = new Gson();
                             List<Cumulant> data = gson.fromJson(strdata, new TypeToken<ArrayList<Cumulant>>() {
                             }.getType());
+
+                            //修改小数位数
+                            for (Cumulant cumulant : data) {
+                                //修改当月的小数位数
+                                BigDecimal bigDecimal = new BigDecimal(cumulant.getThisMonth());
+                                cumulant.setThisMonth(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改当日小数位数
+                                bigDecimal = new BigDecimal(cumulant.getToday());
+                                cumulant.setToday(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改上月小数位数
+                                bigDecimal = new BigDecimal(cumulant.getLastMonth());
+                                cumulant.setLastMonth(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改上日小数位数
+                                bigDecimal = new BigDecimal(cumulant.getLastday());
+                                cumulant.setLastday(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                                //修改统计值小数位数
+                                bigDecimal = new BigDecimal(cumulant.getStatis());
+                                cumulant.setStatis(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
+                            }
+
                             tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);
                             table.setTableData(tableData);
                         }
@@ -190,7 +210,6 @@ public class CumulantDataActivity extends AppCompatActivity implements View.OnCl
                                 //修改统计值小数位数
                                 bigDecimal = new BigDecimal(cumulant.getStatis());
                                 cumulant.setStatis(bigDecimal.setScale(1, RoundingMode.UP).doubleValue());
-                                System.out.println(cumulant);
                             }
 
                             TableData tableData = new TableData(unitname, data, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5, dataColumn_6);

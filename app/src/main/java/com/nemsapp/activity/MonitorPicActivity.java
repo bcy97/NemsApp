@@ -139,8 +139,9 @@ public class MonitorPicActivity extends AppCompatActivity {
             mainUI.setTexts(parseString(document));
             mainUI.setImage0s(parseImage0(document));
             mainUI.setImage1s(parseImage1(document));
-            mainUI.setImageStatue0s(parseImageStatue0(document));
-            mainUI.setImageStatue1s(parseImageStatue1(document));
+            parseImageStatue(document);
+//            mainUI.setImageStatue0s(parseImageStatue0(document));
+//            mainUI.setImageStatue1s(parseImageStatue1(document));
             mainUI.setCommandButtons(parseCommandButton(document));
             mainUI.setDyanDatas(parseDyanData(document));
 
@@ -260,6 +261,77 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
 
         return image1s;
+    }
+
+    private void parseImageStatue(Document document) {
+        NodeList lineList = document.getElementsByTagName("imageStatue");
+        List<ImageStatue_0> imageStatue0s = new ArrayList<>();
+        List<ImageStatue_1> imageStatue1s = new ArrayList<>();
+        for (int i = 0; i < lineList.getLength(); i++) {
+            Element element = (Element) lineList.item(i);
+            if (element.getAttribute("iconType").equals("0")) {
+                ImageStatue_0 imageStatue0 = new ImageStatue_0();
+                String[] from = element.getAttribute("from").split(",");
+                imageStatue0.setX(Integer.parseInt(from[0]));
+                imageStatue0.setY(Integer.parseInt(from[1]));
+                imageStatue0.setName(element.getAttribute("stname"));
+                imageStatue0.setColor(element.getAttribute("borderColor"));
+                imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                try {
+                    imageStatue0.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
+                } catch (Exception e) {
+                    System.out.println(imageStatue0.getName());
+                    continue;
+                }
+
+                try {
+                    imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
+                } catch (Exception e) {
+                    System.out.println(imageStatue0.getName());
+                    continue;
+                }
+
+                imageStatue0.init();
+                imageStatue0s.add(imageStatue0);
+
+                if (!imageStatue0.getName().equals("")) {
+                    imageStatues.put(imageStatue0.name, imageStatue0);
+                }
+            } else {
+                ImageStatue_1 imageStatue1 = new ImageStatue_1();
+                String[] from = element.getAttribute("from").split(",");
+                String[] to = element.getAttribute("to").split(",");
+                imageStatue1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+                imageStatue1.setName(element.getAttribute("stname"));
+                imageStatue1s.add(imageStatue1);
+                Bitmap bitmap = null;
+                try {
+                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
+                    InputStream is = new FileInputStream(file);
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageStatue1.setOpen(bitmap);
+                try {
+                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_close"));
+                    InputStream is = new FileInputStream(file);
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageStatue1.setClose(bitmap);
+                imageStatue1s.add(imageStatue1);
+
+                if (!imageStatue1.name.equals("")) {
+                    imageStatues.put(imageStatue1.name, imageStatue1);
+                }
+            }
+        }
+        mainUI.setImageStatue0s(imageStatue0s);
+        mainUI.setImageStatue1s(imageStatue1s);
     }
 
     private List<ImageStatue_0> parseImageStatue0(Document document) {
@@ -389,7 +461,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-//                    update();
+                    update();
                     break;
             }
             super.handleMessage(msg);
