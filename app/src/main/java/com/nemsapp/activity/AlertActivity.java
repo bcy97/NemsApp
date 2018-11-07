@@ -37,11 +37,11 @@ public class AlertActivity extends AppCompatActivity {
 
     private EventInfo[] data;
 
-    final Column<Integer> dataColumn_1 = new Column<>("时间", "time");
-    final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
-    final Column<Integer> dataColumn_3 = new Column<>("事件名称", "event");
-    final Column<Integer> dataColumn_4 = new Column<>("事件内容", "info");
-    final Column<Integer> dataColumn_5 = new Column<>("相关数据", "more");
+    final Column<String> dataColumn_1 = new Column<>("时间", "time");
+    final Column<String> dataColumn_2 = new Column<>("监控单元", "unit");
+    final Column<String> dataColumn_3 = new Column<>("事件名称", "event");
+    final Column<String> dataColumn_4 = new Column<>("事件内容", "info");
+    final Column<String> dataColumn_5 = new Column<>("相关数据", "more");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,8 @@ public class AlertActivity extends AppCompatActivity {
 
         getAlert();
 
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth()).setShowXSequence(false);
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
+                .setShowXSequence(false);
 
     }
 
@@ -119,7 +120,13 @@ public class AlertActivity extends AppCompatActivity {
                                     if (value != null && value.equals("查看详情")) {
                                         List<EventLog> eventLogs = data[row].getEventLogs();
                                         Intent intent = new Intent(AlertActivity.this, EventLogActivity.class);
+
+                                        //传递具体事件信息
                                         intent.putExtra("data", gson.toJson(eventLogs));
+
+                                        //传递表头
+                                        String title = alertDatas.get(row).getEvent() + " " + alertDatas.get(row).getInfo() + " 时间：" + alertDatas.get(row).getTime();
+                                        intent.putExtra("title", title);
                                         startActivity(intent);
                                     }
                                 }

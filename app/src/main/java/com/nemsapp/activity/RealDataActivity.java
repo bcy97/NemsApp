@@ -1,5 +1,6 @@
 package com.nemsapp.activity;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -66,8 +67,14 @@ public class RealDataActivity extends AppCompatActivity {
         initSideBar();
 
         table = findViewById(R.id.table);
+
+        //设置宽度占满屏幕，取消x轴abc
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
                 .setShowXSequence(false);
+
+
+        //设置左对齐
+        dataColumn_1.setTextAlign(Paint.Align.LEFT);
 
         if (unitlist.size() > 0) {
 
@@ -131,6 +138,8 @@ public class RealDataActivity extends AppCompatActivity {
                                 realData.add(new RealData(anO.getCname(), bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue(), anO.getLgName()));
                             }
                             tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);
+
+
                             table.setTableData(tableData);
                         }
                     });

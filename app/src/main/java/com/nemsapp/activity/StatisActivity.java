@@ -55,7 +55,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     //设置要查询的点名
     private List<String> unitnames;
 
-    final Column<Integer> dataColumn_1 = new Column<>("时间", "time");
+    final Column<String> dataColumn_1 = new Column<>("时间", "time");
     final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
     final Column<Integer> dataColumn_3 = new Column<>("事件名称", "event");
     final Column<Integer> dataColumn_4 = new Column<>("事件内容", "info");
@@ -96,7 +96,8 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         //初始化表格
         table = findViewById(R.id.static_table);
-        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth());
+        table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
+                .setShowXSequence(false);
 
         //初始化侧边栏
         sideBar = findViewById(R.id.static_data);
@@ -306,6 +307,10 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                                         List<EventLog> eventLogs = data[row].getEventLogs();
                                         Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
                                         intent.putExtra("data", gson.toJson(eventLogs));
+
+                                        //传递表头
+                                        String title = alertDatas.get(row).getEvent() + " " + alertDatas.get(row).getInfo() + " 时间：" + alertDatas.get(row).getTime();
+                                        intent.putExtra("title", title);
                                         startActivity(intent);
                                     }
                                 }

@@ -35,7 +35,7 @@ public class EventLogActivity extends AppCompatActivity {
         List<EventLog> logs = gson.fromJson(getIntent().getStringExtra("data"), new TypeToken<List<EventLog>>() {
         }.getType());
 
-        TableData tableData = new TableData("test", logs, dataColumn_1, dataColumn_2, dataColumn_3);
+        TableData tableData = new TableData(getIntent().getStringExtra("title"), logs, dataColumn_1, dataColumn_2, dataColumn_3);
         table.setTableData(tableData);
     }
 }
