@@ -16,7 +16,7 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -32,6 +32,7 @@ import com.nemsapp.R;
 import com.nemsapp.adapter.SimpleTreeAdapter;
 import com.nemsapp.treelist.Node;
 import com.nemsapp.treelist.TreeListViewAdapter;
+import com.nemsapp.ui.LineChartMarkView;
 import com.nemsapp.util.Constants;
 import com.nemsapp.vo.GraphLine;
 
@@ -122,6 +123,10 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         //初始化曲线图
         lineChart = findViewById(R.id.lineChart);
+        //关闭右下角描述
+        Description description = new Description();
+        description.setEnabled(false);
+
         initChart();
 
     }
@@ -281,9 +286,9 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 LineDataSet lineData = new LineDataSet(yVals, pointName);
                                 lineData.setCubicIntensity(0.2f);
                                 lineData.setDrawFilled(true);  //设置包括的范围区域填充颜色
-                                lineData.setDrawCircles(true);  //设置有圆点
-                                lineData.setLineWidth(2f);    //设置线的宽度
-                                lineData.setCircleSize(5f);   //设置小圆的大小
+                                lineData.setDrawCircles(false);  //设置无圆点
+                                lineData.setLineWidth(1f);    //设置线的宽度
+                                lineData.setValueTextSize(0f);  //设置字体大小为0（默认不显示数值）
                                 if (allPoints.get(pointName).getColor() != null) {
                                     int color = Color.parseColor("#" + allPoints.get(pointName).getColor());
                                     lineData.setHighLightColor(color);
@@ -294,7 +299,6 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
                             }
                             lineChart.setData(new LineData(dataSets));
-                            lineChart.invalidate();
                         }
                     });
                 } catch (IOException e) {
@@ -316,6 +320,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 return;
             } else {
                 getData();
+                setMarkerView();
             }
         }
     }
@@ -384,5 +389,15 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     private String getTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
+    }
+
+    /**
+     * 设置 可以显示X Y 轴自定义值的 MarkerView
+     */
+    public void setMarkerView() {
+        LineChartMarkView mv = new LineChartMarkView(this, xAxis.getValueFormatter());
+        mv.setChartView(lineChart);
+        lineChart.setMarker(mv);
+        lineChart.invalidate();
     }
 }

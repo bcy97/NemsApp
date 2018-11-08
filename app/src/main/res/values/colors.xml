@@ -7,4 +7,6 @@
     <color name="coler0">#ff0000</color>
     <color name="color1">#00ff00</color>
 
+    <color name="transparent_gray">#90000000</color>
+
 </resources>
