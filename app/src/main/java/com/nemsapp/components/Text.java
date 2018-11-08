@@ -14,6 +14,7 @@ public class Text {
     private int y;
     private int size;
     private int loc_y;
+    private String color;
 
     public Text() {
         paint = new Paint();
@@ -34,9 +35,14 @@ public class Text {
         //设置文字样式
         paint.setTypeface(Typeface.DEFAULT);
         //设置文字颜色
-        paint.setColor(Color.WHITE);
+        int c = Color.parseColor(color);
+        paint.setColor(c);
         //设置文字baseline向下偏移size
         loc_y = y + size;
+        //设置对齐
+//        paint.setTextAlign(Paint.Align.RIGHT);
+        //设置字体
+//        paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
     }
 
     public String getText() {
@@ -69,5 +75,13 @@ public class Text {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

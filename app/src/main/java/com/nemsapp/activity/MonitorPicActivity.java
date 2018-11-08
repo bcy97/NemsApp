@@ -92,6 +92,14 @@ public class MonitorPicActivity extends AppCompatActivity {
             initXml(picList.get(0));
         }
 
+
+        //初始化刷新数据
+        getAnData(mainUI.getDyanDatas());
+        getStData(imageStatues);
+        //刷新msg的内容
+        mainUI.invalidate();
+
+
         timer.schedule(task, 0, 5000);
 
     }
@@ -208,6 +216,7 @@ public class MonitorPicActivity extends AppCompatActivity {
             text.setY(Integer.parseInt(from[1]));
             text.setText(element.getAttribute("text"));
             text.setSize(Integer.parseInt(element.getAttribute("size")));
+            text.setColor(element.getAttribute("fontColor"));
             text.init();
             texts.add(text);
         }
@@ -519,7 +528,6 @@ public class MonitorPicActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
-                        Toast.makeText(getApplicationContext(), "网络连接不可用", Toast.LENGTH_SHORT).show();
                         System.out.println("网络连接不可用");
                     }
                 }
@@ -548,7 +556,7 @@ public class MonitorPicActivity extends AppCompatActivity {
                         .build(),
                 new Callback() {
                     @Override
-                    public void onSuccess(HttpInfo info) throws IOException {
+                    public void onSuccess(HttpInfo info) {
                         String response = info.getRetDetail();
                         Gson gson = new Gson();
                         Map<String, StValue> data = gson.fromJson(response, new TypeToken<HashMap<String, StValue>>() {
@@ -566,8 +574,7 @@ public class MonitorPicActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(HttpInfo info) throws IOException {
-                        Toast.makeText(getApplicationContext(), "网络连接不可用", Toast.LENGTH_SHORT).show();
+                    public void onFailure(HttpInfo info) {
                         System.out.println("网络连接不可用");
                     }
                 }
