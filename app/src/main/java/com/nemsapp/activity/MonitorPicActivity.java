@@ -2,6 +2,7 @@ package com.nemsapp.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -75,23 +76,29 @@ public class MonitorPicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_pic);
+
+        //初始化MainUI
         mainUI = findViewById(R.id.mainUI);
 
+        //初始化侧边栏
         sidebar = findViewById(R.id.pic_sidebar);
 
         imageStatues = new HashMap<>();
 
+        //隐藏顶部标题栏
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
+        //初始化侧边导航栏
         initSideBar();
 
+
+        //初始化默认pic图（默认第一张）
         if (picList != null && picList.size() > 0) {
             initXml(picList.get(0));
         }
-
 
         //初始化刷新数据
         getAnData(mainUI.getDyanDatas());
@@ -99,7 +106,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         //刷新msg的内容
         mainUI.invalidate();
 
-
+        //添加定时任务，定时刷新pic图中数据
         timer.schedule(task, 0, 5000);
 
     }
@@ -122,7 +129,6 @@ public class MonitorPicActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 initXml(picList.get(i));
                 mainUI.invalidate();
-
             }
         });
 
@@ -135,21 +141,26 @@ public class MonitorPicActivity extends AppCompatActivity {
         try {
             builder = factory.newDocumentBuilder();
 
+            //初始化piclib
+            InputStream is2 = getResources().openRawResource(R.raw.piclib);
+            Document pic = builder.parse(is2);
+            piclib = initPiclib16(pic);
+
+            //初始化pic图
             File file = new File(Constants.folderPath + "/pictures/" + filename);
             InputStream is = new FileInputStream(file);
             Document document = builder.parse(is);
-            InputStream is2 = getResources().openRawResource(R.raw.piclib);
-            Document pic = builder.parse(is2);
 
-            piclib = initPiclib16(pic);
+            mainUI.setBackgroundColor(Color.parseColor(document.getDocumentElement().getAttribute("color")));
+
+            mainUI.setPicWidth(Integer.parseInt(document.getDocumentElement().getAttribute("width")));
+            mainUI.setPicHeight(Integer.parseInt(document.getDocumentElement().getAttribute("height")));
 
             mainUI.setLines(parseLine(document));
             mainUI.setTexts(parseString(document));
             mainUI.setImage0s(parseImage0(document));
             mainUI.setImage1s(parseImage1(document));
             parseImageStatue(document);
-//            mainUI.setImageStatue0s(parseImageStatue0(document));
-//            mainUI.setImageStatue1s(parseImageStatue1(document));
             mainUI.setCommandButtons(parseCommandButton(document));
             mainUI.setDyanDatas(parseDyanData(document));
 
@@ -341,75 +352,6 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
         mainUI.setImageStatue0s(imageStatue0s);
         mainUI.setImageStatue1s(imageStatue1s);
-    }
-
-    private List<ImageStatue_0> parseImageStatue0(Document document) {
-        NodeList lineList = document.getElementsByTagName("imageStatue");
-        List<ImageStatue_0> imageStatue0s = new ArrayList<>();
-        for (int i = 0; i < lineList.getLength(); i++) {
-            Element element = (Element) lineList.item(i);
-            if (element.getAttribute("iconType").equals("0")) {
-                ImageStatue_0 imageStatue0 = new ImageStatue_0();
-                String[] from = element.getAttribute("from").split(",");
-                imageStatue0.setX(Integer.parseInt(from[0]));
-                imageStatue0.setY(Integer.parseInt(from[1]));
-                imageStatue0.setName(element.getAttribute("stname"));
-                imageStatue0.setColor(element.getAttribute("borderColor"));
-                imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                imageStatue0.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
-                imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
-                imageStatue0.init();
-                imageStatue0s.add(imageStatue0);
-
-                if (!imageStatue0.getName().equals("")) {
-                    imageStatues.put(imageStatue0.name, imageStatue0);
-                }
-            }
-        }
-
-        return imageStatue0s;
-    }
-
-    private List<ImageStatue_1> parseImageStatue1(Document document) {
-        NodeList lineList = document.getElementsByTagName("imageStatue");
-        List<ImageStatue_1> imageStatue1s = new ArrayList<>();
-        for (int i = 0; i < lineList.getLength(); i++) {
-            Element element = (Element) lineList.item(i);
-            if (element.getAttribute("iconType").equals("1")) {
-                ImageStatue_1 imageStatue1 = new ImageStatue_1();
-                String[] from = element.getAttribute("from").split(",");
-                String[] to = element.getAttribute("to").split(",");
-                imageStatue1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
-                imageStatue1.setName(element.getAttribute("stname"));
-                imageStatue1s.add(imageStatue1);
-                Bitmap bitmap = null;
-                try {
-                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
-                    InputStream is = new FileInputStream(file);
-                    bitmap = BitmapFactory.decodeStream(is);
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                imageStatue1.setOpen(bitmap);
-                try {
-                    File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_close"));
-                    InputStream is = new FileInputStream(file);
-                    bitmap = BitmapFactory.decodeStream(is);
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                imageStatue1.setClose(bitmap);
-                imageStatue1s.add(imageStatue1);
-
-                if (!imageStatue1.name.equals("")) {
-                    imageStatues.put(imageStatue1.name, imageStatue1);
-                }
-            }
-        }
-
-        return imageStatue1s;
     }
 
     private Map<String, DyanData> parseDyanData(Document document) {
