@@ -13,8 +13,16 @@ public class Text {
     private int x;
     private int y;
     private int size;
+
+    //字体渲染位置
+    private int loc_x;
     private int loc_y;
+
     private String color;
+    //对齐方式，0为左对齐，1为居中，2为右对齐
+    private int align;
+    //最右端
+    private int right;
 
     public Text() {
         paint = new Paint();
@@ -22,7 +30,7 @@ public class Text {
 
     public void draw(Canvas canvas) {
         //全部显示，起点在(50,100)点
-        canvas.drawText(text, x, loc_y, paint);
+        canvas.drawText(text, loc_x, loc_y, paint);
     }
 
     public void init() {
@@ -39,6 +47,20 @@ public class Text {
         paint.setColor(c);
         //设置文字baseline向下偏移size
         loc_y = y + size;
+
+        switch (align) {
+            case 0:
+                loc_x = x;
+                break;
+            case 1:
+                loc_x = (x + right) / 2;
+                paint.setTextAlign(Paint.Align.CENTER);
+                break;
+            case 2:
+                loc_x = right;
+                paint.setTextAlign(Paint.Align.RIGHT);
+                break;
+        }
         //设置对齐
 //        paint.setTextAlign(Paint.Align.RIGHT);
         //设置字体
@@ -83,5 +105,21 @@ public class Text {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getAlign() {
+        return align;
+    }
+
+    public void setAlign(int align) {
+        this.align = align;
+    }
+
+    public int getRight() {
+        return right;
+    }
+
+    public void setRight(int right) {
+        this.right = right;
     }
 }

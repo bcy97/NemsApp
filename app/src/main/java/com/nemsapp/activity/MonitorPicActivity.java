@@ -225,9 +225,12 @@ public class MonitorPicActivity extends AppCompatActivity {
             String[] from = element.getAttribute("from").split(",");
             text.setX(Integer.parseInt(from[0]));
             text.setY(Integer.parseInt(from[1]));
+            String[] to = element.getAttribute("to").split(",");
+            text.setRight(Integer.parseInt(to[0]));
             text.setText(element.getAttribute("text"));
             text.setSize(Integer.parseInt(element.getAttribute("size")));
             text.setColor(element.getAttribute("fontColor"));
+            text.setAlign(Integer.parseInt(element.getAttribute("align")));
             text.init();
             texts.add(text);
         }
@@ -412,7 +415,7 @@ public class MonitorPicActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    update();
+//                    update();
                     break;
             }
             super.handleMessage(msg);
