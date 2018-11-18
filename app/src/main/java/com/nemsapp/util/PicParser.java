@@ -5,19 +5,21 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 
-import com.nemsapp.components.staticComponets.CommandButton;
 import com.nemsapp.components.DyanData;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.components.image.ImageStatue_0;
 import com.nemsapp.components.image.ImageStatue_1;
 import com.nemsapp.components.image.Image_0;
 import com.nemsapp.components.image.Image_1;
+import com.nemsapp.components.staticComponets.CommandButton;
 import com.nemsapp.components.staticComponets.Line;
+import com.nemsapp.components.staticComponets.Rect1;
 import com.nemsapp.components.staticComponets.Text;
 import com.nemsapp.ui.MainUI;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
@@ -111,10 +113,12 @@ public class PicParser {
 
             //解析pic内容
             parseLine(mainUI, document);
-            parseString(mainUI, document);
             parseImage(mainUI, document);
             parseCommandButton(mainUI, document);
             parseDyanData(mainUI, document);
+            parseRect(mainUI, document);
+            parseString(mainUI, document);
+
 
             return parseImageStatue(mainUI, document);
 
@@ -126,7 +130,6 @@ public class PicParser {
 
     public void parseLine(MainUI mainUI, Document document) {
         NodeList lineList = document.getElementsByTagName("line");
-        List<Line> lines = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             Line line = new Line();
@@ -145,7 +148,6 @@ public class PicParser {
 
     public void parseString(MainUI mainUI, Document document) {
         NodeList lineList = document.getElementsByTagName("string");
-        List<Text> texts = new ArrayList<>();
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             Text text = new Text();
@@ -187,7 +189,7 @@ public class PicParser {
                 }
                 image0.init();
                 mainUI.getComponents().add(image0);
-            } else {
+            } else if (element.getAttribute("iconType").equals("1")) {
                 Image_1 image1 = new Image_1();
                 String[] to = element.getAttribute("to").split(",");
                 image1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
@@ -198,7 +200,7 @@ public class PicParser {
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                 } catch (IOException e) {
-                    System.out.println("bmp图源缺失：" + element.getAttribute("filename_open"));
+                    System.out.println("bmp图源缺失：" + element.getAttribute("filename"));
                     e.printStackTrace();
                     continue;
                 }
@@ -354,6 +356,50 @@ public class PicParser {
             mainUI.getComponents().add(commandButton);
         }
 
+    }
+
+    public void parseRect(MainUI mainUI, Document document) {
+        NodeList rectList = document.getElementsByTagName("rect");
+        parseRectList(mainUI, rectList);
+    }
+
+    public void parseRectList(MainUI mainUI, NodeList nodeList) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Element element = (Element) nodeList.item(i);
+            Rect1 rect = new Rect1();
+            String[] from = element.getAttribute("from").split(",");
+            String[] to = element.getAttribute("to").split(",");
+            int x1 = Integer.parseInt(from[0]);
+            int y1 = Integer.parseInt(from[1]);
+            int x2 = Integer.parseInt(to[0]);
+            int y2 = Integer.parseInt(to[1]);
+            if (x1 > x2) {
+                rect.setX1(x2);
+                rect.setX2(x1);
+            } else {
+                rect.setX1(x1);
+                rect.setX2(x2);
+            }
+            if (y1 > y2) {
+                rect.setY1(y2);
+                rect.setY2(y1);
+            } else {
+                rect.setY1(y1);
+                rect.setY2(y2);
+            }
+            rect.setBorder(Integer.parseInt(element.getAttribute("border")));
+            if (rect.getBorder() == 1) {
+                rect.setBorderColor(element.getAttribute("borderColor"));
+                rect.setBorderWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+            }
+            rect.setFill(Integer.parseInt(element.getAttribute("fill")));
+            if (rect.getFill() == 1) {
+                rect.setFillColor(element.getAttribute("fillColor"));
+            }
+
+
+            mainUI.getComponents().add(rect);
+        }
     }
 
 

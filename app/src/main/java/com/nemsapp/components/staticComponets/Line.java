@@ -34,8 +34,7 @@ public class Line extends Component {
     }
 
     public void init() {
-        int c = Color.parseColor(color);
-        paint.setColor(c);
+        paint.setColor(Color.parseColor(color));
         str_path = "m" + x1 + "," + y1 + " l" + (x2 - x1) + "," + (y2 - y1);
         path = PathParser.createPathFromPathData(str_path);
     }
