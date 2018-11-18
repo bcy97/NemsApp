@@ -1,13 +1,13 @@
-package com.nemsapp.components;
+package com.nemsapp.components.staticComponets;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-public class Text {
+import com.nemsapp.components.Component;
 
-    private Paint paint;
+public class Text extends Component {
 
     private String text;
     private int x;
@@ -48,6 +48,7 @@ public class Text {
         //设置文字baseline向下偏移size
         loc_y = y + size;
 
+        //设置对齐
         switch (align) {
             case 0:
                 loc_x = x;
@@ -61,8 +62,6 @@ public class Text {
                 paint.setTextAlign(Paint.Align.RIGHT);
                 break;
         }
-        //设置对齐
-//        paint.setTextAlign(Paint.Align.RIGHT);
         //设置字体
 //        paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
     }

@@ -1,17 +1,20 @@
-package com.nemsapp.components;
+package com.nemsapp.components.image;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.nemsapp.components.image.Image;
 import com.nemsapp.util.PathParser;
 
-public class Image_0 {
-    private Paint paint;
+/**
+ * 对应xml文件内的Image，iconType为0，即为图原的图标
+ */
+public class Image_0 extends Image {
+
     private Path path;
 
-    private String name;
     private double x;
     private double y;
     private int strokeWidth;
@@ -26,8 +29,9 @@ public class Image_0 {
         paint = new Paint();
     }
 
+    @Override
     public void draw(Canvas canvas) {
-
+        paint.setStrokeWidth(strokeWidth);
         canvas.drawPath(path, paint);
     }
 
@@ -48,24 +52,12 @@ public class Image_0 {
         this.name = name;
     }
 
-    public double getX() {
-        return x;
-    }
-
     public void setX(double x) {
         this.x = x;
     }
 
-    public double getY() {
-        return y;
-    }
-
     public void setY(double y) {
         this.y = y;
-    }
-
-    public int getStrokeWidth() {
-        return strokeWidth;
     }
 
     public void setStrokeWidth(int strokeWidth) {
@@ -78,10 +70,6 @@ public class Image_0 {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getCom_path() {
-        return com_path;
     }
 
     public void setCom_path(String com_path) {

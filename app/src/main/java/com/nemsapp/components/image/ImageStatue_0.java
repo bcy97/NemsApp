@@ -1,10 +1,11 @@
-package com.nemsapp.components;
+package com.nemsapp.components.image;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.util.PathParser;
 
 /**
@@ -32,7 +33,9 @@ public class ImageStatue_0 extends ImageStatue {
         on = true;
     }
 
+    @Override
     public void draw(Canvas canvas) {
+        paint.setColor(Color.parseColor(color));
         if (on) {
             canvas.drawPath(path_on, paint);
         } else {
@@ -42,7 +45,6 @@ public class ImageStatue_0 extends ImageStatue {
 
     public void init() {
         paint.setStyle(style);
-        paint.setColor(Color.parseColor(color));
 
         str_path = "m" + x + "," + y + on_path;
         path_on = PathParser.createPathFromPathData(str_path);

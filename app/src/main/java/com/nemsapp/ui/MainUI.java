@@ -10,15 +10,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-import com.nemsapp.components.CommandButton;
+import com.nemsapp.components.Component;
 import com.nemsapp.components.DyanData;
-import com.nemsapp.components.ImageStatue_0;
-import com.nemsapp.components.ImageStatue_1;
-import com.nemsapp.components.Image_0;
-import com.nemsapp.components.Image_1;
-import com.nemsapp.components.Line;
-import com.nemsapp.components.Text;
+import com.nemsapp.components.image.ImageStatue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +25,9 @@ import java.util.Map;
 
 public class MainUI extends SurfaceView {
 
-    private List<Line> lines;
-    private List<Text> texts;
-    private List<Image_0> image0s;
-    private List<Image_1> image1s;
-    private List<ImageStatue_0> imageStatue0s;
-    private List<ImageStatue_1> imageStatue1s;
+    private Map<String, ImageStatue> statueMap;
     private Map<String, DyanData> dyanDatas;
-    private List<CommandButton> commandButtons;
+    private List<Component> components;
 
 
     //记录是拖拉界面模式还是放大缩小界面模式
@@ -79,6 +71,15 @@ public class MainUI extends SurfaceView {
         super(context, attrs);
     }
 
+    public void clean() {
+        statueMap = new HashMap<>();
+        dyanDatas = new HashMap<>();
+        components = new ArrayList<>();
+
+        mode = 0;
+
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         //如果是初始状态，初始化缩放尺寸
@@ -109,44 +110,15 @@ public class MainUI extends SurfaceView {
         //缩放scaleTime倍
         canvas.scale(scaleTime, scaleTime);
 
-        if (null != lines && lines.size() > 0) {
-            for (Line line : lines) {
-                line.draw(canvas);
-            }
-        }
-        if (null != texts && texts.size() > 0) {
-            for (Text text : texts) {
-                text.draw(canvas);
-            }
-        }
-        if (null != image0s && image0s.size() > 0) {
-            for (Image_0 image0 : image0s) {
-                image0.draw(canvas);
-            }
-        }
-        if (null != image1s && image1s.size() > 0) {
-            for (Image_1 image1 : image1s) {
-                image1.draw(canvas);
-            }
-        }
-        if (null != imageStatue0s && imageStatue0s.size() > 0) {
-            for (ImageStatue_0 imageStatue0 : imageStatue0s) {
-                imageStatue0.draw(canvas);
-            }
-        }
-        if (null != imageStatue1s && imageStatue1s.size() > 0) {
-            for (ImageStatue_1 imageStatue1 : imageStatue1s) {
-                imageStatue1.draw(canvas);
-            }
-        }
         if (null != dyanDatas && dyanDatas.size() > 0) {
             for (String name : dyanDatas.keySet()) {
                 dyanDatas.get(name).draw(canvas);
             }
         }
-        if (null != commandButtons && commandButtons.size() > 0) {
-            for (CommandButton commandButton : commandButtons) {
-                commandButton.draw(canvas);
+
+        if (null != components && components.size() > 0) {
+            for (Component component : components) {
+                component.draw(canvas);
             }
         }
     }
@@ -250,68 +222,12 @@ public class MainUI extends SurfaceView {
 
     }
 
-    public List<Line> getLines() {
-        return lines;
-    }
-
-    public void setLines(List<Line> lines) {
-        this.lines = lines;
-    }
-
-    public List<Text> getTexts() {
-        return texts;
-    }
-
-    public void setTexts(List<Text> texts) {
-        this.texts = texts;
-    }
-
-    public List<Image_0> getImage0s() {
-        return image0s;
-    }
-
-    public void setImage0s(List<Image_0> image0s) {
-        this.image0s = image0s;
-    }
-
-    public List<Image_1> getImage1s() {
-        return image1s;
-    }
-
-    public void setImage1s(List<Image_1> image1s) {
-        this.image1s = image1s;
-    }
-
-    public List<ImageStatue_0> getImageStatue0s() {
-        return imageStatue0s;
-    }
-
-    public void setImageStatue0s(List<ImageStatue_0> imageStatue0s) {
-        this.imageStatue0s = imageStatue0s;
-    }
-
-    public List<ImageStatue_1> getImageStatue1s() {
-        return imageStatue1s;
-    }
-
-    public void setImageStatue1s(List<ImageStatue_1> imageStatue1s) {
-        this.imageStatue1s = imageStatue1s;
-    }
-
     public Map<String, DyanData> getDyanDatas() {
         return dyanDatas;
     }
 
     public void setDyanDatas(Map<String, DyanData> dyanDatas) {
         this.dyanDatas = dyanDatas;
-    }
-
-    public List<CommandButton> getCommandButtons() {
-        return commandButtons;
-    }
-
-    public void setCommandButtons(List<CommandButton> commandButtons) {
-        this.commandButtons = commandButtons;
     }
 
     public int getPicWidth() {
@@ -328,6 +244,26 @@ public class MainUI extends SurfaceView {
 
     public void setPicHeight(int picHeight) {
         this.picHeight = picHeight;
+    }
+
+
+    public Map<String, ImageStatue> getStatueMap() {
+        return statueMap;
+    }
+
+    public void setStatueMap(Map<String, ImageStatue> statueMap) {
+        this.statueMap = statueMap;
+    }
+
+    public List<Component> getComponents() {
+        if (components == null) {
+            components = new ArrayList<>();
+        }
+        return components;
+    }
+
+    public void setComponents(List<Component> components) {
+        this.components = components;
     }
 }
 

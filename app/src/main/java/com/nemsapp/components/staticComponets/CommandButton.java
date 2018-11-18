@@ -1,25 +1,26 @@
-package com.nemsapp.components;
+package com.nemsapp.components.staticComponets;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Image_1 {
+import com.nemsapp.components.Component;
 
-    private Paint paint;
+public class CommandButton extends Component {
 
     private String name;
     private Rect rect;
-    private Bitmap bitmap;
+    private Bitmap down;
+    private Bitmap up;
 
 
-    public Image_1() {
+    public CommandButton() {
         paint = new Paint();
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, rect, paint);
+        canvas.drawBitmap(down, null, rect, paint);
     }
 
     public String getName() {
@@ -34,7 +35,11 @@ public class Image_1 {
         this.rect = rect;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setDown(Bitmap down) {
+        this.down = down;
+    }
+
+    public void setUp(Bitmap up) {
+        this.up = up;
     }
 }

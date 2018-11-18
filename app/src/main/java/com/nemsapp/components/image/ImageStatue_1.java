@@ -1,9 +1,11 @@
-package com.nemsapp.components;
+package com.nemsapp.components.image;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+
+import com.nemsapp.components.image.ImageStatue;
 
 /**
  * 对应xml文件内的ImageStatue，iconType为1，即为bmp的图标
@@ -20,6 +22,7 @@ public class ImageStatue_1 extends ImageStatue {
         on = false;
     }
 
+    @Override
     public void draw(Canvas canvas) {
         if (on) {
             canvas.drawBitmap(open, null, rect, paint);

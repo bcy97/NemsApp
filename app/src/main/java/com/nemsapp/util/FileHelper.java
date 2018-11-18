@@ -95,7 +95,7 @@ public class FileHelper {
 
     public void initPictureLib() {
 
-        final File publiclib = new File(Constants.folderPath + "/iconlibrary/public");
+        File publiclib = new File(Constants.folderPath + "/iconlibrary/public");
         File userlib = new File(Constants.folderPath + "/iconlibrary/user");
 
         if (!publiclib.exists()) {
