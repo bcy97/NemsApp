@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -217,14 +218,34 @@ public class FileHelper {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+
                     //获取md5列表
                     configFileMD5 = getConfigFileMD5();
+
                     //获取config文件的种类
                     Set<String> configFileType = configFileMD5.keySet();
+
                     //按种类遍历
                     for (String type : configFileType) {
                         String path = Constants.folderPath + "/" + type;
                         List<FileMD5> md5List = configFileMD5.get(type);
+                        File typeFolder = new File(path);
+                        //删除除了configList以外到所有文件
+                        if (typeFolder.exists() && typeFolder.isDirectory()) {
+                            for (File file : typeFolder.listFiles(new FileFilter() {
+                                @Override
+                                public boolean accept(File pathname) {
+                                    if (pathname.equals("configList.xml")) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            })) {
+                                file.delete();
+                            }
+                        }
+
                         //全部下载
                         for (FileMD5 f : md5List) {
                             downloadFile(f.getFileName(), path, type);

@@ -78,13 +78,10 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
 
         //初始化刷新数据
-        getAnData(mainUI.getDyanDatas());
-        getStData(imageStatues);
-        //刷新msg的内容
-        mainUI.invalidate();
+        update();
 
         //添加定时任务，定时刷新pic图中数据
-        timer.schedule(task, 0, 5000000);
+        timer.schedule(task, 0, 5000);
 
     }
 

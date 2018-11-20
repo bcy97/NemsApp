@@ -54,7 +54,7 @@ public class PicParser {
     }
 
     private void initPiclib() {
-        File lib = new File(Constants.folderPath + "/iconlibrary/public/piclib.xml");
+        File lib = new File(Constants.folderPath + "/baseConfigs/piclib.xml");
         DocumentBuilder builder;
 
         piclib = new HashMap<>();
