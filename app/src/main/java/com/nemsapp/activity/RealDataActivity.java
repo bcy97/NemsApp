@@ -49,9 +49,10 @@ public class RealDataActivity extends AppCompatActivity {
     private List<String> unitlist;
 
 
-    final Column<String> dataColumn_1 = new Column<>("名称", "name");
-    final Column<Integer> dataColumn_2 = new Column<>("数值", "data");
-    final Column<Integer> dataColumn_3 = new Column<>("单位", "unit");
+    final Column<Short> ptNo = new Column<>("序号", "ptNo");
+    final Column<String> cname = new Column<>("名称", "cname");
+    final Column<Integer> value = new Column<>("数值", "value");
+    final Column<Integer> lgName = new Column<>("单位", "lgName");
 
     List<RealData> realData;
 
@@ -70,11 +71,14 @@ public class RealDataActivity extends AppCompatActivity {
 
         //设置宽度占满屏幕，取消x轴abc
         table.getConfig().setMinTableWidth(getWindowManager().getDefaultDisplay().getWidth())
-                .setShowXSequence(false);
+                .setShowXSequence(false)
+                .setShowYSequence(false);
 
 
         //设置左对齐
-        dataColumn_1.setTextAlign(Paint.Align.LEFT);
+        cname.setTextAlign(Paint.Align.LEFT);
+        //设置排序
+        ptNo.setAutoCount(true);
 
         if (unitlist.size() > 0) {
 
@@ -135,10 +139,10 @@ public class RealDataActivity extends AppCompatActivity {
                                 AnO anO = CfgData.getInstance().getAnO(name);
                                 double value = data.get(name).getValid() == 1 ? data.get(name).getValue() : 0;
                                 BigDecimal bigDecimal = new BigDecimal(value);
-                                realData.add(new RealData(anO.getCname(), bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue(), anO.getLgName()));
+                                realData.add(new RealData(anO.getPtNo(), anO.getCname(), bigDecimal.setScale(anO.getPoinum(), RoundingMode.UP).doubleValue(), anO.getLgName()));
                             }
-                            tableData = new TableData(unitname, realData, dataColumn_1, dataColumn_2, dataColumn_3);
-
+                            tableData = new TableData(unitname, realData, ptNo, cname, value, lgName);
+                            tableData.setSortColumn(ptNo);
 
                             table.setTableData(tableData);
                         }
