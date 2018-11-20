@@ -40,9 +40,11 @@ import static com.nemsapp.util.Constants.*;
 
 public class StatisActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //组件
     private TimePickerView pvTime;
     private Button sTime;
     private Button eTime;
+    private Button typeButton;
     private Button search;
 
 
@@ -52,8 +54,11 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
     private Date startTime;
     private Date endTime;
 
-    //设置要查询的点名
+
+    //要查询的点名
     private List<String> unitnames;
+    //查询的类型
+    private int type;
 
     final Column<String> dataColumn_1 = new Column<>("时间", "time");
     final Column<Integer> dataColumn_2 = new Column<>("监控单元", "unit");
@@ -90,6 +95,10 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
         eTime = findViewById(R.id.btn_Etime);
         eTime.setOnClickListener(this);
+
+        typeButton = findViewById(R.id.type);
+        typeButton.setOnClickListener(this);
+        type = 1;
 
         search = findViewById(R.id.btn_Search);
         search.setOnClickListener(this);
@@ -136,6 +145,14 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Etime && pvTime != null) {
             pvTime.show(v);
+        } else if (v.getId() == R.id.type) {
+            if (typeButton.getText().equals("遥测")) {
+                typeButton.setText("遥信");
+                type = 0;
+            } else {
+                typeButton.setText("遥测");
+                type = 1;
+            }
         } else if (v.getId() == R.id.btn_Search) {
             if (startTime == null) {
                 Toast.makeText(this, "请选择开始时间", Toast.LENGTH_SHORT);
@@ -158,6 +175,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
 
             getEventInfoByUnitNameAndTime(startTime, endTime, unitnames);
         }
+
     }
 
     private void initCustomTimePicker() {
@@ -243,7 +261,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         param.put("stime", getTime(new Date(now.getTime() - 86400000L)));
         param.put("etime", getTime(now));
         param.put("unitname", gson.toJson(unitnames));
-        param.put("type", 0 + "");
+        param.put("type", type + "");
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
 
@@ -267,55 +285,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            TableData tableData = null;
-                            final ArrayList<AlertData> alertDatas = new ArrayList<>();
-                            data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
-                            }.getType());
-
-                            for (int i = 0; i < data.length; i++) {
-                                AlertData alertData = new AlertData();
-                                int id = data[i].getId();
-                                switch (Utils.getTypeInId(id)) {
-                                    case IDAN:
-                                        AnO anO = CfgData.getInstance().getAnO(id);
-                                        alertData.setEvent(anO.getCname());
-                                        break;
-                                    case IDACC:
-                                        AcO acO = CfgData.getInstance().getAcO(id);
-                                        alertData.setEvent(acO.getCname());
-                                        break;
-                                    case IDST:
-                                        StO stO = CfgData.getInstance().getStO(id);
-                                        alertData.setEvent(stO.getCname());
-                                }
-                                alertData.setUnit(CfgData.getInstance().getUnitInfoByNo(Utils.getUnitNoInId(id)).getName());
-                                alertData.setTime(data[i].getStrTime().substring(0, data[i].getStrTime().length() - 4));
-                                alertData.setInfo(data[i].getInfo());
-                                if (data[i].getEventLogs() != null && data[i].getEventLogs().size() > 0) {
-                                    alertData.setMore("查看详情");
-                                } else {
-                                    alertData.setMore("无更多信息");
-                                }
-                                alertDatas.add(alertData);
-                            }
-
-                            tableData = new TableData("查询统计", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
-                            tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
-                                @Override
-                                public void onClick(Column column, String value, Object o, int col, int row) {
-                                    if (value != null && value.equals("查看详情")) {
-                                        List<EventLog> eventLogs = data[row].getEventLogs();
-                                        Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
-                                        intent.putExtra("data", gson.toJson(eventLogs));
-
-                                        //传递表头
-                                        String title = alertDatas.get(row).getEvent() + " " + alertDatas.get(row).getInfo() + " 时间：" + alertDatas.get(row).getTime();
-                                        intent.putExtra("title", title);
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            table.setTableData(tableData);
+                            parseTableData(gson, strdata);
                         }
                     });
                 } catch (IOException e) {
@@ -336,7 +306,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
         param.put("stime", getTime(stime));
         param.put("etime", getTime(etime));
         param.put("unitname", gson.toJson(unitnames));
-        param.put("type", 0 + "");
+        param.put("type", type + "");
 
         RequestBody requestBody = RequestBody.create(mediaType, gson.toJson(param));
 
@@ -360,51 +330,7 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            TableData tableData = null;
-                            final ArrayList<AlertData> alertDatas = new ArrayList<>();
-                            data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
-                            }.getType());
-
-                            for (int i = 0; i < data.length; i++) {
-                                AlertData alertData = new AlertData();
-                                int id = data[i].getId();
-                                switch (Utils.getTypeInId(id)) {
-                                    case IDAN:
-                                        AnO anO = CfgData.getInstance().getAnO(id);
-                                        alertData.setEvent(anO.getCname());
-                                        break;
-                                    case IDACC:
-                                        AcO acO = CfgData.getInstance().getAcO(id);
-                                        alertData.setEvent(acO.getCname());
-                                        break;
-                                    case IDST:
-                                        StO stO = CfgData.getInstance().getStO(id);
-                                        alertData.setEvent(stO.getCname());
-                                }
-                                alertData.setUnit(CfgData.getInstance().getUnitInfoByNo(Utils.getUnitNoInId(id)).getName());
-                                alertData.setTime(data[i].getStrTime().substring(0, data[i].getStrTime().length() - 4));
-                                alertData.setInfo(data[i].getInfo());
-                                if (data[i].getEventLogs() != null && data[i].getEventLogs().size() > 0) {
-                                    alertData.setMore("查看详情");
-                                } else {
-                                    alertData.setMore("无更多信息");
-                                }
-                                alertDatas.add(alertData);
-                            }
-
-                            tableData = new TableData("查询统计", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
-                            tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
-                                @Override
-                                public void onClick(Column column, String value, Object o, int col, int row) {
-                                    if (value != null && value.equals("查看详情")) {
-                                        List<EventLog> eventLogs = data[row].getEventLogs();
-                                        Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
-                                        intent.putExtra("data", gson.toJson(eventLogs));
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            table.setTableData(tableData);
+                            parseTableData(gson, strdata);
                         }
                     });
                 } catch (IOException e) {
@@ -412,6 +338,60 @@ public class StatisActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         }).start();
+    }
+
+    /**
+     * 解析json数据，赋值到表格
+     *
+     * @param gson
+     * @param strdata
+     */
+    public void parseTableData(final Gson gson, String strdata) {
+        TableData tableData = null;
+        final ArrayList<AlertData> alertDatas = new ArrayList<>();
+        data = gson.fromJson(strdata, new TypeToken<EventInfo[]>() {
+        }.getType());
+
+        for (int i = 0; i < data.length; i++) {
+            AlertData alertData = new AlertData();
+            int id = data[i].getId();
+            switch (Utils.getTypeInId(id)) {
+                case IDAN:
+                    AnO anO = CfgData.getInstance().getAnO(id);
+                    alertData.setEvent(anO.getCname());
+                    break;
+                case IDACC:
+                    AcO acO = CfgData.getInstance().getAcO(id);
+                    alertData.setEvent(acO.getCname());
+                    break;
+                case IDST:
+                    StO stO = CfgData.getInstance().getStO(id);
+                    alertData.setEvent(stO.getCname());
+            }
+            alertData.setUnit(CfgData.getInstance().getUnitInfoByNo(Utils.getUnitNoInId(id)).getName());
+            alertData.setTime(data[i].getStrTime().substring(0, data[i].getStrTime().length() - 4));
+            alertData.setInfo(data[i].getInfo());
+            if (data[i].getEventLogs() != null && data[i].getEventLogs().size() > 0) {
+                alertData.setMore("查看详情");
+            } else {
+                alertData.setMore("无更多信息");
+            }
+            alertDatas.add(alertData);
+        }
+
+        tableData = new TableData("查询统计", alertDatas, dataColumn_1, dataColumn_2, dataColumn_3, dataColumn_4, dataColumn_5);
+        tableData.setOnItemClickListener(new TableData.OnItemClickListener() {
+            @Override
+            public void onClick(Column column, String value, Object o, int col, int row) {
+                if (value != null && value.equals("查看详情")) {
+                    List<EventLog> eventLogs = data[row].getEventLogs();
+                    Intent intent = new Intent(StatisActivity.this, EventLogActivity.class);
+                    intent.putExtra("data", gson.toJson(eventLogs));
+                    startActivity(intent);
+                }
+            }
+        });
+        table.setTableData(tableData);
     }
 
 
