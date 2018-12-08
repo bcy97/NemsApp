@@ -47,10 +47,11 @@
         <activity
             android:name=".activity.StatisActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.FileActivity"></activity>
+        <activity android:name=".activity.FileActivity" />
         <activity
             android:name=".activity.EventLogActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.DrawLibActivity"></activity>
     </application>
 
 </manifest>

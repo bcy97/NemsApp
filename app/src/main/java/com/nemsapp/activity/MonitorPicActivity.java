@@ -128,8 +128,8 @@ public class MonitorPicActivity extends AppCompatActivity {
     };
 
     void update() {
-        getAnData(mainUI.getDyanDatas());
-        getStData(imageStatues);
+//        getAnData(mainUI.getDyanDatas());
+//        getStData(imageStatues);
         //刷新msg的内容
         mainUI.invalidate();
     }

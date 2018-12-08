@@ -10,7 +10,6 @@ import com.nemsapp.components.Component;
 public class CommandButton extends Component {
 
     private String name;
-    private Rect rect;
     private Bitmap down;
     private Bitmap up;
 
@@ -29,10 +28,6 @@ public class CommandButton extends Component {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setRect(Rect rect) {
-        this.rect = rect;
     }
 
     public void setDown(Bitmap down) {

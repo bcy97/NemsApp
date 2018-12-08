@@ -10,8 +10,6 @@ import com.nemsapp.components.Component;
 public class Text extends Component {
 
     private String text;
-    private int x;
-    private int y;
     private int size;
 
     //字体渲染位置
@@ -21,8 +19,6 @@ public class Text extends Component {
     private String color;
     //对齐方式，0为左对齐，1为居中，2为右对齐
     private int align;
-    //最右端
-    private int right;
 
     public Text() {
         paint = new Paint();
@@ -46,19 +42,19 @@ public class Text extends Component {
         int c = Color.parseColor(color);
         paint.setColor(c);
         //设置文字baseline向下偏移size
-        loc_y = y + size;
+        loc_y = rect.top + size;
 
         //设置对齐
         switch (align) {
             case 0:
-                loc_x = x;
+                loc_x = rect.left;
                 break;
             case 1:
-                loc_x = (x + right) / 2;
+                loc_x = (rect.left + rect.right) / 2;
                 paint.setTextAlign(Paint.Align.CENTER);
                 break;
             case 2:
-                loc_x = right;
+                loc_x = rect.right;
                 paint.setTextAlign(Paint.Align.RIGHT);
                 break;
         }
@@ -72,22 +68,6 @@ public class Text extends Component {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public int getSize() {
@@ -114,11 +94,4 @@ public class Text extends Component {
         this.align = align;
     }
 
-    public int getRight() {
-        return right;
-    }
-
-    public void setRight(int right) {
-        this.right = right;
-    }
 }

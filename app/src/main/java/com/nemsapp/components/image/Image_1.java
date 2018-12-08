@@ -7,9 +7,11 @@ import android.graphics.Rect;
 
 import com.nemsapp.components.image.Image;
 
+/**
+ * 对应xml文件内的Image，iconType为1，即为png的图标
+ */
 public class Image_1 extends Image {
 
-    private Rect rect;
     private Bitmap bitmap;
 
 
@@ -28,10 +30,6 @@ public class Image_1 extends Image {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setRect(Rect rect) {
-        this.rect = rect;
     }
 
     public void setBitmap(Bitmap bitmap) {

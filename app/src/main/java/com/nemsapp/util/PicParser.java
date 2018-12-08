@@ -19,7 +19,6 @@ import com.nemsapp.ui.MainUI;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
@@ -40,6 +39,8 @@ public class PicParser {
 
     private Map<String, Map<String, String>> piclib;
 
+    private Map<String, List<String>> picFill;
+
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
     private PicParser() {
@@ -58,33 +59,73 @@ public class PicParser {
         DocumentBuilder builder;
 
         piclib = new HashMap<>();
+        picFill = new HashMap<>();
 
         try {
             builder = factory.newDocumentBuilder();
             InputStream is = new FileInputStream(lib);
             Document document = builder.parse(is);
 
+            //解析16位图源
             NodeList lineList = document.getElementsByTagName("p16");
             Map<String, String> lib16 = new HashMap<>();
+            List<String> fill16 = new ArrayList<>();
             for (int i = 0; i < lineList.getLength(); i++) {
                 Element element = (Element) lineList.item(i);
                 lib16.put(element.getAttribute("id"), element.getAttribute("path"));
+                if (element.getAttribute("fill").equals("1")) {
+                    fill16.add(element.getAttribute("id"));
+                }
             }
+
+            //解析24位图源
+            lineList = document.getElementsByTagName("p32");
+            Map<String, String> lib24 = new HashMap<>();
+            List<String> fill24 = new ArrayList<>();
+            for (int i = 0; i < lineList.getLength(); i++) {
+                Element element = (Element) lineList.item(i);
+                lib24.put(element.getAttribute("id"), element.getAttribute("path"));
+                if (element.getAttribute("fill").equals("1")) {
+                    fill24.add(element.getAttribute("id"));
+                }
+            }
+
+            //解析32位图源
             lineList = document.getElementsByTagName("p32");
             Map<String, String> lib32 = new HashMap<>();
+            List<String> fill32 = new ArrayList<>();
             for (int i = 0; i < lineList.getLength(); i++) {
                 Element element = (Element) lineList.item(i);
                 lib32.put(element.getAttribute("id"), element.getAttribute("path"));
+                if (element.getAttribute("fill").equals("1")) {
+                    fill32.add(element.getAttribute("id"));
+                }
             }
+
+            //解析24位图源
             lineList = document.getElementsByTagName("p48");
             Map<String, String> lib48 = new HashMap<>();
+            List<String> fill48 = new ArrayList<>();
             for (int i = 0; i < lineList.getLength(); i++) {
                 Element element = (Element) lineList.item(i);
                 lib48.put(element.getAttribute("id"), element.getAttribute("path"));
+                if (element.getAttribute("fill").equals("1")) {
+                    fill48.add(element.getAttribute("id"));
+                }
             }
+
+            //绘制路径放入piclib
             piclib.put("16", lib16);
+            piclib.put("24", lib24);
             piclib.put("32", lib32);
             piclib.put("48", lib48);
+
+            //填充模式列表
+            picFill.put("16", fill16);
+            picFill.put("24", fill24);
+            picFill.put("32", fill32);
+            picFill.put("48", fill48);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +157,7 @@ public class PicParser {
             parseImage(mainUI, document);
             parseCommandButton(mainUI, document);
             parseDyanData(mainUI, document);
-            parseRect(mainUI, document);
+            parseRectAndRoundRect(mainUI, document);
             parseString(mainUI, document);
 
 
@@ -133,14 +174,9 @@ public class PicParser {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             Line line = new Line();
+            line.setRect(getComponentRect(element));
             line.setColor(element.getAttribute("lineColor"));
             line.setStrokeWidth(Integer.parseInt(element.getAttribute("lineWidth")));
-            String[] from = element.getAttribute("from").split(",");
-            line.setX1(Integer.parseInt(from[0]));
-            line.setY1(Integer.parseInt(from[1]));
-            String[] to = element.getAttribute("to").split(",");
-            line.setX2(Integer.parseInt(to[0]));
-            line.setY2(Integer.parseInt(to[1]));
             line.init();
             mainUI.getComponents().add(line);
         }
@@ -151,11 +187,7 @@ public class PicParser {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             Text text = new Text();
-            String[] from = element.getAttribute("from").split(",");
-            text.setX(Integer.parseInt(from[0]));
-            text.setY(Integer.parseInt(from[1]));
-            String[] to = element.getAttribute("to").split(",");
-            text.setRight(Integer.parseInt(to[0]));
+            text.setRect(getComponentRect(element));
             text.setText(element.getAttribute("text"));
             text.setSize(Integer.parseInt(element.getAttribute("size")));
             text.setColor(element.getAttribute("fontColor"));
@@ -173,26 +205,31 @@ public class PicParser {
 
         for (int i = 0; i < imageList.getLength(); i++) {
             Element element = (Element) imageList.item(i);
-            String[] from = element.getAttribute("from").split(",");
+            Rect rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 Image_0 image0 = new Image_0();
-                image0.setX(Integer.parseInt(from[0]));
-                image0.setY(Integer.parseInt(from[1]));
+                image0.setRect(rect);
                 image0.setColor(element.getAttribute("borderColor"));
                 image0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                try {
 
+                //设置路径
+                try {
                     image0.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
                 } catch (Exception e) {
                     System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index") + "号");
                     continue;
                 }
+
+                //设置画笔是否为填充模式
+                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index"))) {
+                    image0.setFill(1);
+                }
+
                 image0.init();
                 mainUI.getComponents().add(image0);
             } else if (element.getAttribute("iconType").equals("1")) {
                 Image_1 image1 = new Image_1();
-                String[] to = element.getAttribute("to").split(",");
-                image1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+                image1.setRect(rect);
                 Bitmap bitmap;
                 try {
                     File file = new File(Constants.folderPath + "/" + element.getAttribute("filename"));
@@ -233,12 +270,11 @@ public class PicParser {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
 
-            String[] from = element.getAttribute("from").split(",");
+            Rect rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 //处理type为0，使用图源
                 ImageStatue_0 imageStatue0 = new ImageStatue_0();
-                imageStatue0.setX(Integer.parseInt(from[0]));
-                imageStatue0.setY(Integer.parseInt(from[1]));
+                imageStatue0.setRect(rect);
                 imageStatue0.setName(element.getAttribute("stname"));
                 imageStatue0.setColor(element.getAttribute("borderColor"));
                 imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
@@ -249,11 +285,21 @@ public class PicParser {
                     continue;
                 }
 
+                //设置画笔是否填充模式
+                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_open"))) {
+                    imageStatue0.setOn_fill(1);
+                }
+
                 try {
                     imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
                 } catch (Exception e) {
                     System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index_close") + "号");
                     continue;
+                }
+
+                //设置画笔是否填充模式
+                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_close"))) {
+                    imageStatue0.setOff_fill(1);
                 }
 
                 imageStatue0.init();
@@ -265,10 +311,9 @@ public class PicParser {
             } else {
                 //处理type为1，使用bmp图库
                 ImageStatue_1 imageStatue1 = new ImageStatue_1();
-                String[] to = element.getAttribute("to").split(",");
-                imageStatue1.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+                imageStatue1.setRect(rect);
                 imageStatue1.setName(element.getAttribute("stname"));
-                Bitmap bitmap = null;
+                Bitmap bitmap;
                 try {
                     File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
                     InputStream is = new FileInputStream(file);
@@ -329,9 +374,7 @@ public class PicParser {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
             CommandButton commandButton = new CommandButton();
-            String[] from = element.getAttribute("from").split(",");
-            String[] to = element.getAttribute("to").split(",");
-            commandButton.setRect(new Rect(Integer.parseInt(from[0]), Integer.parseInt(from[1]), Integer.parseInt(to[0]), Integer.parseInt(to[1])));
+            commandButton.setRect(getComponentRect(element));
             Bitmap bitmap = null;
             try {
                 File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_down"));
@@ -358,50 +401,77 @@ public class PicParser {
 
     }
 
-    public void parseRect(MainUI mainUI, Document document) {
+    public void parseRectAndRoundRect(MainUI mainUI, Document document) {
         NodeList rectList = document.getElementsByTagName("rect");
-        parseRectList(mainUI, rectList);
-    }
-
-    public void parseRectList(MainUI mainUI, NodeList nodeList) {
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Element element = (Element) nodeList.item(i);
-            Rect1 rect = new Rect1();
-            String[] from = element.getAttribute("from").split(",");
-            String[] to = element.getAttribute("to").split(",");
-            int x1 = Integer.parseInt(from[0]);
-            int y1 = Integer.parseInt(from[1]);
-            int x2 = Integer.parseInt(to[0]);
-            int y2 = Integer.parseInt(to[1]);
-            if (x1 > x2) {
-                rect.setX1(x2);
-                rect.setX2(x1);
-            } else {
-                rect.setX1(x1);
-                rect.setX2(x2);
-            }
-            if (y1 > y2) {
-                rect.setY1(y2);
-                rect.setY2(y1);
-            } else {
-                rect.setY1(y1);
-                rect.setY2(y2);
-            }
-            rect.setBorder(Integer.parseInt(element.getAttribute("border")));
-            if (rect.getBorder() == 1) {
-                rect.setBorderColor(element.getAttribute("borderColor"));
-                rect.setBorderWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-            }
-            rect.setFill(Integer.parseInt(element.getAttribute("fill")));
-            if (rect.getFill() == 1) {
-                rect.setFillColor(element.getAttribute("fillColor"));
-            }
-
-
-            mainUI.getComponents().add(rect);
+        for (int i = 0; i < rectList.getLength(); i++) {
+            mainUI.getComponents().add(parseBasicRect((Element) rectList.item(i)));
+        }
+        NodeList roundRectList = document.getElementsByTagName("roundrect");
+        for (int i = 0; i < roundRectList.getLength(); i++) {
+            mainUI.getComponents().add(parseBasicRect((Element) roundRectList.item(i)));
         }
     }
 
+    public Rect1 parseBasicRect(Element element) {
+        Rect1 rect = new Rect1();
+        rect.setRect(getComponentRect(element));
+        rect.setBorder(Integer.parseInt(element.getAttribute("border")));
+        if (rect.getBorder() == 1) {
+            rect.setBorderColor(element.getAttribute("borderColor"));
+            rect.setBorderWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+        }
+        rect.setFill(Integer.parseInt(element.getAttribute("fill")));
+        if (rect.getFill() == 1) {
+            rect.setFillColor(element.getAttribute("fillColor"));
+        }
+
+        if (!element.getAttribute("round").equals("")) {
+            rect.setRound(1);
+            rect.setR(Integer.parseInt(element.getAttribute("round").split(",")[1]) / 2);
+        }
+
+        return rect;
+    }
+
+
+    /**
+     * 根据xml文档里的from和to值确定组件的范围
+     *
+     * @param element xml文档中的组件
+     * @return Rect 组件范围
+     */
+    private Rect getComponentRect(Element element) {
+        Rect rect = new Rect();
+        String[] from = element.getAttribute("from").split(",");
+        String[] to = element.getAttribute("to").split(",");
+        int x1 = Integer.parseInt(from[0]);
+        int y1 = Integer.parseInt(from[1]);
+        int x2 = Integer.parseInt(to[0]);
+        int y2 = Integer.parseInt(to[1]);
+
+        //如果是直线，直接返回点坐标
+        if (element.getTagName().equals("line")) {
+            rect.set(x1, y1, x2, y2);
+            return rect;
+        }
+
+        //不是直线，根据from，to的坐标圈定rect
+        if (x1 > x2) {
+            rect.left = x2;
+            rect.right = x1;
+        } else {
+            rect.left = x1;
+            rect.right = x2;
+        }
+        if (y1 > y2) {
+            rect.top = y2;
+            rect.bottom = y1;
+        } else {
+            rect.top = y1;
+            rect.bottom = y2;
+        }
+        return rect;
+    }
 
     public Map<String, Map<String, String>> getPiclib() {
         return piclib;

@@ -12,7 +12,6 @@ import com.nemsapp.components.image.ImageStatue;
  */
 public class ImageStatue_1 extends ImageStatue {
 
-    private Rect rect;  //图标范围
     private boolean on;  //开关状态
     private Bitmap open;  //开状态bmp
     private Bitmap close; //关状态bmp
@@ -37,10 +36,6 @@ public class ImageStatue_1 extends ImageStatue {
 
     public String getName() {
         return name;
-    }
-
-    public void setRect(Rect rect) {
-        this.rect = rect;
     }
 
     public void setOpen(Bitmap open) {

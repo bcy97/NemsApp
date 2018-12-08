@@ -3,14 +3,15 @@ package com.nemsapp.components.image;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 import com.nemsapp.components.Component;
 
+/**
+ * 对应xml文件内的ImageNavi，iconType为1，图源为图片。有操作属性
+ */
 public class ImageNavi extends Component {
 
     private String name;
-    private Rect rect;
     private Bitmap bitmap;
 
     public ImageNavi() {

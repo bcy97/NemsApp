@@ -16,17 +16,16 @@ public class ImageStatue_0 extends ImageStatue {
     private Path path_on;  //开状态路径
     private Path path_off; //关状态路径
 
-    private double x;  //坐标x
-    private double y;  //坐标y
     private int strokeWidth;  //线宽
     private String color;  //颜色
     private String on_path;  //开状态路径字符串
     private String off_path; //关状态路径字符串
 
+    private int on_fill;  //开状态是否填充
+    private int off_fill;  //闭状态是否填充
 
     private String str_path;  //加上坐标后的路径字符串
 
-    private Paint.Style style = Paint.Style.STROKE;  //画笔样式
 
     public ImageStatue_0() {
         paint = new Paint();
@@ -37,18 +36,26 @@ public class ImageStatue_0 extends ImageStatue {
     public void draw(Canvas canvas) {
         paint.setColor(Color.parseColor(color));
         if (on) {
+            if (on_fill == 1) {
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            } else {
+                paint.setStyle(Paint.Style.STROKE);
+            }
             canvas.drawPath(path_on, paint);
         } else {
+            if (off_fill == 1) {
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            } else {
+                paint.setStyle(Paint.Style.STROKE);
+            }
             canvas.drawPath(path_off, paint);
         }
     }
 
     public void init() {
-        paint.setStyle(style);
-
-        str_path = "m" + x + "," + y + on_path;
+        str_path = "m" + rect.left + "," + rect.top + on_path;
         path_on = PathParser.createPathFromPathData(str_path);
-        str_path = "m" + x + "," + y + off_path;
+        str_path = "m" + rect.left + "," + rect.top + off_path;
         path_off = PathParser.createPathFromPathData(str_path);
     }
 
@@ -58,26 +65,6 @@ public class ImageStatue_0 extends ImageStatue {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public int getStrokeWidth() {
-        return strokeWidth;
     }
 
     public void setStrokeWidth(int strokeWidth) {
@@ -92,23 +79,19 @@ public class ImageStatue_0 extends ImageStatue {
         this.color = color;
     }
 
-    public String getOn_path() {
-        return on_path;
-    }
-
     public void setOn_path(String on_path) {
         this.on_path = on_path;
-    }
-
-    public String getOff_path() {
-        return off_path;
     }
 
     public void setOff_path(String off_path) {
         this.off_path = off_path;
     }
 
-    public void setStyle(Paint.Style style) {
-        this.style = style;
+    public void setOn_fill(int on_fill) {
+        this.on_fill = on_fill;
+    }
+
+    public void setOff_fill(int off_fill) {
+        this.off_fill = off_fill;
     }
 }

@@ -101,6 +101,7 @@ public class MainUI extends SurfaceView {
             nowX = (appWidth - picWidth * scaleTime) / 2;
             nowY = (appHeight - picHeight * scaleTime) / 2;
 
+            System.out.println(nowX + "," + nowY);
             minScale = scaleTime;
 
         }
