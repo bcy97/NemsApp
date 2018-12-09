@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.components.image.ImageStatue_0;
 import com.nemsapp.components.image.ImageStatue_1;
@@ -37,14 +39,20 @@ public class PicParser {
 
     private static PicParser instance;
 
+    //pic图源库
     private Map<String, Map<String, String>> piclib;
 
+    //pic图源需要填充的列表
     private Map<String, List<String>> picFill;
+
+    //imageNavi和侧边导航栏信息
+    private List<String> naviList;
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
     private PicParser() {
         initPiclib();
+        initNaviTable();
     }
 
     public static PicParser getInstance() {
@@ -131,13 +139,34 @@ public class PicParser {
         }
     }
 
-    public Map<String, ImageStatue> initXml(MainUI mainUI, String filename) {
+    private void initNaviTable() {
+        File lib = new File(Constants.folderPath + "/baseConfigs/Picture.xml");
+        DocumentBuilder builder;
+
+        naviList = new ArrayList<>();
+
+        try {
+            builder = factory.newDocumentBuilder();
+            InputStream is = new FileInputStream(lib);
+            Document document = builder.parse(is);
+
+            NodeList picList = document.getElementsByTagName("pic");
+            for (int i = 0; i < picList.getLength(); i++) {
+                Element element = (Element) picList.item(i);
+                naviList.add(element.getAttribute("name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, ImageStatue> initXml(MainUI mainUI) {
 
         //清空mainUI的内容
         mainUI.clean();
 
         //读取pic文件
-        File file = new File(Constants.folderPath + "/pictures/" + filename);
+        File file = new File(Constants.folderPath + "/pictures/" + mainUI.getFilename());
         InputStream is;
         DocumentBuilder builder;
         try {
@@ -159,6 +188,7 @@ public class PicParser {
             parseDyanData(mainUI, document);
             parseRectAndRoundRect(mainUI, document);
             parseString(mainUI, document);
+            parseImageNavi(mainUI, document);
 
 
             return parseImageStatue(mainUI, document);
@@ -205,7 +235,7 @@ public class PicParser {
 
         for (int i = 0; i < imageList.getLength(); i++) {
             Element element = (Element) imageList.item(i);
-            Rect rect = getComponentRect(element);
+            RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 Image_0 image0 = new Image_0();
                 image0.setRect(rect);
@@ -270,7 +300,7 @@ public class PicParser {
         for (int i = 0; i < lineList.getLength(); i++) {
             Element element = (Element) lineList.item(i);
 
-            Rect rect = getComponentRect(element);
+            RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 //处理type为0，使用图源
                 ImageStatue_0 imageStatue0 = new ImageStatue_0();
@@ -433,6 +463,33 @@ public class PicParser {
         return rect;
     }
 
+    public void parseImageNavi(MainUI mainUI, Document document) {
+
+        //找到所有的image节点
+        NodeList imageList = document.getElementsByTagName("imageNavi");
+
+        for (int i = 0; i < imageList.getLength(); i++) {
+            Element element = (Element) imageList.item(i);
+            RectF rect = getComponentRect(element);
+            ImageNavi imageNavi = new ImageNavi();
+            imageNavi.setRect(rect);
+            Bitmap bitmap;
+            try {
+                File file = new File(Constants.folderPath + "/" + element.getAttribute("filename"));
+                InputStream is = new FileInputStream(file);
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                System.out.println("bmp图源缺失：" + element.getAttribute("filename"));
+                e.printStackTrace();
+                continue;
+            }
+            imageNavi.setBitmap(bitmap);
+            imageNavi.setNo(Integer.parseInt(element.getAttribute("naviTo")));
+            mainUI.getComponents().add(imageNavi);
+            mainUI.getClickableComponents().add(imageNavi);
+        }
+    }
 
     /**
      * 根据xml文档里的from和to值确定组件的范围
@@ -440,8 +497,8 @@ public class PicParser {
      * @param element xml文档中的组件
      * @return Rect 组件范围
      */
-    private Rect getComponentRect(Element element) {
-        Rect rect = new Rect();
+    private RectF getComponentRect(Element element) {
+        RectF rect = new RectF();
         String[] from = element.getAttribute("from").split(",");
         String[] to = element.getAttribute("to").split(",");
         int x1 = Integer.parseInt(from[0]);
@@ -477,4 +534,7 @@ public class PicParser {
         return piclib;
     }
 
+    public List<String> getNaviList() {
+        return naviList;
+    }
 }

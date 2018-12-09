@@ -13,7 +13,9 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
+import com.nemsapp.components.Component;
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.ui.MainUI;
 import com.nemsapp.util.Constants;
@@ -86,15 +88,7 @@ public class MonitorPicActivity extends AppCompatActivity {
     }
 
     private void initSideBar() {
-        picList = new ArrayList<>();
-
-        //获取文件夹
-        File folder = new File(Constants.folderPath + "/pictures");
-        if (folder != null && !folder.exists()) return;
-        if (!folder.isDirectory()) return;
-
-        //获取文件夹下的pic列表
-        picList = Arrays.asList(folder.list());
+        picList = PicParser.getInstance().getNaviList();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, picList);
         sidebar.setAdapter(adapter);
@@ -110,8 +104,33 @@ public class MonitorPicActivity extends AppCompatActivity {
 
     private void initXml(String filename) {
 
+        mainUI.setFilename(filename);
         //初始化pic图
-        imageStatues = PicParser.getInstance().initXml(mainUI, filename);
+        imageStatues = PicParser.getInstance().initXml(mainUI);
+
+//        mainUI.setOnClickListener(new MainUI.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println(v.getX() + "," + v.getY());
+//                for (Component c : mainUI.getClickableComponents()) {
+//
+//                    //如果没有点击该按钮，继续循环
+//                    if (!c.rect.contains(v.getX(), v.getY())) {
+//                        continue;
+//                    }
+//
+//                    //如果是navi按钮
+//                    if (c instanceof ImageNavi) {
+//                        String newFilename = PicParser.getInstance().getNaviList().get(((ImageNavi) c).getNo());
+//                        if (!mainUI.getFilename().equals(newFilename)) {
+//                            mainUI.setFilename(newFilename);
+//                            mainUI.invalidate();
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+//        });
 
     }
 

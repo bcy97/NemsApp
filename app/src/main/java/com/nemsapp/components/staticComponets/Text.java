@@ -42,19 +42,19 @@ public class Text extends Component {
         int c = Color.parseColor(color);
         paint.setColor(c);
         //设置文字baseline向下偏移size
-        loc_y = rect.top + size;
+        loc_y = (int) (rect.top + size);
 
         //设置对齐
         switch (align) {
             case 0:
-                loc_x = rect.left;
+                loc_x = (int) rect.left;
                 break;
             case 1:
-                loc_x = (rect.left + rect.right) / 2;
+                loc_x = (int) ((rect.left + rect.right) / 2);
                 paint.setTextAlign(Paint.Align.CENTER);
                 break;
             case 2:
-                loc_x = rect.right;
+                loc_x = (int) rect.right;
                 paint.setTextAlign(Paint.Align.RIGHT);
                 break;
         }

@@ -2,21 +2,25 @@ package com.nemsapp.components;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.RectF;
 
 public class Component {
 
     public Paint paint;
-    public Rect rect;
+    public RectF rect;
 
     public void draw(Canvas canvas) {
     }
 
-    public Rect getRect() {
+    public void onClick() {
+
+    }
+
+    public RectF getRect() {
         return rect;
     }
 
-    public void setRect(Rect rect) {
+    public void setRect(RectF rect) {
         this.rect = rect;
     }
 }
