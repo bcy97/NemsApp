@@ -87,7 +87,7 @@ public class PicParser {
             }
 
             //解析24位图源
-            lineList = document.getElementsByTagName("p32");
+            lineList = document.getElementsByTagName("p24");
             Map<String, String> lib24 = new HashMap<>();
             List<String> fill24 = new ArrayList<>();
             for (int i = 0; i < lineList.getLength(); i++) {

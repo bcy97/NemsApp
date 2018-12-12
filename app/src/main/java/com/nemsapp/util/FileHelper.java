@@ -198,7 +198,7 @@ public class FileHelper {
                         message.what = 1;
                         handler.sendMessage(message);
                     }
-                    Log.i("DOWNLOAD", "FileHelper: totalTime=" + (System.currentTimeMillis() - startTime));
+                    Log.i("DOWNLOAD", "FileHelper: " + filename + " totalTime=" + (System.currentTimeMillis() - startTime));
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.i("DOWNLOAD", "FileHelper: download failed");
@@ -235,7 +235,7 @@ public class FileHelper {
                             for (File file : typeFolder.listFiles(new FileFilter() {
                                 @Override
                                 public boolean accept(File pathname) {
-                                    if (pathname.equals("configList.xml")) {
+                                    if (pathname.getName().equals("configList.xml")) {
                                         return false;
                                     } else {
                                         return true;
