@@ -3,10 +3,10 @@ package com.nemsapp.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.image.ImageCheck;
 import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.components.image.ImageStatue_0;
@@ -189,6 +189,7 @@ public class PicParser {
             parseRectAndRoundRect(mainUI, document);
             parseString(mainUI, document);
             parseImageNavi(mainUI, document);
+            parseImageCheck(mainUI, document);
 
 
             return parseImageStatue(mainUI, document);
@@ -488,6 +489,52 @@ public class PicParser {
             imageNavi.setNo(Integer.parseInt(element.getAttribute("naviTo")));
             mainUI.getComponents().add(imageNavi);
             mainUI.getClickableComponents().add(imageNavi);
+        }
+    }
+
+    public void parseImageCheck(MainUI mainUI, Document document) {
+
+        //找到所有的image节点
+        NodeList checkList = document.getElementsByTagName("imageCheck");
+
+        for (int i = 0; i < checkList.getLength(); i++) {
+            Element element = (Element) checkList.item(i);
+            RectF rect = getComponentRect(element);
+            ImageCheck imageCheck = new ImageCheck();
+            imageCheck.setRect(rect);
+            imageCheck.setName(element.getAttribute("name"));
+            imageCheck.setGroupName(element.getAttribute("groupname"));
+            Bitmap bitmap = null;
+            try {
+                File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
+                InputStream is = new FileInputStream(file);
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageCheck.setOpen(bitmap);
+            try {
+                if (element.getAttribute("filename_close").equals("")) {
+                    continue;
+                }
+                File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_close"));
+                InputStream is = new FileInputStream(file);
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+            }
+            imageCheck.setClose(bitmap);
+            //默认未选中
+            imageCheck.setOn(false);
+            if (mainUI.getImageChecks().get(imageCheck.getGroupName()) == null) {
+                List<ImageCheck> checks = new ArrayList<>();
+                checks.add(imageCheck);
+                mainUI.getImageChecks().put(imageCheck.getGroupName(), checks);
+            } else {
+                mainUI.getImageChecks().get(imageCheck.getGroupName()).add(imageCheck);
+            }
+            mainUI.getClickableComponents().add(imageCheck);
         }
     }
 

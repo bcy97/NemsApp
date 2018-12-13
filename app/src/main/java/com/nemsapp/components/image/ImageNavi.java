@@ -11,8 +11,6 @@ import com.nemsapp.components.Component;
  */
 public class ImageNavi extends Component {
 
-    private String name;
-
     private Bitmap bitmap;
 
     private int No;
@@ -25,9 +23,6 @@ public class ImageNavi extends Component {
         canvas.drawBitmap(bitmap, null, rect, paint);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;

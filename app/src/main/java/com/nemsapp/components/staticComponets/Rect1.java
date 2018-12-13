@@ -51,7 +51,6 @@ public class Rect1 extends Component {
                 canvas.drawRect(rect, paint);
             }
         } else {
-            System.out.println(rect);
             //画边框
             if (border == 1) {
                 paint.setStyle(Paint.Style.STROKE);

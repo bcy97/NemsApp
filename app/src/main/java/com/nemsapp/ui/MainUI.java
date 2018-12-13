@@ -9,13 +9,11 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.nemsapp.components.Component;
 import com.nemsapp.components.DyanData;
-import com.nemsapp.components.image.ImageNavi;
+import com.nemsapp.components.image.ImageCheck;
 import com.nemsapp.components.image.ImageStatue;
-import com.nemsapp.util.PicParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +38,9 @@ public class MainUI extends SurfaceView {
     //所有组件列表
     private List<Component> components;
 
+    //imageCheck列表
+    private Map<String, List<ImageCheck>> imageChecks;
+
     //所有可点击组件列表
     private List<Component> clickableComponents;
 
@@ -51,6 +52,9 @@ public class MainUI extends SurfaceView {
     private static final int MODE_ZOOM = 2;
     //是否拖拉
     boolean draged = false;
+
+    //点击事件监听
+    private OnClickListener listener;
 
     //用于记录触摸事件开始时候的坐标位置
     private PointF startPoint = new PointF();
@@ -91,6 +95,7 @@ public class MainUI extends SurfaceView {
         dyanDatas = new HashMap<>();
         components = new ArrayList<>();
         clickableComponents = new ArrayList<>();
+        imageChecks = new HashMap<>();
 
         mode = 0;
 
@@ -117,7 +122,6 @@ public class MainUI extends SurfaceView {
             nowX = (appWidth - picWidth * scaleTime) / 2;
             nowY = (appHeight - picHeight * scaleTime) / 2;
 
-            System.out.println(nowX + "," + nowY);
             minScale = scaleTime;
 
         }
@@ -138,29 +142,14 @@ public class MainUI extends SurfaceView {
                 component.draw(canvas);
             }
         }
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(v.getX() + "," + v.getY());
-                for (Component c : clickableComponents) {
 
-                    //如果没有点击该按钮，继续循环
-                    if (!c.rect.contains(v.getX(), v.getY())) {
-                        continue;
-                    }
-
-                    //如果是navi按钮
-                    if (c instanceof ImageNavi) {
-                        String newFilename = PicParser.getInstance().getNaviList().get(((ImageNavi) c).getNo());
-                        if (!filename.equals(newFilename)) {
-                            filename = newFilename;
-                            invalidate();
-                        }
-                        break;
-                    }
+        if (null != imageChecks && imageChecks.size() > 0) {
+            for (String group : imageChecks.keySet()) {
+                for (ImageCheck check : imageChecks.get(group)) {
+                    check.draw(canvas);
                 }
             }
-        });
+        }
     }
 
     @Override
@@ -218,25 +207,9 @@ public class MainUI extends SurfaceView {
             // 手指离开屏幕
             case MotionEvent.ACTION_UP:
                 if (mode == MODE_DRAG && draged == false) {
-                    System.out.println(event.getX() + "," + event.getY());
-                    for (Component c : clickableComponents) {
-
-                        //如果没有点击该按钮，继续循环
-                        if (!c.rect.contains(event.getX(), event.getY())) {
-                            continue;
-                        }
-
-                        //如果是navi按钮
-                        if (c instanceof ImageNavi) {
-                            String newFilename = PicParser.getInstance().getNaviList().get(((ImageNavi) c).getNo());
-                            if (!filename.equals(newFilename)) {
-                                filename = newFilename;
-                                PicParser.getInstance().initXml(this);
-                                invalidate();
-                            }
-                            break;
-                        }
-                    }
+                    float rowX = (event.getX() - nowX) / scaleTime;
+                    float rowY = (event.getY() - nowY) / scaleTime;
+                    listener.onClick(rowX, rowY);
                 }
                 break;
             // 当触点离开屏幕，但是屏幕上还有触点(手指)
@@ -342,5 +315,24 @@ public class MainUI extends SurfaceView {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    public Map<String, List<ImageCheck>> getImageChecks() {
+        return imageChecks;
+    }
+
+    public void setOnClickListener(@Nullable OnClickListener listener) {
+        this.listener = listener;
+    }
+
+
+    public interface OnClickListener {
+        /**
+         * @param x 点击点对应xml中的x坐标
+         * @param y 点击点对应xml中的y坐标
+         */
+        void onClick(float x, float y);
+    }
+
+
 }
 

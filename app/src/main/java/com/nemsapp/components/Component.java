@@ -12,10 +12,6 @@ public class Component {
     public void draw(Canvas canvas) {
     }
 
-    public void onClick() {
-
-    }
-
     public RectF getRect() {
         return rect;
     }

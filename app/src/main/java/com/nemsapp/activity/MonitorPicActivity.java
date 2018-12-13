@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.components.Component;
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.image.ImageCheck;
 import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.ui.MainUI;
@@ -28,11 +29,8 @@ import com.okhttplib.annotation.ContentType;
 import com.okhttplib.annotation.Encoding;
 import com.okhttplib.callback.Callback;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +77,37 @@ public class MonitorPicActivity extends AppCompatActivity {
             initXml(picList.get(0));
         }
 
+        //给mainUI加上监听
+        mainUI.setOnClickListener(new MainUI.OnClickListener() {
+            @Override
+            public void onClick(float x, float y) {
+                System.out.println(x + "," + y);
+                for (Component c : mainUI.getClickableComponents()) {
+
+                    //如果没有点击该按钮，继续循环
+                    if (!c.rect.contains(x, y)) {
+                        continue;
+                    }
+
+                    //如果是navi按钮
+                    if (c instanceof ImageNavi) {
+                        initXml(picList.get(((ImageNavi) c).getNo()));
+                        update();
+                        break;
+                    } else if (c instanceof ImageCheck) {
+                        ((ImageCheck) c).setOn(!((ImageCheck) c).isOn());
+                        if (((ImageCheck) c).getName().equals("_sysSelectAll")) {
+                            for (ImageCheck check : mainUI.getImageChecks().get(((ImageCheck) c).getGroupName())) {
+                                check.setOn(((ImageCheck) c).isOn());
+                            }
+                        }
+                        update();
+                        break;
+                    }
+                }
+            }
+        });
+
         //初始化刷新数据
         update();
 
@@ -104,33 +133,14 @@ public class MonitorPicActivity extends AppCompatActivity {
 
     private void initXml(String filename) {
 
+        //如果文件名一样，不执行刷新xml
+        if (mainUI.getFilename() != null && mainUI.getFilename().equals(filename)) {
+            return;
+        }
+
         mainUI.setFilename(filename);
         //初始化pic图
         imageStatues = PicParser.getInstance().initXml(mainUI);
-
-//        mainUI.setOnClickListener(new MainUI.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                System.out.println(v.getX() + "," + v.getY());
-//                for (Component c : mainUI.getClickableComponents()) {
-//
-//                    //如果没有点击该按钮，继续循环
-//                    if (!c.rect.contains(v.getX(), v.getY())) {
-//                        continue;
-//                    }
-//
-//                    //如果是navi按钮
-//                    if (c instanceof ImageNavi) {
-//                        String newFilename = PicParser.getInstance().getNaviList().get(((ImageNavi) c).getNo());
-//                        if (!mainUI.getFilename().equals(newFilename)) {
-//                            mainUI.setFilename(newFilename);
-//                            mainUI.invalidate();
-//                        }
-//                        break;
-//                    }
-//                }
-//            }
-//        });
 
     }
 
@@ -258,4 +268,5 @@ public class MonitorPicActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
+
 }
