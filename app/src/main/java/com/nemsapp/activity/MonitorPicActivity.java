@@ -81,7 +81,6 @@ public class MonitorPicActivity extends AppCompatActivity {
         mainUI.setOnClickListener(new MainUI.OnClickListener() {
             @Override
             public void onClick(float x, float y) {
-                System.out.println(x + "," + y);
                 for (Component c : mainUI.getClickableComponents()) {
 
                     //如果没有点击该按钮，继续循环

@@ -51,7 +51,15 @@
         <activity
             android:name=".activity.EventLogActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.DrawLibActivity"></activity>
+        <activity
+            android:name=".activity.DrawLibActivity"
+            android:screenOrientation="landscape">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

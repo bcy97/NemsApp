@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.nemsapp.R;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.ui.MainUI;
+import com.nemsapp.util.DrawParser;
 import com.nemsapp.util.FileHelper;
 import com.nemsapp.util.PicParser;
 
@@ -45,9 +46,9 @@ public class DrawLibActivity extends AppCompatActivity {
 
     private void initXml() {
 
-        mainUI.setFilename("中心电站高压系统图.xml");
+        mainUI.setFilename("drawlib.xml");
         //初始化pic图
-        imageStatues = PicParser.getInstance().initXml(mainUI);
+        imageStatues = DrawParser.getInstance(mainUI).initXml(mainUI);
     }
 
 }
