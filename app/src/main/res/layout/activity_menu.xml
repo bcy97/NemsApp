@@ -1,68 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".activity.MenuActivity">
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="监控图"
-        app:layout_constraintBottom_toBottomOf="@id/button3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button2"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--Banner轮播条-->
+    <com.youth.banner.Banner
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:image_scale_type="center_crop"
+        app:scroll_time="500" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="曲线图"
-        app:layout_constraintBottom_toBottomOf="@id/button4"
-        app:layout_constraintLeft_toRightOf="@id/button1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--&lt;!&ndash;5个大模块布局&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_big_module_fragment_home"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="15dp"-->
+    <!--android:layout_marginTop="15dp"-->
+    <!--android:orientation="horizontal" />-->
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="实时数据"
-        app:layout_constraintBottom_toBottomOf="@id/button5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button4"
-        app:layout_constraintTop_toTopOf="@id/button1" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="累加量统计"
-        app:layout_constraintBottom_toBottomOf="@id/button6"
-        app:layout_constraintLeft_toRightOf="@id/button3"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button2" />
+    <GridView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="重要警报"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button6"
-        app:layout_constraintTop_toTopOf="@id/button3" />
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/dividerColorF0" />
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="查询统计"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/button5"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button4" />
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

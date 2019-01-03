@@ -12,7 +12,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,6 +34,10 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     implementation group: 'dom4j', name: 'dom4j', version: '1.6.1'
     implementation group: 'jaxen', name: 'jaxen', version: '1.1.4'
+    //Banner
+    implementation "com.youth.banner:banner:1.4.10"
+    // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation group: 'com.github.bumptech.glide', name: 'glide', version: '3.7.0'
 
 
 }
