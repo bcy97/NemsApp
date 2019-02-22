@@ -238,26 +238,15 @@ public class PicParser {
             Element element = (Element) imageList.item(i);
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
-                Image_0 image0 = new Image_0();
-                image0.setRect(rect);
-                image0.setColor(element.getAttribute("borderColor"));
-                image0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
+                Image_1 image1 = new Image_1();
+                image1.setRect(rect);
+                image1.setName(element.getAttribute("stname"));
 
-                //设置路径
-                try {
-                    image0.setCom_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index")));
-                } catch (Exception e) {
-                    System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index") + "号");
-                    continue;
-                }
+                image1.setBitmap(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
 
-                //设置画笔是否为填充模式
-                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index"))) {
-                    image0.setFill(1);
-                }
+                mainUI.getComponents().add(image1);
 
-                image0.init();
-                mainUI.getComponents().add(image0);
+                mainUI.getComponents().add(image1);
             } else if (element.getAttribute("iconType").equals("1")) {
                 Image_1 image1 = new Image_1();
                 image1.setRect(rect);
@@ -304,40 +293,17 @@ public class PicParser {
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 //处理type为0，使用图源
-                ImageStatue_0 imageStatue0 = new ImageStatue_0();
-                imageStatue0.setRect(rect);
-                imageStatue0.setName(element.getAttribute("stname"));
-                imageStatue0.setColor(element.getAttribute("borderColor"));
-                imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                try {
-                    imageStatue0.setOn_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
-                } catch (Exception e) {
-                    System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index_open") + "号");
-                    continue;
-                }
+                ImageStatue_1 imageStatue1 = new ImageStatue_1();
+                imageStatue1.setRect(rect);
+                imageStatue1.setName(element.getAttribute("stname"));
 
-                //设置画笔是否填充模式
-                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_open"))) {
-                    imageStatue0.setOn_fill(1);
-                }
+                imageStatue1.setOpen(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
+                imageStatue1.setClose(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_close")), element.getAttribute("borderColor"), "#303030"));
 
-                try {
-                    imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
-                } catch (Exception e) {
-                    System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index_close") + "号");
-                    continue;
-                }
+                mainUI.getComponents().add(imageStatue1);
 
-                //设置画笔是否填充模式
-                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_close"))) {
-                    imageStatue0.setOff_fill(1);
-                }
-
-                imageStatue0.init();
-                mainUI.getComponents().add(imageStatue0);
-
-                if (!imageStatue0.getName().equals("")) {
-                    statueMap.put(imageStatue0.name, imageStatue0);
+                if (!imageStatue1.getName().equals("")) {
+                    statueMap.put(imageStatue1.name, imageStatue1);
                 }
             } else {
                 //处理type为1，使用bmp图库

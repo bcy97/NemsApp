@@ -264,16 +264,8 @@ public class MainUI extends SurfaceView {
         this.dyanDatas = dyanDatas;
     }
 
-    public int getPicWidth() {
-        return picWidth;
-    }
-
     public void setPicWidth(int picWidth) {
         this.picWidth = picWidth;
-    }
-
-    public int getPicHeight() {
-        return picHeight;
     }
 
     public void setPicHeight(int picHeight) {

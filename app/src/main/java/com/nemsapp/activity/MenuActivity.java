@@ -91,6 +91,7 @@ public class MenuActivity extends AppCompatActivity implements AdapterView.OnIte
                         startActivity(intent);
                         break;
                     case 1:
+                        System.out.println("点击");
                         intent = new Intent(MenuActivity.this, GraphActivity.class);
                         startActivity(intent);
                         break;

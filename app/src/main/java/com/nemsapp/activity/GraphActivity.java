@@ -232,9 +232,11 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 
+        //获取请求参数
         Map<String, String> data = new HashMap<>();
+
+        //查询时间
         data.put("time", getTime(chooseTime));
-//        data.put("unitname", unitname);
         Gson gson = new Gson();
 
         final List<String> pointNames = new ArrayList<>();

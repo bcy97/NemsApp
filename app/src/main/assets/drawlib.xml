@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="gbk"?>
-<picture version="7" color="#303030" width="100" height="100">
+<picture version="7" color="#303030" width="500" height="500">
 
     <layer name="底图">
 
-        <imageStatue from="10,10" to="42,42" border="1" borderColor="#c02020" borderWidth="1" fill="0" stname="A_H1_04_WP" iconType="0" size="32" index_close="59" index_open="37" angle="0.000000"/>
+        <imageStatue from="100,100" to="132,132" border="1" borderColor="#c02020" borderWidth="1" fill="0" stname="A_H1_04_WP" iconType="0" size="24" index_close="87" index_open="40" angle="0.000000"/>
         <!--<imageStatue from="10,10" to="34,34" border="1" borderColor="#c02020" borderWidth="1" fill="0" stname="A_H1_04_WP" iconType="0" size="24" index_close="59" index_open="41" angle="0.000000"/>-->
 
     </layer>

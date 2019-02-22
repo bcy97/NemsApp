@@ -1,32 +1,16 @@
 package com.nemsapp.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.os.Environment;
 
-import com.nemsapp.components.DyanData;
-import com.nemsapp.components.image.ImageCheck;
-import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
-import com.nemsapp.components.image.ImageStatue_0;
 import com.nemsapp.components.image.ImageStatue_1;
-import com.nemsapp.components.image.Image_0;
-import com.nemsapp.components.image.Image_1;
-import com.nemsapp.components.staticComponets.CommandButton;
-import com.nemsapp.components.staticComponets.Line;
-import com.nemsapp.components.staticComponets.Rect1;
-import com.nemsapp.components.staticComponets.Text;
 import com.nemsapp.ui.MainUI;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -190,42 +174,15 @@ public class DrawParser {
 
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
-                //处理type为0，使用图源
-                ImageStatue_0 imageStatue0 = new ImageStatue_0();
-                imageStatue0.setRect(rect);
-                imageStatue0.setName(element.getAttribute("stname"));
-                imageStatue0.setColor(element.getAttribute("borderColor"));
-                imageStatue0.setStrokeWidth(Integer.parseInt(element.getAttribute("borderWidth")));
-                try {
-                    imageStatue0.setOn_path("h31 v31 h-31 v-31" + piclib.get(element.getAttribute("size")).get(element.getAttribute("index_open")));
-                } catch (Exception e) {
-                    System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index_open") + "号");
-                    continue;
-                }
+                //处理type为1，使用bmp图库
+                ImageStatue_1 imageStatue1 = new ImageStatue_1();
+                imageStatue1.setRect(rect);
+                imageStatue1.setName(element.getAttribute("stname"));
 
-                //设置画笔是否填充模式
-                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_open"))) {
-                    imageStatue0.setOn_fill(1);
-                }
+                imageStatue1.setOpen(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
+                imageStatue1.setClose(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_close")), element.getAttribute("borderColor"), "#303030"));
 
-                try {
-                    imageStatue0.setOff_path(piclib.get(element.getAttribute("size")).get(element.getAttribute("index_close")));
-                } catch (Exception e) {
-                    System.out.println("xml图源缺失：" + element.getAttribute("size") + "位，" + element.getAttribute("index_close") + "号");
-                    continue;
-                }
-
-                //设置画笔是否填充模式
-                if (picFill.get(element.getAttribute("size")).contains(element.getAttribute("index_close"))) {
-                    imageStatue0.setOff_fill(1);
-                }
-
-                imageStatue0.init();
-                mainUI.getComponents().add(imageStatue0);
-
-                if (!imageStatue0.getName().equals("")) {
-                    statueMap.put(imageStatue0.name, imageStatue0);
-                }
+                mainUI.getComponents().add(imageStatue1);
             }
         }
 
