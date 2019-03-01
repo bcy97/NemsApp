@@ -51,7 +51,7 @@ public class PicParser {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
     private PicParser() {
-        initPiclib();
+//        initPiclib();
         initNaviTable();
     }
 
@@ -62,82 +62,82 @@ public class PicParser {
         return instance;
     }
 
-    private void initPiclib() {
-        File lib = new File(Constants.folderPath + "/baseConfigs/piclib.xml");
-        DocumentBuilder builder;
-
-        piclib = new HashMap<>();
-        picFill = new HashMap<>();
-
-        try {
-            builder = factory.newDocumentBuilder();
-            InputStream is = new FileInputStream(lib);
-            Document document = builder.parse(is);
-
-            //解析16位图源
-            NodeList lineList = document.getElementsByTagName("p16");
-            Map<String, String> lib16 = new HashMap<>();
-            List<String> fill16 = new ArrayList<>();
-            for (int i = 0; i < lineList.getLength(); i++) {
-                Element element = (Element) lineList.item(i);
-                lib16.put(element.getAttribute("id"), element.getAttribute("path"));
-                if (element.getAttribute("fill").equals("1")) {
-                    fill16.add(element.getAttribute("id"));
-                }
-            }
-
-            //解析24位图源
-            lineList = document.getElementsByTagName("p24");
-            Map<String, String> lib24 = new HashMap<>();
-            List<String> fill24 = new ArrayList<>();
-            for (int i = 0; i < lineList.getLength(); i++) {
-                Element element = (Element) lineList.item(i);
-                lib24.put(element.getAttribute("id"), element.getAttribute("path"));
-                if (element.getAttribute("fill").equals("1")) {
-                    fill24.add(element.getAttribute("id"));
-                }
-            }
-
-            //解析32位图源
-            lineList = document.getElementsByTagName("p32");
-            Map<String, String> lib32 = new HashMap<>();
-            List<String> fill32 = new ArrayList<>();
-            for (int i = 0; i < lineList.getLength(); i++) {
-                Element element = (Element) lineList.item(i);
-                lib32.put(element.getAttribute("id"), element.getAttribute("path"));
-                if (element.getAttribute("fill").equals("1")) {
-                    fill32.add(element.getAttribute("id"));
-                }
-            }
-
-            //解析24位图源
-            lineList = document.getElementsByTagName("p48");
-            Map<String, String> lib48 = new HashMap<>();
-            List<String> fill48 = new ArrayList<>();
-            for (int i = 0; i < lineList.getLength(); i++) {
-                Element element = (Element) lineList.item(i);
-                lib48.put(element.getAttribute("id"), element.getAttribute("path"));
-                if (element.getAttribute("fill").equals("1")) {
-                    fill48.add(element.getAttribute("id"));
-                }
-            }
-
-            //绘制路径放入piclib
-            piclib.put("16", lib16);
-            piclib.put("24", lib24);
-            piclib.put("32", lib32);
-            piclib.put("48", lib48);
-
-            //填充模式列表
-            picFill.put("16", fill16);
-            picFill.put("24", fill24);
-            picFill.put("32", fill32);
-            picFill.put("48", fill48);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void initPiclib() {
+//        File lib = new File(Constants.folderPath + "/baseConfigs/piclib.xml");
+//        DocumentBuilder builder;
+//
+//        piclib = new HashMap<>();
+//        picFill = new HashMap<>();
+//
+//        try {
+//            builder = factory.newDocumentBuilder();
+//            InputStream is = new FileInputStream(lib);
+//            Document document = builder.parse(is);
+//
+//            //解析16位图源
+//            NodeList lineList = document.getElementsByTagName("p16");
+//            Map<String, String> lib16 = new HashMap<>();
+//            List<String> fill16 = new ArrayList<>();
+//            for (int i = 0; i < lineList.getLength(); i++) {
+//                Element element = (Element) lineList.item(i);
+//                lib16.put(element.getAttribute("id"), element.getAttribute("path"));
+//                if (element.getAttribute("fill").equals("1")) {
+//                    fill16.add(element.getAttribute("id"));
+//                }
+//            }
+//
+//            //解析24位图源
+//            lineList = document.getElementsByTagName("p24");
+//            Map<String, String> lib24 = new HashMap<>();
+//            List<String> fill24 = new ArrayList<>();
+//            for (int i = 0; i < lineList.getLength(); i++) {
+//                Element element = (Element) lineList.item(i);
+//                lib24.put(element.getAttribute("id"), element.getAttribute("path"));
+//                if (element.getAttribute("fill").equals("1")) {
+//                    fill24.add(element.getAttribute("id"));
+//                }
+//            }
+//
+//            //解析32位图源
+//            lineList = document.getElementsByTagName("p32");
+//            Map<String, String> lib32 = new HashMap<>();
+//            List<String> fill32 = new ArrayList<>();
+//            for (int i = 0; i < lineList.getLength(); i++) {
+//                Element element = (Element) lineList.item(i);
+//                lib32.put(element.getAttribute("id"), element.getAttribute("path"));
+//                if (element.getAttribute("fill").equals("1")) {
+//                    fill32.add(element.getAttribute("id"));
+//                }
+//            }
+//
+//            //解析24位图源
+//            lineList = document.getElementsByTagName("p48");
+//            Map<String, String> lib48 = new HashMap<>();
+//            List<String> fill48 = new ArrayList<>();
+//            for (int i = 0; i < lineList.getLength(); i++) {
+//                Element element = (Element) lineList.item(i);
+//                lib48.put(element.getAttribute("id"), element.getAttribute("path"));
+//                if (element.getAttribute("fill").equals("1")) {
+//                    fill48.add(element.getAttribute("id"));
+//                }
+//            }
+//
+//            //绘制路径放入piclib
+//            piclib.put("16", lib16);
+//            piclib.put("24", lib24);
+//            piclib.put("32", lib32);
+//            piclib.put("48", lib48);
+//
+//            //填充模式列表
+//            picFill.put("16", fill16);
+//            picFill.put("24", fill24);
+//            picFill.put("32", fill32);
+//            picFill.put("48", fill48);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void initNaviTable() {
         File lib = new File(Constants.folderPath + "/baseConfigs/Picture.xml");
@@ -242,7 +242,7 @@ public class PicParser {
                 image1.setRect(rect);
                 image1.setName(element.getAttribute("stname"));
 
-                image1.setBitmap(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
+                image1.setBitmap(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index")), element.getAttribute("borderColor"), "#303030"));
 
                 mainUI.getComponents().add(image1);
 
