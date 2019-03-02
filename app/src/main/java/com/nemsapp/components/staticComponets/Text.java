@@ -39,7 +39,7 @@ public class Text extends Component {
         //设置文字样式
         paint.setTypeface(Typeface.DEFAULT);
         //设置文字颜色
-        int c = Color.parseColor(color);
+        int c = color != "" ? Color.parseColor(color) : Color.YELLOW;
         paint.setColor(c);
         //设置文字baseline向下偏移size
         loc_y = (int) (rect.top + size);

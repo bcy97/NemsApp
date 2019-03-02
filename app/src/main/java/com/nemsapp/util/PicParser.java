@@ -256,7 +256,7 @@ public class PicParser {
                     InputStream is = new FileInputStream(file);
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     System.out.println("bmp图源缺失：" + element.getAttribute("filename"));
                     e.printStackTrace();
                     continue;
