@@ -6,19 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.format.draw.MultiLineDrawFormat;
 import com.bin.david.form.data.table.TableData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.util.CfgData;
-import com.nemsapp.util.Constants;
 import com.nemsapp.util.Utils;
-import com.nemsapp.vo.*;
+import com.nemsapp.vo.AcO;
+import com.nemsapp.vo.AlertData;
+import com.nemsapp.vo.AnO;
+import com.nemsapp.vo.EventInfo;
+import com.nemsapp.vo.EventLog;
+import com.nemsapp.vo.StO;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -26,7 +28,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.nemsapp.util.Constants.*;
+import static com.nemsapp.util.Constants.IDACC;
+import static com.nemsapp.util.Constants.IDAN;
+import static com.nemsapp.util.Constants.IDST;
+import static com.nemsapp.util.Constants.ip;
 
 
 public class AlertActivity extends AppCompatActivity {

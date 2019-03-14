@@ -6,13 +6,10 @@ import android.graphics.Color;
 import android.graphics.RectF;
 
 import com.nemsapp.components.DyanData;
+import com.nemsapp.components.image.Image;
 import com.nemsapp.components.image.ImageCheck;
 import com.nemsapp.components.image.ImageNavi;
 import com.nemsapp.components.image.ImageStatue;
-import com.nemsapp.components.image.ImageStatue_0;
-import com.nemsapp.components.image.ImageStatue_1;
-import com.nemsapp.components.image.Image_0;
-import com.nemsapp.components.image.Image_1;
 import com.nemsapp.components.staticComponets.CommandButton;
 import com.nemsapp.components.staticComponets.Line;
 import com.nemsapp.components.staticComponets.Rect1;
@@ -238,18 +235,18 @@ public class PicParser {
             Element element = (Element) imageList.item(i);
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
-                Image_1 image1 = new Image_1();
-                image1.setRect(rect);
-                image1.setName(element.getAttribute("stname"));
+                Image image = new Image();
+                image.setRect(rect);
+                image.setName(element.getAttribute("stname"));
 
-                image1.setBitmap(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index")), element.getAttribute("borderColor"), "#303030"));
+                image.setBitmap(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index")), element.getAttribute("borderColor"), "#303030"));
 
-                mainUI.getComponents().add(image1);
+                mainUI.getComponents().add(image);
 
-                mainUI.getComponents().add(image1);
+                mainUI.getComponents().add(image);
             } else if (element.getAttribute("iconType").equals("1")) {
-                Image_1 image1 = new Image_1();
-                image1.setRect(rect);
+                Image image = new Image();
+                image.setRect(rect);
                 Bitmap bitmap;
                 try {
                     File file = new File(Constants.folderPath + "/" + element.getAttribute("filename"));
@@ -261,8 +258,8 @@ public class PicParser {
                     e.printStackTrace();
                     continue;
                 }
-                image1.setBitmap(bitmap);
-                mainUI.getComponents().add(image1);
+                image.setBitmap(bitmap);
+                mainUI.getComponents().add(image);
             }
         }
 
@@ -293,23 +290,23 @@ public class PicParser {
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 //处理type为0，使用图源
-                ImageStatue_1 imageStatue1 = new ImageStatue_1();
-                imageStatue1.setRect(rect);
-                imageStatue1.setName(element.getAttribute("stname"));
+                ImageStatue imagestatue = new ImageStatue();
+                imagestatue.setRect(rect);
+                imagestatue.setName(element.getAttribute("stname"));
 
-                imageStatue1.setOpen(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
-                imageStatue1.setClose(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_close")), element.getAttribute("borderColor"), "#303030"));
+                imagestatue.setOpen(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_open")), element.getAttribute("borderColor"), "#303030"));
+                imagestatue.setClose(LibParser.getInstance().getIcon(Integer.parseInt(element.getAttribute("size")), Integer.parseInt(element.getAttribute("index_close")), element.getAttribute("borderColor"), "#303030"));
 
-                mainUI.getComponents().add(imageStatue1);
+                mainUI.getComponents().add(imagestatue);
 
-                if (!imageStatue1.getName().equals("")) {
-                    statueMap.put(imageStatue1.name, imageStatue1);
+                if (!imagestatue.getName().equals("")) {
+                    statueMap.put(imagestatue.name, imagestatue);
                 }
             } else {
                 //处理type为1，使用bmp图库
-                ImageStatue_1 imageStatue1 = new ImageStatue_1();
-                imageStatue1.setRect(rect);
-                imageStatue1.setName(element.getAttribute("stname"));
+                ImageStatue imagestatue = new ImageStatue();
+                imagestatue.setRect(rect);
+                imagestatue.setName(element.getAttribute("stname"));
                 Bitmap bitmap;
                 try {
                     File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_open"));
@@ -321,7 +318,7 @@ public class PicParser {
                     e.printStackTrace();
                     continue;
                 }
-                imageStatue1.setOpen(bitmap);
+                imagestatue.setOpen(bitmap);
                 try {
                     File file = new File(Constants.folderPath + "/" + element.getAttribute("filename_close"));
                     InputStream is = new FileInputStream(file);
@@ -332,12 +329,12 @@ public class PicParser {
                     e.printStackTrace();
                     continue;
                 }
-                imageStatue1.setClose(bitmap);
+                imagestatue.setClose(bitmap);
 
-                mainUI.getComponents().add(imageStatue1);
+                mainUI.getComponents().add(imagestatue);
 
-                if (!imageStatue1.name.equals("")) {
-                    statueMap.put(imageStatue1.name, imageStatue1);
+                if (!imagestatue.name.equals("")) {
+                    statueMap.put(imagestatue.name, imagestatue);
                 }
             }
         }

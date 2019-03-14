@@ -1,15 +1,14 @@
 package com.nemsapp.activity;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.nemsapp.R;
 import com.nemsapp.components.image.ImageStatue;
 import com.nemsapp.ui.MainUI;
 import com.nemsapp.util.DrawParser;
 import com.nemsapp.util.FileHelper;
-import com.nemsapp.util.PicParser;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.RectF;
 
 import com.nemsapp.components.image.ImageStatue;
-import com.nemsapp.components.image.ImageStatue_1;
 import com.nemsapp.ui.MainUI;
 
 import org.w3c.dom.Document;
@@ -175,7 +174,7 @@ public class DrawParser {
             RectF rect = getComponentRect(element);
             if (element.getAttribute("iconType").equals("0")) {
                 //处理type为1，使用bmp图库
-                ImageStatue_1 imageStatue1 = new ImageStatue_1();
+                ImageStatue imageStatue1 = new ImageStatue();
                 imageStatue1.setRect(rect);
                 imageStatue1.setName(element.getAttribute("stname"));
 

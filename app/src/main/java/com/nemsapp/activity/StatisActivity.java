@@ -24,19 +24,37 @@ import com.google.gson.reflect.TypeToken;
 import com.nemsapp.R;
 import com.nemsapp.adapter.SimpleTreeAdapter;
 import com.nemsapp.treelist.Node;
-import com.nemsapp.treelist.OnTreeNodeClickListener;
 import com.nemsapp.treelist.TreeListViewAdapter;
 import com.nemsapp.util.CfgData;
 import com.nemsapp.util.Utils;
-import com.nemsapp.vo.*;
-
-import okhttp3.*;
+import com.nemsapp.vo.AcO;
+import com.nemsapp.vo.AlertData;
+import com.nemsapp.vo.AnO;
+import com.nemsapp.vo.EventInfo;
+import com.nemsapp.vo.EventLog;
+import com.nemsapp.vo.StO;
+import com.nemsapp.vo.UnitInfo;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.nemsapp.util.Constants.*;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.nemsapp.util.Constants.IDACC;
+import static com.nemsapp.util.Constants.IDAN;
+import static com.nemsapp.util.Constants.IDST;
+import static com.nemsapp.util.Constants.ip;
 
 public class StatisActivity extends AppCompatActivity implements View.OnClickListener {
 

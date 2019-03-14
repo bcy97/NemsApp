@@ -3,7 +3,6 @@ package com.nemsapp.components.staticComponets;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 import com.nemsapp.components.Component;
 

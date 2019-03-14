@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible" />
-        <!--android:background="#3e3e3e"-->
+    <!--android:background="#3e3e3e"-->
 
     <ListView
         android:id="@+id/pic_sidebar"
